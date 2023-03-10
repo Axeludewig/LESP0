@@ -10,7 +10,7 @@
 
       <div class="mb-6">
         <label for="rfc" class="inline-block text-lg mb-2">RFC</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="rfc" placeholder="Inicia sesión con tu RFC y contraseña" value="{{old('rfc')}}" />
+        <input type="text" class="shadow appearance-none leading-tight focus:outline-none focus:ring hover:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full" name="rfc" placeholder="Inicia sesión con tu RFC y contraseña" value="{{old('rfc')}}" />
 
         @error('rfc')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -21,7 +21,7 @@
         <label for="password" class="inline-block text-lg mb-2">
           Contraseña
         </label>
-        <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
+        <input type="password" class="shadow appearance-none leading-tight focus:outline-none focus:ring hover:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full" name="password"
           value="{{old('password')}}" />
 
         @error('password')
@@ -30,7 +30,7 @@
       </div>
 
       <div class="mb-6">
-        <button type="submit" class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+        <button type="submit" class="bg-laravel text-white rounded py-2 px-4 hover:bg-mich4 hover:text-black">
           Iniciar Sesión
         </button>
       </div>

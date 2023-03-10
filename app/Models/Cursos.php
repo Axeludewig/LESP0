@@ -11,12 +11,25 @@ class Cursos extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion',
-        'fecha_de_inicio',
+		'modalidad',
+		'tipo',
+		'nombre_del_responsable',
+		'coordinacion',
+		'dirigido',
+		'numero_de_asistentes',
+		'horas_teoricas',
+		'horas_practicas',
+		'categoria',
+		'auditorio',
+		'fecha_de_inicio',
         'fecha_de_terminacion',
+		'objetivo_general',
+		'forma_de_evaluacion',
+		'porcentaje_asistencia',
+		'calificacion_requerida',
+		'evaluacion_adquirida',
         'valor_curricular',
-        'modalidad',
-        'ubicacion',
+        'status',
         'tags',
         'img'
     ];
@@ -31,6 +44,11 @@ class Cursos extends Model
                 ->orWhere('descripcion', 'like', '%' . request('search') . '%')
                 ->orWhere('tags', 'like', '%' . request('search') . '%');
         }
+    }
+    public function participantes()
+    {
+        return $this->belongsToMany(Participantes::class)
+                    ->withPivot('nombre_participante', 'rfc_participante', 'ubicacion', 'fecha_de_inicio', 'fecha_de_terminacion', 'valor_curricular', 'img');
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\Cursos;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -56,29 +57,14 @@ class ListingController extends Controller
     }
 
     // Update Listing Data
-    public function update(Request $request, Listing $listing) {
-        // Make sure logged in user is owner
-        if($listing->user_id != auth()->id()) {
-            abort(403, 'Unauthorized Action');
-        }
-        
+    public function update(Request $request, Cursos $listing) {
         $formFields = $request->validate([
-            'title' => 'required',
-            'company' => ['required'],
-            'location' => 'required',
-            'website' => 'required',
-            'email' => ['required', 'email'],
-            'tags' => 'required',
-            'description' => 'required'
+            'status' => 'required'
         ]);
-
-        if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
-        }
 
         $listing->update($formFields);
 
-        return back()->with('message', 'Listing updated successfully!');
+        return back()->with('message', 'Curso finalizado correctamente.');
     }
 
     // Delete Listing

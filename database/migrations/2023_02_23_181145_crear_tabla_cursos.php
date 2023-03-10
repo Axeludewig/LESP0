@@ -14,17 +14,28 @@ return new class extends Migration
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion');
-            $table->string('fecha_de_inicio');
-            $table->string('fecha_de_terminacion');
-            $table->string('valor_curricular');
             $table->string('modalidad');
-            $table->string('ubicacion');
+            $table->string('tipo');
+            $table->string('nombre_del_responsable');
+            $table->string('coordinacion');
+            $table->string('dirigido');
+            $table->integer('numero_de_asistentes');
+            $table->integer('horas_teoricas');
+            $table->integer('horas_practicas');
+            $table->string('categoria');
+            $table->string('auditorio');
+            $table->date('fecha_de_inicio');
+            $table->date('fecha_de_terminacion');
+            $table->text('objetivo_general');
+            $table->string('forma_de_evaluacion');
+            $table->integer('porcentaje_asistencia');
+            $table->integer('calificacion_requerida');
+            $table->string('evaluacion_adquirida');
+            $table->string('status');
             $table->string('tags');
             $table->string('img')->nullable();
-            $table->timestamp('fecha_de_registro')->nullable();
+            $table->timestamps('');
             $table->rememberToken();
-            $table->timestamps();
         });
         //
     }

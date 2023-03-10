@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @page {
+      size: A4 landscape;
+        }
+        .topcontainer{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -3%;
+            width: 32rem;
+        }
+        .top{
+            margin: 0;
+            text-align: center;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .midcontainer{
+            display: flex;
+            flex-direction: row;
+            margin-left: 5%;
+            margin-right: 5%;
+            font-family: Calibri, sans-serif;
+        }
+        .semicontainer{
+            display: flex;
+            flex-direction: row;
+            font-family: Calibri, sans-serif;
+        }
+        .column1 {
+            width: 50%;
+        }
+        .column2 {
+            width: 50%;
+        }
+        .mid{
+            margin:0 ;
+        }
+        .bold{
+            font-weight: bold;
+        }
+        .bordertop{
+            border-style: solid;
+            border-width: 1px 0 0 0;
+        }
+        .borderbot{
+            border-style: solid;
+            border-width: 0 0 1px 0;
+        }
+        .borderfull{
+            border-style: solid;
+            border-width: 0 1px 1px 1px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="topcontainer">
+        <p class="top">SECRETARÍA DE SALUD DE MICHOACÁN</p>
+        <p class="top">DIRECCIÓN DE SERVICIOS DE SALUD</p>
+        <p class="top">DEPARTAMENTO DE ENSEÑANZA</p>
+        <p class="top">CARTA DESCRIPTIVA PARA ACTIVIDADES DE CAPACITACIÓN</p>
+    </div>
+    <div class="midcontainer">
+        <div class="column1">
+            <div class="borderbot">
+                <p class="mid bold">Departamento: Laboratorio Estatal de Salud Pública</p>
+            </div>
+        
+            <div class="semicontainer">
+                <div>
+                    <p class="mid"><span class="bold">Nombre de la capacitación:</span></p>	
+                </div>
+                <div>
+                    <p class="mid borderfull">Taller para la aplicación del modelo Bio-RAM para el análisis del riesgo biológico						
+                    </p>
+                </div>
+            </div>
+	    </div>
+        <div class="column2">
+
+        </div>
+    </div>
+</body>
+</html>

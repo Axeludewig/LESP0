@@ -5,12 +5,45 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     // Show Register/Create Form
     public function create() {
         return view('users.register');
+    }
+
+    public function cursospanel() {
+        return view('admin.CPcursos');
+    }
+
+    public function admincontrolpanel() {
+        return view('admin.CP');
+    }
+
+    public function index() {
+        return view('admin.showallusers', [
+            'listings' => User::latest()->filter(request(['tag', 'search']))->paginate(10)
+        ]);
+    }
+
+    public function perfil() {
+        return view('users.perfil');
+    }
+
+    public function expediente() {
+        $user_id = auth()->user()->rfc;
+        $finished_courses = DB::table('participantes')
+            ->where('rfc_participante', $user_id)
+            ->join('cursos', 'participantes.nombre_curso', '=', 'cursos.nombre')
+            ->where('cursos.status', 'Finalizado')
+            ->select('cursos.*')
+            ->get();
+
+ 
+
+        return view('participantes.expediente', ['listings' => $finished_courses]);
     }
 
     // Create New User
@@ -76,5 +109,10 @@ class UserController extends Controller
         }
 
         return back()->withErrors(['rfc' => 'Credenciales Invalidas'])->onlyInput('rfc');
+    }
+
+    public function destroy(User $listing) {
+        $listing->delete();
+        return redirect('/')->with('message', 'Usuario eliminado correctamente.');
     }
 }

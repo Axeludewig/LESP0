@@ -54,5 +54,26 @@ class User extends Authenticatable
         'fecha-de-registro' => 'datetime',
     ];
 
+    public function scopeFilter($query, array $filters) {
+        if($filters['tag'] ?? false) {
+            $query->where('tags', 'like', '%' . request('tag') . '%');
+        }
 
+        if($filters['search'] ?? false) {
+            $query->where('nombre', 'like', '%' . request('search') . '%')
+                ->orWhere('apellido_paterno', 'like', '%' . request('search') . '%')
+                ->orWhere('apellido_materno', 'like', '%' . request('search') . '%');
+        }
+    }
+
+    public function participantes()
+    {
+        return $this->belongsToMany(Participantes::class)
+                    ->withPivot('nombre_curso', 'fecha_de_inicio', 'fecha_de_terminacion', 'valor_curricular', 'img');
+    }
+
+    public function validaciones()
+    {
+        return $this->hasMany(Validaciones::class);
+    }
 }

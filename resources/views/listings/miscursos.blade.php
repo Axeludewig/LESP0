@@ -15,7 +15,7 @@
   
   
       @else
-      <p>No listings found</p>
+      <p>No hay registros.</p>
       @endunless
   
     </div>

@@ -17,6 +17,7 @@ class participantes extends Model
         'fecha_de_inicio',
         'fecha_de_terminacion',
         'valor_curricular',
+        'tipo',
         'img'
     ];
 
@@ -30,6 +31,12 @@ class participantes extends Model
                 ->orWhere('rfc_participante', 'like', '%' . request('search') . '%')
                 ->orWhere('nombre_participante', 'like', '%' . request('search') . '%');
         }
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+                    ->withPivot('nombre_curso', 'fecha_de_inicio', 'fecha_de_terminacion', 'valor_curricular', 'img');
     }
 
 }
