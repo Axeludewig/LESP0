@@ -42,6 +42,9 @@
                                     @enderror
                                 </div>
 
+                                <input type="text" hidden="true" name="email_participante"
+                                    value="{{ auth()->user()->email }}" />
+
                                 <div class="mb-6">
                                     <label for="rfc_participante" class="inline-block text-lg mb-2">
                                         <span class="font-bold">RFC del participante:</span> {{ auth()->user()->rfc }}
@@ -184,7 +187,7 @@
 
                     @if (auth()->user()->es_admin == '1')
                         <div class="flex flex-col items-center justify-center place-content-center text-center mt-6">
-                            <form method="GET" action="/admin/cartadescriptiva" enctype="multipart/form-data">
+                            <form method="GET" action="/cursos/export" enctype="multipart/form-data">
                                 @csrf
 
 

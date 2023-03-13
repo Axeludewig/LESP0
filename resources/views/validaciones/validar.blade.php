@@ -20,7 +20,7 @@
                 <x-validaciones-card :listing="$listing" />
             @endforeach
         @else
-            <p>No tienes cursos en proceso.</p>
+            <p>No existe esta validación.</p>
         @endunless
 
     </div>

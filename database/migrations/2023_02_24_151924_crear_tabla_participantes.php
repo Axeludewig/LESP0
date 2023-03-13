@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre_curso');
             $table->string('rfc_participante');
             $table->string('nombre_participante');
+            $table->string('email_participante');
             $table->string('ubicacion');
             $table->string('fecha_de_inicio');
             $table->string('fecha_de_terminacion');

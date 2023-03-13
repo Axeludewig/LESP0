@@ -39,6 +39,10 @@ use Illuminate\Auth\Events\Validated;
 // TODOS LOS CURSOS
 Route::get('/', [CursosController::class, 'index']);
 
+
+// TODOS LOS CURSOS
+Route::get('/registro/{id_curso}', [participantesController::class, 'registro']);
+
 // Formulario para crear 
 Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
 
@@ -119,6 +123,9 @@ Route::put('/listings/{listing}', [CursosController::class, 'update'])->middlewa
 
 // REGISTRARSE
 Route::post('/listings', [participantesController::class, 'store'])->middleware('auth');
+
+// REGISTRARSE SIN CUENTA
+Route::post('/participantes', [participantesController::class, 'storeeasy']);
 
 // CREAR CURSO
 Route::post('/cursos/crear', [cursosController::class, 'store'])->middleware('auth');

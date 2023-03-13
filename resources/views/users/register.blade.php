@@ -52,6 +52,17 @@
             </div>
 
             <div class="mb-6">
+                <label for="email" class="inline-block text-lg mb-2">Correo electrónico</label>
+                <input type="text"
+                    class="shadow appearance-none leading-tight focus:outline-none focus:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full hover:ring"
+                    name="email" value="{{ old('email') }}" />
+
+                @error('email')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-6">
                 <label for="proyecto" class="inline-block text-lg mb-2">Proyecto</label>
                 <input type="text"
                     class="shadow appearance-none leading-tight focus:outline-none focus:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full hover:ring"
@@ -140,7 +151,7 @@
             </div>
 
             <div class="mb-6">
-                <label for="email" class="inline-block text-lg mb-2">Status</label>
+                <label for="status" class="inline-block text-lg mb-2">Status</label>
                 <input type="status"
                     class="shadow appearance-none leading-tight focus:outline-none focus:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full hover:ring"name="status"
                     value="{{ old('status') }}" />

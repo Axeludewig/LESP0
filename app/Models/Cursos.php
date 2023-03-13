@@ -11,6 +11,7 @@ class Cursos extends Model
 
     protected $fillable = [
         'nombre',
+        'numero_consecutivo',
 		'modalidad',
 		'tipo',
 		'nombre_del_responsable',

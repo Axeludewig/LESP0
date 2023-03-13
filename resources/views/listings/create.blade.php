@@ -22,9 +22,21 @@
             </div>
 
             <div class="mb-6">
+                <label for="numero_consecutivo" class="inline-block text-lg mb-2">
+                    Número consecutivo de la capacitación:
+                </label>
+                <input type="text" class="border border-gray-200 rounded p-2 w-full" name="numero_consecutivo"
+                    value="{{ old('numero_consecutivo') }}" />
+
+                @error('numero_consecutivo')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-6">
                 <label for="modalidad" class="inline-block text-lg mb-2">Modalidad a realizar:</label>
                 <select id="modalidad" name="modalidad" class="border border-gray-200 rounded p-2 w-full"
-                    name="modalidad">
+                    value="{{ old('modalidad') }}">
                     <option value="curso">Curso</option>
                     <option value="sesion">Sesión</option>
                     <option value="congreso">Congreso</option>
@@ -40,7 +52,8 @@
 
             <div class="mb-6">
                 <label for="tipo" class="inline-block text-lg mb-2">Tipo de capacitación:</label>
-                <select id="tipo" name="tipo" class="border border-gray-200 rounded p-2 w-full">
+                <select id="tipo" name="tipo" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('tipo') }}">
                     <option value="presencial">Presencial</option>
                     <option value="virtual">Virtual</option>
                     <option value="mixto">Mixto</option>
@@ -54,7 +67,7 @@
                 <label for="nombre_del_responsable" class="inline-block text-lg mb-2">Nombre del responsable del evento
                     de capacitación:</label>
                 <input type="text" id="nombre_del_responsable" name="nombre_del_responsable"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('nombre_del_responsable') }}">
                 @error('nombre_del_responsable')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -63,7 +76,8 @@
             <div class="mb-6">
                 <label for="coordinacion" class="inline-block text-lg mb-2">Coordinación responsable de la
                     capacitación:</label>
-                <select id="coordinacion" name="coordinacion" class="border border-gray-200 rounded p-2 w-full">
+                <select id="coordinacion" name="coordinacion" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('coordinacion') }}">
                     <option value="todo-el-personal-de-la-unidad">Todo el personal de la unidad</option>
                     <option value="coordinacion-de-vigilancia-epidemiologica">Coordinación de Vigilancia Epidemiológica
                     </option>
@@ -87,7 +101,8 @@
 
             <div class="mb-6">
                 <label for="dirigido" class="inline-block text-lg mb-2">Personal al que va dirigido:</label>
-                <input type="text" id="dirigido" name="dirigido" class="border border-gray-200 rounded p-2 w-full">
+                <input type="text" id="dirigido" name="dirigido" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('dirigido') }}">
                 @error('dirigido')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -96,7 +111,7 @@
             <div class="mb-6">
                 <label for="numero_de_asistentes" class="inline-block text-lg mb-2">N° de Asistentes esperados:</label>
                 <input type="number" id="numero_de_asistentes" name="numero_de_asistentes"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('numero_de_asistentes') }}">
                 @error('numero_de_asistentes')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -105,7 +120,7 @@
             <div class="mb-6">
                 <label for="horas_teoricas" class="inline-block text-lg mb-2">Horas teóricas:</label>
                 <input type="number" id="horas_teoricas" name="horas_teoricas"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('horas_teoricas') }}">
                 @error('horas_teoricas')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -114,7 +129,7 @@
             <div class="mb-6">
                 <label for="horas_practicas" class="inline-block text-lg mb-2">Horas prácticas:</label>
                 <input type="number" id="horas_practicas" name="horas_practicas"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('horas_practicas') }}">
                 @error('horas_practicas')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -122,7 +137,8 @@
 
             <div class="mb-6">
                 <label for="categoria" class="inline-block text-lg mb-2">Categoría:</label>
-                <select id="categoria" name="categoria" class="border border-gray-200 rounded p-2 w-full">
+                <select id="categoria" name="categoria" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('categoria') }}">
                     <option>Cursos técnicos del proceso analítico</option>
                     <option> Cursos del sistema de gestión integral (Calidad)</option>
                     <option>Cursos de Riesgo biológico (Bioseguridad) y gestión ambiental en laboratorios</option>
@@ -167,7 +183,7 @@
             <div class="mb-6">
                 <label for="fecha_de_inicio" class="inline-block text-lg mb-2">Fecha de inicio:</label>
                 <input type="date" id="fecha_de_inicio" name="fecha_de_inicio"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_inicio') }}">
                 @error('fecha_de_inicio')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -176,7 +192,7 @@
             <div class="mb-6">
                 <label for="fecha_de_terminacion" class="inline-block text-lg mb-2">Fecha de término:</label>
                 <input type="date" id="fecha_de_terminacion" name="fecha_de_terminacion"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_terminacion') }}">
                 @error('fecha_de_terminacion')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -185,7 +201,8 @@
             <div class="mb-6">
                 <label for="objetivo_general" class="inline-block text-lg mb-2">Objetivo general de la
                     capacitación:</label>
-                <textarea id="objetivo_general" name="objetivo_general" class="border border-gray-200 rounded p-2 w-full"></textarea>
+                <textarea id="objetivo_general" name="objetivo_general" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('objetivo_general') }}"></textarea>
                 @error('objetivo_general')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -194,7 +211,8 @@
             <div class="mb-6">
                 <label for="forma_de_evaluacion" class="inline-block text-lg mb-2">Forma de evaluación del
                     curso:<br>(Descripción opcional)</label>
-                <textarea id="forma_de_evaluacion" name="forma_de_evaluacion" class="border border-gray-200 rounded p-2 w-full"></textarea>
+                <textarea id="forma_de_evaluacion" name="forma_de_evaluacion" class="border border-gray-200 rounded p-2 w-full"
+                    value="{{ old('forma_de_evaluacion') }}"></textarea>
                 @error('forma_de_evaluacion')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -204,7 +222,7 @@
                 <label for="porcentaje_asistencia" class="inline-block text-lg mb-2">Porcentaje de asistencia
                     requerido para acreditar curso:</label>
                 <input type="text" id="porcentaje_asistencia" name="porcentaje_asistencia"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('porcentaje_asistencia') }}">
                 @error('porcentaje_asistencia')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -214,7 +232,7 @@
                 <label for="calificacion_requerida" class="inline-block text-lg mb-2">Calificación requerida para
                     acreditar curso (cuestionario cuando aplique) del 80% al 100%:</label>
                 <input type="text" id="calificacion_requerida" name="calificacion_requerida"
-                    class="border border-gray-200 rounded p-2 w-full">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('calificacion_requerida') }}">
                 @error('calificacion_requerida')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror

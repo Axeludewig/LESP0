@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
             $table->string('nombre');
+            $table->string('email')->unique();
             $table->string('proyecto');
             $table->string('puesto');
             $table->string('descripcion_puesto');
@@ -31,7 +32,6 @@ return new class extends Migration
             $table->string('observaciones');
             $table->string('password');
             $table->boolean('es_admin');
-            $table->timestamp('fecha_de_registro')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

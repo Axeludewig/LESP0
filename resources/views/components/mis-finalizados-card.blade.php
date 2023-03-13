@@ -33,6 +33,8 @@
                         hidden="true" value="Verificado" />
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tipo"
                         hidden="true" value="Asistente" />
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="folio"
+                        hidden="true" value="B2A2023{{ $listing->numero_consecutivo }}" />
                     <button type="submit"
                         class="w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center">Generar
                         Validación <i class="fa-sharp fa-solid fa-pen-to-square"></i>

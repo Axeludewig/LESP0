@@ -17,6 +17,7 @@ class participantesController extends Controller
             'nombre_curso' => 'required',
             'rfc_participante' => 'required',
             'nombre_participante' => 'required',
+            'email_participante' => 'required',
             'ubicacion' => 'required',
             'fecha_de_inicio' => 'required',
             'fecha_de_terminacion' => 'required',
@@ -29,6 +30,32 @@ class participantesController extends Controller
         $rfc_participante = $formFields['rfc_participante'];
 
         if (DB::table('participantes')->where('nombre_curso', $nombre_curso)->where('rfc_participante', $rfc_participante)->exists()) {
+            return redirect('/')->with('message', 'Ya te has registrado anteriormente.');
+        } else {
+            participantes::create($formFields);
+            return redirect('/')->with('message', 'Te has registrado correctamente.');
+        }
+    }
+
+    public function storeeasy(Request $request)
+    {
+        $formFields = $request->validate([
+            'nombre_curso' => 'required',
+            'rfc_participante' => 'required',
+            'nombre_participante' => 'required',
+            'email_participante' => 'required',
+            'ubicacion' => 'required',
+            'fecha_de_inicio' => 'required',
+            'fecha_de_terminacion' => 'required',
+            'valor_curricular' => 'required',
+            'tipo' => 'required',
+            'img' => 'required'
+        ]);
+
+        $nombre_curso = $formFields['nombre_curso'];
+        $nombre_participante = $formFields['nombre_participante'];
+
+        if (DB::table('participantes')->where('nombre_curso', $nombre_curso)->where('nombre_participante', $nombre_participante)->exists()) {
             return redirect('/')->with('message', 'Ya te has registrado anteriormente.');
         } else {
             participantes::create($formFields);
@@ -67,5 +94,11 @@ class participantesController extends Controller
             ->get();
 
         return view('participantes.mis-finalizados', ['listings' => $finished_courses]);
+    }
+
+    public function registro(Cursos $id_curso){
+        return view('participantes.registrosinauth', [
+            'curso' => $id_curso
+        ]);
     }
 }

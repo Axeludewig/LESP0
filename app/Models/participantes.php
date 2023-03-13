@@ -13,6 +13,7 @@ class participantes extends Model
         'nombre_curso',
         'rfc_participante',
         'nombre_participante',
+        'email_participante',
         'ubicacion',
         'fecha_de_inicio',
         'fecha_de_terminacion',

@@ -60,6 +60,7 @@ class CursosController extends Controller
     public function store(Request $request) {
         $formFields = $request->validate([
             'nombre' => 'required',
+            'numero_consecutivo' => 'required',
             'modalidad'=> 'required',
             'tipo'=> 'required',
             'nombre_del_responsable'=> 'required',

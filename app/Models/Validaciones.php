@@ -13,7 +13,8 @@ class Validaciones extends Model
         'nombre_usuario',
         'valor_curricular',
         'status',
-        'tipo'
+        'tipo',
+        'folio'
     ];
 
     public function scopeFilter($query, array $filters) {

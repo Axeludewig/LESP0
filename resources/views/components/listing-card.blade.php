@@ -41,4 +41,13 @@
 
         </div>
     </div>
+    @if (!Auth::check())
+        <div class="flex place-content-center mt-6">
+            <form method="POST" action="/registro/{{ $listing->id }}">
+                @csrf
+                <a href="/registro/{{ $listing->id }}"
+                    class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Registrarse</a>
+            </form>
+        </div>
+    @endif
 </x-card>

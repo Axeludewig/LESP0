@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('valor_curricular');            
             $table->string('status');
             $table->string('tipo');
+            $table->string('folio')->unique();
             $table->timestamp('fecha_de_registro')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -54,6 +54,7 @@ class UserController extends Controller
             'apellido_paterno' => ['required', 'min:3'],
             'apellido_materno' => ['required', 'min:3'],
             'nombre' => ['required', 'min:3'],
+            'email' =>  ['required', 'email', Rule::unique('users', 'email')],
             'proyecto' => ['required', 'min:3'],
             'puesto' => ['required', 'min:3'],
             'descripcion_puesto' => ['required', 'min:3'],
