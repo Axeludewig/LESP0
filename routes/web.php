@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CursosController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\participantesController;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
 use App\Models\participantes;
 use Illuminate\Auth\Events\Validated;
+use Symfony\Component\Mailer\Test\Constraint\EmailCount;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +70,10 @@ Route::get('/admin/qrs', [CursosController::class, 'qrs'])->middleware('auth');
 
 //Mostrar QRs de acceso a capacitaciones
 Route::get('/admin/descargarqr', [CursosController::class, 'descargarqr'])->middleware('auth');
+
+Route::get('/email', [EmailController::class, 'sendmail'])->middleware('auth');
+
+Route::get('/emailme', [EmailController::class, 'emailme'])->middleware('auth');
 
 //MOSTRAR TODOS LOS USUARIOS
 Route::get('/admin/showallusers', [UserController::class, 'index'])->middleware('auth');

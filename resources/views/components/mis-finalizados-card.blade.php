@@ -68,6 +68,34 @@
                         Generar Constancia <i class="fa-sharp fa-solid fa-pen-to-square"></i>
                     </button>
                 </form>
+
+                <form method="GET" action="/emailme" enctype="multipart/form-data">
+                    @csrf
+                    @php
+                        $valor_curricular = $listing->horas_teoricas + $listing->horas_practicas;
+                    @endphp
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre"
+                        hidden="true" value="{{ $listing->nombre }}" />
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="fecha_de_terminacion"
+                        hidden="true" value="{{ $listing->fecha_de_terminacion }}" />
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_user"
+                        hidden="true" value="{{ auth()->user()->nombre }}" />
+
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="valor_curricular"
+                        hidden="true" value="{{ $valor_curricular }}" />
+
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="apellido_paterno"
+                        hidden="true" value="{{ auth()->user()->apellido_paterno }}" />
+
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="apellido_materno"
+                        hidden="true" value="{{ auth()->user()->apellido_materno }}" />
+
+
+                    <button type="submit"
+                        class="w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black flex place-content-center">
+                        Enviar constancia por correo <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>

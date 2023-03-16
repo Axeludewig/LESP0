@@ -23,7 +23,7 @@
                 </div>
                 <div class="border border-gray-200 w-full mb-6"></div>
                 <div>
-                    @if (auth()->check()) {
+                    @if (auth()->check())
                         <h3 class="text-3xl font-bold mb-4">Descripción del curso</h3>
                         <div class="text-lg space-y-6">
                             {{ $listing->descripcion }}
@@ -201,9 +201,9 @@
                     @endif
                 </div>
                 </form>
-                } @endif
+                @endif
 
-                @if (auth()->check()) {
+                @if (auth()->check())
                     @if (auth()->user()->es_admin == '1')
                         <div class="flex flex-col items-center justify-center place-content-center text-center mt-6">
                             <form method="GET" action="/cursos/export" enctype="multipart/form-data">
@@ -216,10 +216,10 @@
                                 </button>
                             </form>
                     @endif
-                    }
+
                 @endif
 
-                @if (auth()->check()) {
+                @if (auth()->check())
                     @if (auth()->user()->es_admin == '1' && $listing->status == 'En proceso')
                         <form method="POST" action="/listings/{{ $listing->id }}" enctype="multipart/form-data">
                             @csrf
@@ -255,7 +255,7 @@
                             </div>
                         </form>
                     @endif
-                    }
+
                 @endif
                 @if (!Auth::check())
                     <div class="flex place-content-center mt-6 mb-6">
