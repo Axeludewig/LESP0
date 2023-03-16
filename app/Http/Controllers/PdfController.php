@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cursos;
 use App\Models\User;
+use App\Models\Validaciones;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
@@ -50,8 +51,10 @@ class PdfController extends Controller
         $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
 
         $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
-        $qrCodeContent = 'https://177a-189-243-47-109.ngrok.io/validaciones/search?' . $query;
+        $qrCodeContent = 'https://0e8c-2806-103e-5-9c10-497f-6006-5241-43c7.ngrok.io/validaciones/search?' . $query;
 
+        $valor_curricular = $formFields['valor_curricular'];
+        $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];
         $nombre_del_curso = $formFields['nombre'];
         $user_id = auth()->user()->rfc;
         $tipo = DB::table('participantes')
@@ -59,13 +62,18 @@ class PdfController extends Controller
         ->where('nombre_curso', $nombre_del_curso)
         ->value('tipo');
 
+        $folio = DB::table('validaciones')
+        ->where('nombre_curso', '=', $nombre_del_curso)
+        ->where('nombre_usuario', '=', $nombre_usuario)
+        ->value('folio');
+
         $qrcode = (new QRCode())->render($qrCodeContent);
 
         // Create a new instance of dompdf
         $pdf = new Dompdf();
 
         // Generate the PDF
-        $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo'])));
+        $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
 
         // Set paper size and orientation
         $pdf->setPaper('A4', 'vertical');
@@ -102,4 +110,7 @@ class PdfController extends Controller
     public function cartavacia(){
         return view('participantes.cartavacia');
     }
+
+    
+    
 }

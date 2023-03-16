@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use League\Csv\Reader;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -115,5 +117,64 @@ class UserController extends Controller
     public function destroy(User $listing) {
         $listing->delete();
         return redirect('/')->with('message', 'Usuario eliminado correctamente.');
+    }
+
+    public function mass_store(Request $request)
+    {
+        // Validate the file upload
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        // Store the uploaded file to a temporary location
+        $path = $request->file('file')->store('temp');
+
+        // Open the CSV file and read the data
+        $csv = Reader::createFromPath(storage_path('app/' . $path), 'r');
+        $csv->setHeaderOffset(0);
+
+        foreach ($csv as $row) {
+            // Create a new user record
+            $userRecord = new User();
+            $userRecord->rfc = $row['RFC'];
+            $userRecord->apellido_paterno = $row['PATERNO'];
+            $userRecord->apellido_materno = $row['MATERNO'];
+            $userRecord->nombre = $row['NOMBRE'];
+            $userRecord->email = "sin registro";
+            $userRecord->proyecto = $row['PROYECTO'];
+            $userRecord->puesto = $row['PUESTO'];
+            $userRecord->descripcion_puesto = $row['DES_PUESTO'];
+            $userRecord->curp = $row['CURP'];
+            $userRecord->turno = $row['TURNO'];
+            $userRecord->coordinacion = $row['COORDINACION'];
+            $userRecord->area = $row['AREA'];   
+            $userRecord->funcion = $row['FUNCION'];
+            $userRecord->tipo = $row['TIPO'];
+            $userRecord->status = $row['ESTATUS ACTUAL'];
+            $password = "123456";
+            
+            $userRecord->observaciones = "sin registro";
+            $userRecord->es_admin = "0";
+            $userRecord->password = Hash::make($password);
+            // Save the user record to the database
+            $userRecord->save();
+        }
+
+        // Redirect the user back to the upload form
+        return redirect()->back()->with('success', 'Usuarios creados exitosamente!');
+    }
+    
+    public function update(Request $request, User $listing) {
+        $formFields = $request->validate([
+            'status' => 'required'
+        ]);
+
+        $listing->update($formFields);
+
+        return redirect('/admin/paneldecursos')->with('message', 'Curso modificado correctamente.');
+    }
+    
+    public function usuarios(){
+        return view('admin.import');
     }
 }

@@ -7,6 +7,11 @@ use App\Models\Cursos;
 use App\Models\participantes;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class CursosController extends Controller
 {
@@ -94,5 +99,57 @@ class CursosController extends Controller
     public function destroy(Cursos $listing) {
         $listing->delete();
         return redirect('/admin/showallcursos')->with('message', 'Curso eliminado correctamente.');
+    }
+
+    public function qrs(){
+        
+        $cursos = DB::table('cursos')->get();
+        
+        $qrCodes = [];
+
+        foreach ($cursos as $curso){
+            $qrCodeContent = 'https://4934-2806-103e-5-9c10-3591-85e6-a33d-38f9.ngrok.io/registro/' . $curso->id;
+            $qrCodeImage = (new QRCode())->render($qrCodeContent);
+            $qrCodes[] = [
+                'name' => $curso->nombre,
+                'image' => $qrCodeImage,
+                'id_curso' => $curso->id
+            ];
+        }
+
+
+        return view('admin.qrs', [
+            'qrCodes' => $qrCodes, // Pass the array of QR codes to the view
+        ]);
+    }
+
+    public function descargarqr(Request $request){
+        $formFields = $request->validate([
+            'id_curso' => 'required',
+            'nombre_curso' => 'required'
+        ]);
+
+        $id_curso = $formFields['id_curso'];
+
+        $qrCodeContent = 'https://4934-2806-103e-5-9c10-3591-85e6-a33d-38f9.ngrok.io/registro/' . $id_curso;
+
+        $nombre_curso = $formFields['nombre_curso'];
+        
+        $qrcode = (new QRCode())->render($qrCodeContent);
+
+        // Create a new instance of dompdf
+        $pdf = new Dompdf();
+
+        // Generate the PDF
+        $pdf->loadHtml(view('qracceso', compact(['qrcode', 'nombre_curso'])));
+
+        // Set paper size and orientation
+        $pdf->setPaper('A4', 'vertical');
+
+        // Render the PDF
+        $pdf->render();
+
+        $filename = 'QR' . '.pdf';
+        return $pdf->stream($filename);
     }
 }

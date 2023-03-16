@@ -26,6 +26,7 @@ class User extends Authenticatable
         'proyecto',
         'puesto',
         'descripcion_puesto',
+        'curp',
         'turno',
         'coordinacion',
         'area',

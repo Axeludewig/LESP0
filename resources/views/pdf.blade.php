@@ -66,9 +66,9 @@
 
     <p class="parrafo2">Por su valiosa participación como <b>{{ $tipo }}</b> en el evento de capacitación
         <b>{{ $formFields['nombre'] }}</b> realizado en el Laboratorio Estatal de Salud Pública el
-        {{ $formFields['fecha_de_terminacion'] }}
+        <b>{{ $formFields['fecha_de_terminacion'] }}</b>.
         <br><br>Valor curricular en horas: <b>{{ $formFields['valor_curricular'] }}</b>
-        <br><br>Folio: <b>B2A2023C1F001</b><br><br>
+        <br><br>Folio: <b>{{ $folio }}</b><br><br>
 
 
         <img src="<?php echo $qrcode; ?>" width="125px" height="125px" />

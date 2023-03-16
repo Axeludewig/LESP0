@@ -37,21 +37,16 @@ class ValidacionesController extends Controller
         
         $formFields['folio'] = $formFields['folio'] . $numero_de_participante;
 
-        if (DB::table('validaciones')->where('folio', $folio)->where('nombre_curso', $nombre_curso)->where('nombre_usuario', $nombre_usuario)->where('valor_curricular', $valor_curricular)->where('status', $status)->exists()) {
+        if (DB::table('validaciones')->where('folio', $formFields['folio'])->exists()) {
             return redirect('/cursos/misfinalizados')->with('message', 'Validación ya ha sido generada anteriormente.');
         } else {
             Validaciones::create($formFields);
 
             return redirect('/cursos/misfinalizados')->with('message', 'Validación generada.');
-        }
-
-
-       
+        }    
     }
 
     public function validar(Validaciones $validacion) {
         return view('validaciones.validar');
     }
-
-    //
 }

@@ -22,11 +22,14 @@
             <p> Total de horas: @foreach ($listings as $listing)
                     @php
                         // Extract the number of hours from the listing's string value
-preg_match('/(\d+) horas/', $listing->valor_curricular, $matches);
-                        $hours = $matches[1];
+//preg_match('/(\d+) horas/', $listing->valor_curricular, $matches);
+                        //    $hours = $matches[1];
                         
                         // Add the extracted hours to the total
-                        $totalHours += $hours;
+                        //  $totalHours += $hours;
+                        $horas_teoricas = $listing->horas_teoricas;
+                        $horas_practicas = $listing->horas_practicas;
+                        $totalHours = $horas_teoricas + $horas_practicas;
                     @endphp
                 @endforeach{{ $totalHours }}</p>
         </h3>

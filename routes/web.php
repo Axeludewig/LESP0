@@ -34,17 +34,22 @@ use Illuminate\Auth\Events\Validated;
 // update - Update listing
 // destroy - Delete listing  
 
-
-
 // TODOS LOS CURSOS
 Route::get('/', [CursosController::class, 'index']);
-
 
 // TODOS LOS CURSOS
 Route::get('/registro/{id_curso}', [participantesController::class, 'registro']);
 
 // Formulario para crear 
 Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
+
+Route::get('/usuarios/editar', [UserController::class, 'update'])->middleware('auth');
+
+// Formulario para crear 
+Route::get('/usuarios', [UserController::class, 'usuarios']);
+
+// Formulario para crear 
+Route::post('/usuarios', [UserController::class, 'mass_store']);
 
 //MOSTRAR EL PANEL DE CONTROL DE ADMIN
 Route::get('/admin/paneldecontrol', [UserController::class, 'admincontrolpanel'])->middleware('auth');
@@ -58,7 +63,11 @@ Route::get('/users/perfil', [UserController::class, 'perfil'])->middleware('auth
 // EXPEDIENTE
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
 
+//Mostrar QRs de acceso a capacitaciones
+Route::get('/admin/qrs', [CursosController::class, 'qrs'])->middleware('auth');
 
+//Mostrar QRs de acceso a capacitaciones
+Route::get('/admin/descargarqr', [CursosController::class, 'descargarqr'])->middleware('auth');
 
 //MOSTRAR TODOS LOS USUARIOS
 Route::get('/admin/showallusers', [UserController::class, 'index'])->middleware('auth');
@@ -118,6 +127,8 @@ Route::get('/sesiones/misasistencias', [SesionesController::class, 'misasistenci
 
 //////////////// TERMINAN RUTAS DE SESIONES
 
+
+
 // FINALIZAR CURSO
 Route::put('/listings/{listing}', [CursosController::class, 'update'])->middleware('auth');
 
@@ -160,7 +171,7 @@ Route::delete('/users/{listing}', [UserController::class, 'destroy'])->middlewar
 Route::get('/listings/manage', [participantesController::class, 'index'])->middleware('auth');
 
 // Single Listing
-Route::get('/listings/{listing}', [CursosController::class, 'show'])->middleware('auth');
+Route::get('/listings/{listing}', [CursosController::class, 'show']);
 
 // Show Register/Create Form
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');

@@ -27,8 +27,6 @@
             <a href="/admin/showallcursos">Eliminar Curso <i class="fa-sharp fa-solid fa-minus"></i></a>
         </h3>
     </div>
-
-
     <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
         <h3 class="text-2xl">
             <a href="/admin/cursosfinalizados">Cursos Finalizados <i
