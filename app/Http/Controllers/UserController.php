@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -177,4 +179,28 @@ class UserController extends Controller
     public function usuarios(){
         return view('admin.import');
     }
+
+    public function updateProfilePicture(Request $request, User $id_usuario)
+    {
+    // Validate the file upload
+    $validatedData = $request->validate([
+        'profile_pic' => 'image|max:2048', // Max file size of 2MB
+    ]);
+
+    $oldProfilePicPath = '/storage' . $id_usuario->profile_pic;
+
+    if($request->hasFile('profile_pic')) {
+        // Store the new profile picture file in the storage directory
+        $validatedData['profile_pic'] = $request->file('profile_pic')->store('images', 'public');
+
+         // Delete the old profile picture file if it exists
+         if ($oldProfilePicPath && Storage::exists($oldProfilePicPath)) {
+            Storage::delete($oldProfilePicPath);
+    }
+
+        $id_usuario->update($validatedData);
+
+        return redirect()->back();
+    }
+}
 }

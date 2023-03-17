@@ -34,7 +34,8 @@ class User extends Authenticatable
         'tipo',
         'status',
         'observaciones',
-        'es_admin'
+        'es_admin',
+        'profile_pic'
     ];
 
     /**

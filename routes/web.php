@@ -53,6 +53,9 @@ Route::get('/usuarios', [UserController::class, 'usuarios']);
 // Formulario para crear 
 Route::post('/usuarios', [UserController::class, 'mass_store']);
 
+// ACTUALIZAR LA FOTO DE PERFIL
+Route::post('/profilepic/{id_usuario}', [UserController::class, 'updateProfilePicture'])->middleware('auth');
+
 //MOSTRAR EL PANEL DE CONTROL DE ADMIN
 Route::get('/admin/paneldecontrol', [UserController::class, 'admincontrolpanel'])->middleware('auth');
 
