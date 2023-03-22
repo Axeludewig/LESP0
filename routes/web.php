@@ -76,7 +76,7 @@ Route::get('/admin/descargarqr', [CursosController::class, 'descargarqr'])->midd
 
 Route::get('/email', [EmailController::class, 'sendmail'])->middleware('auth');
 
-Route::get('/emailme', [EmailController::class, 'emailme'])->middleware('auth');
+Route::get('/emailme', [EmailController::class, 'test'])->middleware('auth');
 
 //MOSTRAR TODOS LOS USUARIOS
 Route::get('/admin/showallusers', [UserController::class, 'index'])->middleware('auth');
