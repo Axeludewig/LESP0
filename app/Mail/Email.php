@@ -8,16 +8,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Attachment;
 
 class Email extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $file;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($file)
     {
+        $this->file = $file;
         //
     }
 
@@ -48,12 +51,11 @@ class Email extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+            return [];
     }
 
     public function build()
     {
-        return $this->view('emails.welcome')
-                    ->subject('Welcome to My Site');
+        return $this->view('emails.welcome');
     }
 }

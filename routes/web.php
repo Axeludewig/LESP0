@@ -153,6 +153,9 @@ Route::post('/cursos/crear', [cursosController::class, 'store'])->middleware('au
 // GENERAR VALIDACIÓN
 Route::post('/validaciones/generar', [ValidacionesController::class, 'store'])->middleware('auth');
 
+// GENERAR TODAS LAS VALIDACIONES
+Route::post('/validaciones', [ValidacionesController::class, 'validaciones'])->middleware('auth');
+
 //QUERY VALIDACIONES
 Route::get('/validaciones/search', function () {
     $query = request()->query('q'); // get the value of the 'q' query parameter

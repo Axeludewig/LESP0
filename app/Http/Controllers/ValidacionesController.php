@@ -49,4 +49,45 @@ class ValidacionesController extends Controller
     public function validar(Validaciones $validacion) {
         return view('validaciones.validar');
     }
+
+    public function validaciones(Request $request) {
+        $formFields = $request->validate([
+            'nombre_curso' => 'required',
+            'id_curso' => 'required',
+            'valor_curricular' => 'required',
+            'status' => 'required',
+            'tipo' => 'required',
+            'folio' => 'required'
+        ]);
+
+        $nombre_curso = $formFields['nombre_curso'];
+        $valor_curricular = $formFields['valor_curricular'];
+        $status = $formFields['status'];
+        $tipo = $formFields['tipo'];
+        $folio = $formFields['folio'];
+        $id = $formFields['id_curso'];
+
+        $participantes_del_curso = DB::table('participantes')
+            ->where('nombre_curso', '=', $nombre_curso)
+            ->get();
+
+            $foliox = 1;
+            foreach ($participantes_del_curso as $participante) {
+            
+            // $nombre_completo = $participante->nombre . ' ' . $participante->apellido_paterno . ' ' . $participante->apellido_materno;
+            
+                DB::table('validaciones')->insert([
+                    'nombre_curso' => $nombre_curso,
+                    'nombre_usuario' => $participante->nombre_participante,
+                    'valor_curricular' => $valor_curricular,
+                    'status' => $status,
+                    'tipo' => $tipo,
+                    'folio' => $folio . sprintf('%02d', $foliox),
+                ]);
+                $foliox++;
+            }
+   
+            return redirect('/')->with('message', 'Validación generada.');
+          
+    }
 }

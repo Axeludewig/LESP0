@@ -16,30 +16,8 @@
                 <i class="fa-solid fa-location-dot"></i> {{ $listing->auditorio }}
             </div>
 
-            <div class="mt-4 ml-8 mb-4 text-lg mt-4 flex space-evenly w-1/2">
-                <form method="POST" action="/validaciones/generar" enctype="multipart/form-data">
-                    @csrf
-                    @php
-                        $valor_curricular = $listing->horas_teoricas + $listing->horas_practicas;
-                    @endphp
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_curso"
-                        hidden="true" value="{{ $listing->nombre }}" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_usuario"
-                        hidden="true"
-                        value="{{ auth()->user()->nombre }} {{ auth()->user()->apellido_paterno }} {{ auth()->user()->apellido_materno }}" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="valor_curricular"
-                        hidden="true" value="{{ $valor_curricular }}" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="status"
-                        hidden="true" value="Verificado" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tipo"
-                        hidden="true" value="Asistente" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="folio"
-                        hidden="true" value="B2A2023{{ $listing->numero_consecutivo }}F" />
-                    <button type="submit"
-                        class="w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center">Generar
-                        Validación <i class="fa-sharp fa-solid fa-pen-to-square"></i>
-                    </button>
-                </form>
+            <div class="mt-4 ml-16 mb-4 text-lg mt-4 flex flex-col space-evenly w-1/2">
+
 
                 <form method="GET" action="/pdf" enctype="multipart/form-data">
                     @csrf
@@ -62,10 +40,10 @@
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="apellido_materno"
                         hidden="true" value="{{ auth()->user()->apellido_materno }}" />
 
-
                     <button type="submit"
-                        class="w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black flex place-content-center">
-                        Generar Constancia <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                        class="w-5/6 m-4 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Descargar
+                        constancia <i
+                            class="m-4 mt-1 justify-center place-self-center content-center fa-solid fa-file-arrow-down"></i>
                     </button>
                 </form>
 
@@ -92,8 +70,9 @@
 
 
                     <button type="submit"
-                        class="w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black flex place-content-center">
-                        Enviar constancia por correo <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                        class="w-5/6 m-4 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Enviar
+                        por correo <i
+                            class="m-4 mt-1 justify-center place-self-center content-center fa-solid fa-envelope"></i>
                     </button>
                 </form>
             </div>
