@@ -9,6 +9,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SesionesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidacionesController;
+use App\Http\Controllers\WordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -77,6 +78,8 @@ Route::get('/admin/descargarqr', [CursosController::class, 'descargarqr'])->midd
 Route::get('/email', [EmailController::class, 'sendmail'])->middleware('auth');
 
 Route::get('/emailme', [EmailController::class, 'test'])->middleware('auth');
+
+Route::get('/wordtest', [WordController::class, 'wordtest'])->middleware('auth');
 
 //MOSTRAR TODOS LOS USUARIOS
 Route::get('/admin/showallusers', [UserController::class, 'index'])->middleware('auth');

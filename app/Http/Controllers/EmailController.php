@@ -245,7 +245,7 @@ class EmailController extends Controller
         $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
 
         $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
-        $qrCodeContent = 'https://bdf6-2806-103e-5-9c10-fc68-1875-f9c0-3456.ngrok.io/validaciones/search?' . $query;
+        $qrCodeContent = 'https://c883-2806-103e-5-9c10-b136-d021-a014-a865.ngrok.io/validaciones/search?' . $query;
 
         $fecha_de_terminacion = $formFields['fecha_de_terminacion'];
         $valor_curricular = $formFields['valor_curricular'];
