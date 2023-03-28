@@ -69,6 +69,26 @@ Route::get('/users/perfil', [UserController::class, 'perfil'])->middleware('auth
 // EXPEDIENTE
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
 
+// -- USUARIO -- CAMBIAR DE CONTRASEÑA -- USUARIO
+Route::get('/users/password', [UserController::class, 'pass'])->middleware('auth');
+
+Route::put('/users/password/STORE/{user}', [UserController::class, 'STORE_pass'])->middleware('auth');
+
+// -- USUARIO -- ir a mis cursos -- USUARIO
+Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth');
+
+// -- USUARIO -- ACTUALIZAR EMAIL!!
+Route::get('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
+
+// ADMIN --- EDITAR USUARIOS FORM
+Route::get('/admin/update_user/{user}', [UserController::class, 'update'])->middleware('auth');
+
+// ADMIN --- EDITAR USUARIOS
+Route::put('/admin/update_user/STORE/{user}', [UserController::class, 'STORE_update'])->middleware('auth');
+
+
+
+
 //Mostrar QRs de acceso a capacitaciones
 Route::get('/admin/qrs', [CursosController::class, 'qrs'])->middleware('auth');
 

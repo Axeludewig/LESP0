@@ -6,6 +6,10 @@
             <b>{{ $listing->apellido_paterno }} {{ $listing->apellido_materno }} {{ $listing->nombre }}</b>
         </h3>
     </div>
+    <!--
+    // LISTING ES USER!
+    // vvv FORMULARIO PARA eliminar! USUARIO COMO ADMIN 
+    -->
     <form method="POST" action="/users/{{ $listing->id }}">
         <div class="text-lg mt-4 flex place-content-center">
             @csrf
@@ -13,10 +17,14 @@
             <button class="text-red-500"><i class="fa-solid fa-trash"></i> Eliminar</button>
         </div>
     </form>
-    <form method="POST" action="/users/{{ $listing->id }}">
+    <!--
+    // LISTING ES USER!
+    // vvv FORMULARIO PARA editar! USUARIO COMO ADMIN 
+    -->
+    <form method="POST" action="/admin/update_user/{{ $listing->id }}">
         <div class="text-lg mt-4 flex place-content-center">
             @csrf
-            @method('DELETE')
+            @method('GET')
             <button class="text-red-500"><i class="fa-solid fa-trash"></i> Editar</button>
         </div>
     </form>

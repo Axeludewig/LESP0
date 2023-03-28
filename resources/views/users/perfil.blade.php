@@ -1,6 +1,6 @@
 <x-layout>
     <div
-        class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center hover:text-black hover:bg-mich4">
+        class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center ">
         <h3 class="text-3xl ">
             <p>Mi Perfil</p>
         </h3>
@@ -26,7 +26,15 @@
                 </div>
             </div>
         </form>
+        <div class="mt-4 flex flex-col items-center text-center text-xl">
+            <a href="/users/cursos"
+            class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56">
+            Ir a Mis Cursos
+            </a>
+        </div>
+
         <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
+        
             <h3 class="text-2xl text-center">
                 <p><span class="font-semibold">Nombre:</span><br> {{ auth()->user()->nombre }}
                     {{ auth()->user()->apellido_paterno }}
@@ -36,7 +44,7 @@
         <div
             class="m-6 flex flex-wrap break-all bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
             <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Correo:</span><br> {{ auth()->user()->email }}</p>
+                <p><span class="font-semibold">Correo electrónico:</span><br> {{ auth()->user()->email }}</p>
             </h3>
         </div>
         <div
@@ -78,47 +86,32 @@
             </h3>
         </div>
 
-        <div class="flex place-content-center text-xl">
-            <button type="submit"
-                class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring">
-                Editar información
-            </button>
-        </div>
+            <form>
+            <div class="flex place-content-center text-xl text-center">
+                <a href="/users/password"
+                    class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56">
+                    Cambiar contraseña
+                </a>
+            </div>
+            </form>
+
+            <div>
+                <form action="/users/email/{{auth()->user()->id}}">
+                    <div class="flex flex-col items-center mt-4 place-content-center text-xl text-center">
+                    @csrf
+                    @method('PUT')
+                    <label for="email" class="ml-3 mr-3 font-semibold">Agregar o cambiar correo electrónico (email):</label>
+            <input type="text" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-56 mt-2"></input>
+                    
+                        <a href="" class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 mt-4">Actualizar correo</a>
+                    </div>
+                </form>
+            </div>
     </div>
     <!-- DIV PARA ACCIONES DEL USUARIO -->
 
 
-    <div
-        class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center hover:text-black hover:bg-mich4">
-        <h3 class="text-3xl ">
-            <p>Cursos</p>
-        </h3>
-    </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/listings/manage"> Mis Cursos <i class="fa-sharp fa-solid fa-list"></i></a>
-        </h3>
-    </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/sesiones/show"> Sesiones <i class="fa-sharp fa-solid fa-forward"></i></a>
-        </h3>
-    </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/sesiones/misasistencias"> Mis Asistencias <i class="fa-sharp fa-solid fa-marker"></i></a>
-        </h3>
-    </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/cursos/misfinalizados"> Cursos Finalizados <i class="fa-sharp fa-solid fa-medal"></i></a>
-        </h3>
-    </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/users/expediente"> Expediente <i class="fa-regular fa-file"></i></a>
-        </h3>
-    </div>
+    
 
 
 </x-layout>

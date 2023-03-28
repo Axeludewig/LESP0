@@ -13,6 +13,35 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+
+    public function cursos(){
+        return view('users.cursos');
+    }
+
+    public function pass(){
+        return view('users.password');
+    }
+
+    public function STORE_pass(Request $request, User $user){
+        
+        // Retrieve form fields
+        $formFields = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+        
+        
+        // Verify current password
+        if (!Hash::check($formFields['current_password'], $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Incorrect current password']);
+        }
+        // Update password
+        $user->update([
+            'password' => Hash::make($formFields['new_password']),
+        ]);
+        
+        return redirect('/users/perfil')->with('message', 'Password actualizado correctamente.');
+    }
     // Show Register/Create Form
     public function create() {
         return view('users.register');
@@ -166,15 +195,50 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Usuarios creados exitosamente!');
     }
     
-    public function update(Request $request, User $listing) {
-        $formFields = $request->validate([
-            'status' => 'required'
+    public function update(User $user) {
+        $usuario = DB::table('users')->where('id', $user->id)->first();
+
+        return view('admin.update_user', [
+            'user' => $usuario
         ]);
-
-        $listing->update($formFields);
-
-        return redirect('/admin/paneldecursos')->with('message', 'Curso modificado correctamente.');
     }
+
+    public function STORE_update(Request $request, User $user) {
+        $formFields = $request->validate([
+            'rfc' => 'nullable',
+            'apellido_paterno' => 'nullable',
+            'apellido_materno' => 'nullable',
+            'nombre' => 'nullable',
+            'email' =>  ['nullable', 'email'],
+            'proyecto' => 'nullable',
+            'puesto' => 'nullable',
+            'descripcion_puesto' => 'nullable',
+            'curp' => 'nullable',
+            'turno' => 'nullable',
+            'coordinacion' => 'nullable',
+            'area' => 'nullable',
+            'funcion' => 'nullable',
+            'tipo' => 'nullable',
+            'status' => 'nullable',
+            'observaciones' => 'nullable',  
+        ]);
+        
+
+        $user->update($formFields);
+
+        return back()->with('message', 'Usuario modificado correctamente.');;
+    }
+
+    public function update_email(Request $request, User $user){
+        $formFields = $request->validate([
+            'email' =>  ['nullable', 'email'],
+        ]);
+        
+        $user->update($formFields);
+
+        return back()->with('message', 'Email modificado correctamente.');;
+    }
+
     
     public function usuarios(){
         return view('admin.import');
