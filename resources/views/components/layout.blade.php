@@ -11,6 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css"  rel="stylesheet" />
     <script>
         tailwind.config = {
             theme: {
@@ -50,53 +51,65 @@
 </head>
 
 <body class="mb-48">
-    <nav class="flex justify-between items-center mb-4">
-        <a href="/"><img class="w-24" src="{{ asset('images/logolesp.png') }}" alt=""
-                class="logo" /></a>
 
-        <ul class="flex place-content-evenly space-x-3 md:space-x-12 mr-6 md:text-lg">
-
-
-            @auth
+    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+        <div class="container flex flex-wrap items-center justify-between mx-auto">
+          <a href="/" class="flex items-center">
+              <img src="{{ asset('images/logolesp.png')}}" class="h-16 mr-3 sm:h-9 md:h-28" alt="LESP Logo" />
+              <span class="self-center text-xl md:text-4xl font-semibold whitespace-nowrap dark:text-white">LESP Michoacán</span>
+          </a>
+          <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+          </button>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                @auth
 
                 @if (auth()->user()->es_admin == '1')
                     {{-- 1 PARA ADMIN, 0 PARA USUARIO --}}
                     {{-- DENTRO DE ESTE IF ESTÁ LA LÓGICA DEL ADMIN --}}
                     <li>
-                        <span class="text-sm font-bold uppercase">
+                        <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                             <i class="fa-sharp fa-solid fa-lock"></i> ADMIN
                         </span>
                     </li>
                     <li>
-                        <a href="/admin/paneldecontrol" class="hover:text-laravel"><i class="fa-sharp fa-solid fa-key"></i>
-                            Control</a>
+                        <a href="/admin/paneldecontrol" class="hover:text-laravel">
+                            <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <i class="fa-sharp fa-solid fa-key"></i>
+                            Control</span></a>
                     </li>
 
                     <li>
                         <form class="inline" method="POST" action="/logout">
                             @csrf
                             <button type="submit">
-                                <i class="fa-solid fa-door-closed"></i> Salir
+                                <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                <i class="fa-solid fa-door-closed"></i> Salir</span>
                             </button>
                         </form>
                     </li>
                 @else
                     {{-- DENTRO DE ESTE ELSE ESTÁ LA LÓGICA DEL USUARIO --}}
                     <li>
-                        <span class="text-sm md:text-2xl">
+                        <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                             <i class="fa-sharp fa-solid fa-lock"></i> Bienvenido/a, {{ auth()->user()->nombre }}
                         </span>
                     </li>
                     <li>
-                        <a href="/users/perfil" class="md:text-2xl hover:text-laravel"><i class="fa-solid fa-gear"></i> Mi
-                            perfil</a>
+                        <a href="/users/perfil" class="md:text-2xl hover:text-laravel">
+                        <span class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <i class="fa-solid fa-gear"></i> Mi
+                            perfil</span></a>
                     </li>
 
-
+                    <li>
                     <form class="inline" method="POST" action="/logout">
                         @csrf
                         <button type="submit" class="md:text-2xl">
-                            <i class="fa-solid fa-door-closed "></i> Cerrar Sesión
+                            <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <i class="fa-solid fa-door-closed "></i> Cerrar Sesión</span>
                         </button>
                     </form>
                     </li>
@@ -104,18 +117,21 @@
             @else
                 {{-- DENTRO DE ESTE ELSE ESTÁ LA LÓGICA DEL USUARIO NO AUTENTICADO --}}
                 <li class="">
-                    <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registro</a>
+                    <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registro</span></a>
                 </li>
                 <li>
-                    <a href="/login" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar
-                        Sesión</a>
+                    <a href="/login" class="hover:text-laravel">
+                        <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar
+                        Sesión</span></a>
                 </li>
 
             @endauth
-
-
-        </ul>
-    </nav>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
 
     <main>
         {{ $slot }}
@@ -125,7 +141,7 @@
         <p class="ml-2">&copy; 2023, Laboratorio Estatal de Salud Pública de Michoacán</p>
 
     </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
     <x-flash-message />
 </body>
 

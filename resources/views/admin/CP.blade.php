@@ -19,7 +19,7 @@
         </div>
         <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
             <h3 class="text-2xl">
-                <a href="/admin/qrs"> Códigos QR de registro <i class="fa-solid fa-qrcode"></i></a>
+                <a href="/admin/qrs"> QRs de registro <i class="fa-solid fa-qrcode"></i></a>
             </h3>
         </div>
         <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
