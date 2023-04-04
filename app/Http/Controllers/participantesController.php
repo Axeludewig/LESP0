@@ -101,4 +101,27 @@ class participantesController extends Controller
             'curso' => $id_curso
         ]);
     }
+
+    public function fakes(){
+        $fake = 0;
+        $email = "ejemplo";
+        $terminacion_email = "@gmail.com";
+        while($fake < 101){
+            $full_email = $email . $fake . $terminacion_email;
+            DB::table('participantes')
+                ->insert([
+                    'nombre_curso' => 'Salud Mental',
+                    'rfc_participante' => 'XXXX',
+                    'nombre_participante' => 'ejemplouwu',
+                    'email_participante' => $full_email,
+                    'ubicacion' => 'Auditorio',
+                    'fecha_de_inicio' => '2023-03-29',
+                    'fecha_de_terminacion' => '2023-03-29',
+                    'valor_curricular' => '16',
+                    'tipo' => 'Asistente',
+                    'img' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+                ]); 
+            $fake++;
+        }
+    }
 }

@@ -2,7 +2,7 @@
     <div
         class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center ">
         <h3 class="text-3xl ">
-            <p>Mi Perfil</p>
+            <p class="font-semibold">Mi Perfil</p>
         </h3>
     </div>
 
@@ -26,65 +26,92 @@
                 </div>
             </div>
         </form>
-        <div class="mt-4 flex flex-col items-center text-center text-xl">
-            <a href="/users/cursos"
-            class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56">
-            Ir a Mis Cursos
-            </a>
+
+        <div class="flex items-center place-content-center text-center align-center">
+            <div class="justify-center w-1/2 md:grid md:grid-cols-2 md:grid-rows-2 gap-4 ">
+                <div class="mt-4 flex flex-col items-center  text-xl">
+                    <a href="/users/cursos"
+                    class="bg-red-600 font-semibold flex justify-center items-center  text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 md:h-20 ">
+                    Ir a Mis Cursos
+                    </a>
+                </div>
+                <div class="mt-4 flex flex-col items-center text-center text-xl">
+                    <a href="/users/info/{{auth()->user()->id}}"
+                    class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
+                    Información Personal
+                    </a>
+                </div>
+                <div class="mt-4 flex flex-col items-center text-center text-xl">
+                    <a href="/users/esco/{{auth()->user()->id}}"
+                    class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
+                    Escolaridad
+                    </a>
+                </div>
+                <div class="mt-4 flex flex-col items-center text-center text-xl">
+                    <a href="/users/exp/{{auth()->user()->id}}"
+                    class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
+                    Experiencia Profesional
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Nombre:</span><br> {{ auth()->user()->nombre }}
-                    {{ auth()->user()->apellido_paterno }}
-                    {{ auth()->user()->apellido_materno }}</p>
-            </h3>
+
+        <div class="mt-12 md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+            
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Nombre:</span><br> {{ auth()->user()->nombre }}
+                        {{ auth()->user()->apellido_paterno }}
+                        {{ auth()->user()->apellido_materno }}</p>
+                </h3>
+            </div>
+            <div
+                class="md:m-6 flex flex-wrap break-all bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Correo electrónico:</span><br> {{ auth()->user()->email }}</p>
+                </h3>
+            </div>
+            <div
+                class="md:m-6 break-words flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Descripción del puesto:</span>
+                        <br>{{ auth()->user()->descripcion_puesto }}
+                    </p>
+                </h3>
+            </div>
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Turno:</span><br> {{ auth()->user()->turno }}</p>
+                </h3>
+            </div>
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Coordinación:</span><br> {{ auth()->user()->coordinacion }}</p>
+                </h3>
+            </div>
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Área:</span><br> {{ auth()->user()->area }}</p>
+                </h3>
+            </div>
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Función:</span><br> {{ auth()->user()->funcion }}</p>
+                </h3>
+            </div>
+            <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+                <h3 class="text-2xl text-center">
+                    <p><span class="font-semibold">Status actual:</span><br> {{ auth()->user()->status }}</p>
+                </h3>
+            </div>
         </div>
-        <div
-            class="m-6 flex flex-wrap break-all bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Correo electrónico:</span><br> {{ auth()->user()->email }}</p>
-            </h3>
-        </div>
-        <div
-            class="m-6 break-words flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Descripción del puesto:</span>
-                    <br>{{ auth()->user()->descripcion_puesto }}
-                </p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Turno:</span><br> {{ auth()->user()->turno }}</p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Coordinación:</span><br> {{ auth()->user()->coordinacion }}</p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Área:</span><br> {{ auth()->user()->area }}</p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Función:</span><br> {{ auth()->user()->funcion }}</p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Status actual:</span><br> {{ auth()->user()->status }}</p>
-            </h3>
-        </div>
-        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-            <h3 class="text-2xl text-center">
-                <p><span class="font-semibold">Perfil del puesto:</span><br></p>
-            </h3>
-        </div>
+
+    <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+        <h3 class="text-2xl text-center">
+            <p><span class="font-semibold">Perfil del puesto:</span><br></p>
+        </h3>
+    </div>
 
             <form>
             <div class="flex place-content-center text-xl text-center">

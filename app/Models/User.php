@@ -79,4 +79,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Validaciones::class);
     }
+
+    public function InformacionPersonal()
+    {
+        return $this->hasOne(InformacionPersonal::class);
+    }
+
+    public function Escolaridad()
+    {
+        return $this->hasOne(Escolaridad::class);
+    }
+
+    public function Experiencia_profesional()
+    {
+        return $this->hasOne(Experiencia_profesional::class);
+    }
 }

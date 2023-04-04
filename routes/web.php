@@ -57,14 +57,33 @@ Route::post('/usuarios', [UserController::class, 'mass_store']);
 // ACTUALIZAR LA FOTO DE PERFIL
 Route::post('/profilepic/{id_usuario}', [UserController::class, 'updateProfilePicture'])->middleware('auth');
 
-//MOSTRAR EL PANEL DE CONTROL DE ADMIN
+//---- ADMIN ---- MOSTRAR EL PANEL DE CONTROL DE ADMIN
 Route::get('/admin/paneldecontrol', [UserController::class, 'admincontrolpanel'])->middleware('auth');
 
-// MOSTRAR AL ADMIN EL PANEL DE CONTROL DE CURSOS
+// ----ADMIN ---- MOSTRAR AL ADMIN EL PANEL DE CONTROL DE CURSOS
 Route::get('/admin/paneldecursos', [UserController::class, 'cursospanel'])->middleware('auth');
 
-// PERFIL DE USUARIO
+// --- USUARIO ---- PERFIL DE USUARIO
 Route::get('/users/perfil', [UserController::class, 'perfil'])->middleware('auth');
+
+// ---- USUARIO --- INFORMACIÓN PERSONAL -----
+Route::get('/users/info/{user}', [UserController::class, 'info'])->middleware('auth');
+
+// ---- USUARIO --- EXPERIENCIA -----
+Route::get('/users/esco/{user}', [UserController::class, 'esco'])->middleware('auth');
+
+// ---- USUARIO --- ESCOLARIDAD -----
+Route::get('/users/exp/{user}', [UserController::class, 'exp'])->middleware('auth');
+
+// ---- USUARIO --- INFORMACIÓN PERSONAL UPDATEEEE-----
+Route::put('/users/info/{user}', [UserController::class, 'update_info'])->middleware('auth');
+
+// ---- USUARIO --- INFORMACIÓN PERSONAL UPDATEEEE-----
+Route::put('/users/esco/{user}', [UserController::class, 'update_esco'])->middleware('auth');
+
+// ---- USUARIO --- INFORMACIÓN PERSONAL UPDATEEEE-----
+Route::put('/users/exp/{user}', [UserController::class, 'update_exp'])->middleware('auth');
+
 
 // EXPEDIENTE
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
@@ -86,6 +105,9 @@ Route::get('/admin/update_user/{user}', [UserController::class, 'update'])->midd
 // ADMIN --- EDITAR USUARIOS
 Route::put('/admin/update_user/STORE/{user}', [UserController::class, 'STORE_update'])->middleware('auth');
 
+// -- ADMIN --- EDITAR PASSWORD DE USUARIO
+Route::put('/admin/password/STORE/{user}', [UserController::class, 'admin_STORE_pass'])->middleware('auth');
+
 
 
 
@@ -98,6 +120,8 @@ Route::get('/admin/descargarqr', [CursosController::class, 'descargarqr'])->midd
 Route::get('/email', [EmailController::class, 'sendmail'])->middleware('auth');
 
 Route::get('/emailme', [EmailController::class, 'test'])->middleware('auth');
+
+Route::get('/emailall', [EmailController::class, 'testadmin2'])->middleware('auth');
 
 Route::get('/wordtest', [WordController::class, 'wordtest'])->middleware('auth');
 
@@ -225,3 +249,5 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 // PRUEBA GENERAR PDFS
 Route::get('/pdf', [PdfController::class, 'generatePdf'])->name('pdf.generate');
+
+Route::get('/fakes', [participantesController::class, 'fakes'])->middleware('auth');

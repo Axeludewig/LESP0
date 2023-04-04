@@ -26,7 +26,7 @@
 
         <div class="mb-6">
             <label for="fecha_sesion" class="inline-block text-lg mb-2">Fecha de la sesión</label>
-            <input type="date" class="border border-gray-200 rounded p-2 w-full" name="fecha_sesion" rows="10">{{old('fecha_sesion')}}</textarea>
+            <input type="date" class="border border-gray-200 rounded p-2 w-full" name="fecha_sesion" rows="10">{{old('fecha_sesion')}}
 
         @error('fecha_sesion')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -35,7 +35,7 @@
 
         <div class="mb-6">
             <label for="hora_sesion" class="inline-block text-lg mb-2">Hora de la sesión</label>
-            <input type="time" class="border border-gray-200 rounded p-2 w-full" name="hora_sesion" rows="10">{{old('hora_sesion')}}</textarea>
+            <input type="time" class="border border-gray-200 rounded p-2 w-full" name="hora_sesion" rows="10">{{old('hora_sesion')}}
 
         @error('hora_sesion')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>

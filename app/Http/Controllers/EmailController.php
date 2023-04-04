@@ -321,4 +321,244 @@ class EmailController extends Controller
 
     }
 
+    public function testadmin(Request $request){
+        $formFields = $request->validate([
+            'nombre_curso' => 'required',
+        ]);
+
+        $nombre_del_curso = $formFields['nombre_curso'];
+        $curso = DB::table('cursos')->
+        where('nombre', $nombre_del_curso)->first();
+        $participantes = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->get();
+        $users = DB::table('users')
+            ->join('participantes', 'users.rfc', '=', 'participantes.rfc_participante')
+            ->select('users.*')
+            ->get();
+
+        // Create a new PHPMailer instance
+        $mail = new PHPMailer(true);
+    
+        $mail->isSMTP();
+
+        // LÍNEA PARA MOSTRAR LA PÁGINA CON DEBUG DATA EN EL BROWSER!
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 465;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->SMTPAuth = true;
+        $mail->Username = 'axelramirezludewig@gmail.com';
+        $mail->Password = 'uppmigsgyglwqume';
+
+        foreach ($users as $user) {
+            $nombre_del_participante = $user->nombre;
+            $email = $user->email;
+            
+            // CÓDIGO PARA LAS IMÁGENES 
+            // CÓDIGO PARA LAS IMÁGENES 
+                $path = base_path('FIRMAS.png');
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+                $path2 = base_path('gob.jpg');
+                $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+                $data2 = file_get_contents($path2);
+                $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+        
+                $path3 = base_path('SS1.png');
+                $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+                $data3 = file_get_contents($path3);
+                $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+            // CÓDIGO PARA LAS IMÁGENES 
+            // CÓDIGO PARA LAS IMÁGENES 
+    
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+                $query = 'q=' . $user->apellido_paterno . '+' . $user->apellido_materno . '&status=Verificado&curso=' . $curso->nombre;
+                $qrCodeContent = 'https://c883-2806-103e-5-9c10-b136-d021-a014-a865.ngrok.io/validaciones/search?' . $query;
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+    
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+                $fecha_de_terminacion = $curso->fecha_de_terminacion;
+                $valor_curricular = $curso->horas_teoricas + $curso->horas_practicas;
+                $nombre_usuario = $user->nombre . " " . $user->apellido_paterno . " " . $user->apellido_materno;
+                $nombre_del_curso = $curso->nombre;
+                $user_id = $user->rfc;
+                $tipo = DB::table('participantes')
+                ->where('rfc_participante', $user_id)
+                ->where('nombre_curso', $nombre_del_curso)
+                ->value('tipo');
+        
+                $folio = DB::table('validaciones')
+                ->where('nombre_curso', '=', $nombre_del_curso)
+                ->where('nombre_usuario', '=', $nombre_usuario)
+                ->value('folio');
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+
+            $qrcode = (new QRCode())->render($qrCodeContent);
+    
+            // Create a new instance of dompdf
+            $pdf = new Dompdf();
+    
+            // Generate the PDF
+            $pdf->loadHtml(view('pdf2', compact(['user', 'curso', 'valor_curricular', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+    
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'vertical');
+    
+            // Render the PDF
+            $pdf->render();
+    
+            $pdfContent = $pdf->output();
+    
+            $filename = $folio . '.pdf';
+            
+         
+            Storage::disk('public')->put($filename, $pdfContent);
+    
+            $mail->addAddress($email, $nombre_del_participante);
+             // Set up the email
+            $mail->Subject = 'Saludos ' . $user->nombre . ' ' . $user->apellido_paterno . ' ' . $user->apellido_materno;
+            $mail->Body = 'Agradecemos su participación en el programa de capacitación 2023 del Laboratorio Estatal de Salud Pública de Michoacán.
+            Enviamos su constancia de participación del evento de capacitación: ' . $nombre_del_curso . ', el cual se realizó en la fecha: ' . $fecha_de_terminacion . '.
+            Podrá consultar el programa trimestral de cursos presenciales y las sugerencias para cursos virtuales en la siguiente liga: https://lespmich.jimdofree.com/programa-de-cursos/';
+    
+            // Attach a file to the email
+            $publicPath = public_path('/storage/' . $filename);
+            //$publicPath = storage_path($filename);
+    
+            $mail->addAttachment($publicPath);
+            //$mail->send();
+    
+            // Send the email
+            if ($mail->send()) {
+            Storage::disk('public')->delete($filename);    
+                return back();
+            } else {return back();}
+
+
+        }
+    }
+
+    public function testadmin2(Request $request){
+        $formFields = $request->validate([
+            'nombre_curso' => 'required',
+        ]);
+
+        $nombre_del_curso = $formFields['nombre_curso'];
+        $curso = DB::table('cursos')->
+        where('nombre', $nombre_del_curso)->first();
+        $participantes = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->get();
+        $users = DB::table('participantes')->where('nombre_curso', $nombre_del_curso)->get();
+
+        // Create a new PHPMailer instance
+        
+        foreach ($users as $user) {
+            $nombre_del_participante = $user->nombre_participante;
+            $email = $user->email_participante;
+            
+            // CÓDIGO PARA LAS IMÁGENES 
+            // CÓDIGO PARA LAS IMÁGENES 
+                $path = base_path('FIRMAS.png');
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+                $path2 = base_path('gob.jpg');
+                $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+                $data2 = file_get_contents($path2);
+                $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+        
+                $path3 = base_path('SS1.png');
+                $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+                $data3 = file_get_contents($path3);
+                $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+            // CÓDIGO PARA LAS IMÁGENES 
+            // CÓDIGO PARA LAS IMÁGENES 
+    
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+                $query = 'q=' . $nombre_del_participante . '&status=Verificado&curso=' . $curso->nombre;
+                $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/validaciones/search?' . $query;
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+            // QUERY QUE APARECERÁ EN EL CÓDIGO QR
+    
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+                $fecha_de_terminacion = $curso->fecha_de_terminacion;
+                $valor_curricular = $curso->horas_teoricas + $curso->horas_practicas;
+
+                $nombre_del_curso = $curso->nombre;
+                $tipo = $user->tipo;
+        
+                $folio = DB::table('validaciones')
+                ->where('nombre_curso', '=', $nombre_del_curso)
+                ->where('nombre_usuario', '=', $nombre_del_participante)
+                ->value('folio');
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+            // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
+
+            $qrcode = (new QRCode())->render($qrCodeContent);
+    
+            // Create a new instance of dompdf
+            $pdf = new Dompdf();
+    
+            // Generate the PDF
+            $pdf->loadHtml(view('pdf3', compact(['user', 'curso', 'valor_curricular', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+    
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'vertical');
+    
+            // Render the PDF
+            $pdf->render();
+    
+            $pdfContent = $pdf->output();
+    
+            $filename = $folio . '.pdf';
+            
+            Storage::disk('public')->put($filename, $pdfContent);
+
+            $mail = new PHPMailer(true);
+        
+            $mail->isSMTP();
+
+            // LÍNEA PARA MOSTRAR LA PÁGINA CON DEBUG DATA EN EL BROWSER!
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 465;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->SMTPAuth = true;
+            $mail->Username = 'axelramirezludewig@gmail.com';
+            $mail->Password = 'uppmigsgyglwqume';
+    
+            $mail->addAddress($email, $nombre_del_participante);
+             // Set up the email
+            $mail->Subject = 'Saludos ' . $nombre_del_participante;
+            $mail->Body = 'Agradecemos su participación en el programa de capacitación 2023 del Laboratorio Estatal de Salud Pública de Michoacán.
+            Enviamos su constancia de participación del evento de capacitación: ' . $nombre_del_curso . ', el cual se realizó en la fecha: ' . $fecha_de_terminacion . '.
+            Podrá consultar el programa trimestral de cursos presenciales y las sugerencias para cursos virtuales en la siguiente liga: https://lespmich.jimdofree.com/programa-de-cursos/';
+    
+            // Attach a file to the email
+            $publicPath = public_path('/storage/' . $filename);
+            //$publicPath = storage_path($filename);
+    
+            $mail->addAttachment($publicPath);
+            //$mail->send();
+    
+            // Send the email
+            if ($mail->send()) {
+            Storage::disk('public')->delete($filename);    
+            } 
+
+
+        }
+
+        return back()->with('message', 'Correos enviados.');
+    }
+
 }

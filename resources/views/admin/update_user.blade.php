@@ -1,5 +1,7 @@
 @props(['user'])
 <x-layout>
+    <a href="/admin/showallusers" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+    </a>
     <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
         <h3 class="text-2xl ">
             <p>Editar la información de {{ $user->nombre }}&nbsp;{{ $user->apellido_paterno }}&nbsp;{{ $user->apellido_materno }}</p>
@@ -9,7 +11,7 @@
         <form method="POST" action="/admin/update_user/STORE/{{ $user->id }}">
             @csrf
             @method('PUT')
-            <div class="flex flex-col place-content-center items-center gap-5">
+            <div class="mt-4 flex flex-col place-content-center items-center gap-5">
                 <div class="flex flex-row">
                     <h2 class="font-semibold text-slate-800">RFC: &nbsp;</h2>
                     <input value="{{ $user->rfc }}" class="border border-solid border-slate-700 rounded" name="rfc">
@@ -74,10 +76,32 @@
                     <h2 class="font-semibold text-slate-800">Observaciones: &nbsp;</h2>
                     <input value="{{ $user->observaciones }}" class="border border-solid border-slate-700 rounded" name="observaciones">
                 </div>
-                <button type="submit" class="text-red-500 border border-solid border-red-500 pl-6 pr-6 pt-2 pb-2 hover:ring"><i class="fa-solid fa-trash"></i> Editar</button>
+                <button type="submit" class="text-red-500 border border-solid border-red-500 pl-6 pr-6 pt-2 pb-2 hover:ring mt-6"><i class="fa-solid fa-trash"></i> Editar</button>
                 
                 </div>
                 
         </form>
+    </x-card>
+    <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
+        <h3 class="text-2xl ">
+            <p>Editar la contraseña de {{ $user->nombre }}&nbsp;{{ $user->apellido_paterno }}&nbsp;{{ $user->apellido_materno }}</p>
+        </h3>
+      </div>
+    <x-card>
+        <div class="mt-4">
+            <form method="POST" action="/admin/password/STORE/{{$user->id}}">
+                <div class="flex flex-col place-content-center items-center gap-5">
+                @csrf
+                @method('PUT')
+                <label for="new_password" class="font-semibold">Password Nuevo&nbsp;</label>
+                <input type="password" name="new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+
+                <label for="new_password_confirmation" class="font-semibold">Confirmar Password Nuevo&nbsp;</label>
+                <input type="password" name="new_password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                
+                <!-- BOTÓN DE CONFIRMACIÓN!! -->
+                <button type="submit" class="text-red-500 border font-bold border-solid border-red-500 pl-6 pr-6 pt-2 pb-2 mt-6 hover:ring"><i class="fa-solid fa-key"></i> Cambiar contraseña</button>
+            </form>
+        </div>
     </x-card>
 </x-layout>

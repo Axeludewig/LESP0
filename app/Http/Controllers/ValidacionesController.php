@@ -72,22 +72,31 @@ class ValidacionesController extends Controller
             ->get();
 
             $foliox = 1;
-            foreach ($participantes_del_curso as $participante) {
+
+            $trufolio = $folio . sprintf('%02d', $foliox);
+            $existe = DB::table('validaciones')->where('folio', $trufolio)->exists();
+
+            if($existe){
+                return back()->with('message', 'Ya se han generado anteriormente las validaciones.');
+            } else {
+                foreach ($participantes_del_curso as $participante) {
             
-            // $nombre_completo = $participante->nombre . ' ' . $participante->apellido_paterno . ' ' . $participante->apellido_materno;
-            
-                DB::table('validaciones')->insert([
-                    'nombre_curso' => $nombre_curso,
-                    'nombre_usuario' => $participante->nombre_participante,
-                    'valor_curricular' => $valor_curricular,
-                    'status' => $status,
-                    'tipo' => $tipo,
-                    'folio' => $folio . sprintf('%02d', $foliox),
-                ]);
-                $foliox++;
+                    // $nombre_completo = $participante->nombre . ' ' . $participante->apellido_paterno . ' ' . $participante->apellido_materno;
+                    
+                        DB::table('validaciones')->insert([
+                            'nombre_curso' => $nombre_curso,
+                            'nombre_usuario' => $participante->nombre_participante,
+                            'valor_curricular' => $valor_curricular,
+                            'status' => $status,
+                            'tipo' => $tipo,
+                            'folio' => $folio . sprintf('%02d', $foliox),
+                        ]);
+                        $foliox++;
+                    }
+           
+                    return back()->with('message', 'Validación generada.');
             }
-   
-            return redirect('/')->with('message', 'Validación generada.');
+            
           
     }
 }

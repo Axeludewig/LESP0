@@ -1,4 +1,6 @@
 <x-layout>
+    <a href="/users/perfil" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+    </a>
     <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
         <h3 class="text-2xl ">
             <p>Cambiar contraseña</p>

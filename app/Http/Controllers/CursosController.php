@@ -108,7 +108,7 @@ class CursosController extends Controller
         $qrCodes = [];
 
         foreach ($cursos as $curso){
-            $qrCodeContent = 'https://4934-2806-103e-5-9c10-3591-85e6-a33d-38f9.ngrok.io/registro/' . $curso->id;
+            $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/registro/' . $curso->id;
             $qrCodeImage = (new QRCode())->render($qrCodeContent);
             $qrCodes[] = [
                 'name' => $curso->nombre,
@@ -131,7 +131,7 @@ class CursosController extends Controller
 
         $id_curso = $formFields['id_curso'];
 
-        $qrCodeContent = 'https://4934-2806-103e-5-9c10-3591-85e6-a33d-38f9.ngrok.io/registro/' . $id_curso;
+        $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/registro/' . $id_curso;
 
         $nombre_curso = $formFields['nombre_curso'];
         

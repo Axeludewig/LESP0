@@ -1,6 +1,6 @@
 @props(['listing'])
 
-<x-card class="overflow-scroll">
+<x-card class="">
     <div class="flex">
         <img class="hidden object-contain w-48 mr-6 md:block"
             src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
@@ -42,6 +42,15 @@
                 <button type="submit"
                     class="mt-3 w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Generar
                     Validaciones &nbsp; <i class="mt-1 content-center fa-regular fa-circle-check"></i>
+                </button>
+            </form>
+            <form action="/emailall" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="nombre_curso" value="{{$listing->nombre}}">
+
+                <button type="submit"
+                    class="mt-3 w-5/6 bg-laravel text-white rounded py-2 px-2 hover:bg-black  flex place-content-center justify-center content-center">Enviar Constancias &nbsp; <i class="mt-1 content-center fa-regular fa-circle-check"></i>
                 </button>
             </form>
         </div>

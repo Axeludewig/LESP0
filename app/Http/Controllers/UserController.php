@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escolaridad;
+use App\Models\Experiencia_profesional;
+use App\Models\InformacionPersonal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -10,9 +13,90 @@ use League\Csv\Reader;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\Reader\Xls\Escher;
 
 class UserController extends Controller
 {
+    public function update_info(Request $request, InformacionPersonal $user){
+        $formFields = $request->validate([
+            'user_id' => 'required',
+            'direccion' => 'nullable',
+            'telefono' => 'nullable',
+            'nacionalidad' => 'nullable',
+            'lugar_de_nacimiento' => 'nullable',
+            'fecha_de_nacimiento' => 'nullable',
+        ]);
+        
+        $user->update($formFields);
+
+        return back()->with('message', 'Información personal modificada correctamente.');;
+    }
+
+    public function update_esco(Request $request, Escolaridad $user){
+        $formFields = $request->validate([
+            'user_id' => 'required',
+            'posgrado1' => 'nullable',
+            'institucion_educativa_p1' => 'nullable',
+            'periodo_de_realizacion_p1' => 'nullable',
+            'posgrado2' => 'nullable',
+            'institucion_educativa_p2' => 'nullable',
+            'periodo_de_realizacion_p2' => 'nullable',
+            'licenciatura' => 'nullable',
+            'institucion_educativa_lic' => 'nullable',
+            'cedula' => 'nullable',
+            'periodo_de_realizacion_lic' => 'nullable',
+            'carrera_tecnica' => 'nullable',
+            'institucion_educativa_ct' => 'nullable',
+            'periodo_de_realizacion_ct' => 'nullable',
+            'preparatoria' => 'nullable',
+            'institucion_educativa_prepa' => 'nullable',
+            'periodo_de_realizacion_prepa' => 'nullable',
+        ]);
+        
+        $user->update($formFields);
+
+        return back()->with('message', 'Escolaridad modificada correctamente.');;
+    }
+
+    public function update_exp(Request $request, Experiencia_profesional $user){
+        $formFields = $request->validate([
+            'user_id' => 'required',
+            'puesto1'=> 'nullable',
+            'experiencia1'=> 'nullable',
+            'periodo1'=> 'nullable',
+            'puesto2'=> 'nullable',
+            'experiencia2'=> 'nullable',
+            'periodo2'=> 'nullable',
+            'puesto3'=> 'nullable',
+            'experiencia3'=> 'nullable',
+            'periodo3'=> 'nullable',
+            'puesto4'=> 'nullable',
+            'experiencia4'=> 'nullable',
+            'periodo4'=> 'nullable',
+        ]);
+        
+        $user->update($formFields);
+
+        return back()->with('message', 'Experiencia modificada correctamente.');;
+    }
+
+    public function info(InformacionPersonal $user){
+        return view('users.info', [
+            'info' => $user
+        ]);
+    }
+
+    public function esco(Escolaridad $user){
+        return view('users.esco', [
+            'esco' => $user
+        ]);
+    }
+
+    public function exp(Experiencia_profesional $user){
+        return view('users.exp', [
+            'exp' => $user
+        ]);
+    }
 
     public function cursos(){
         return view('users.cursos');
@@ -20,6 +104,20 @@ class UserController extends Controller
 
     public function pass(){
         return view('users.password');
+    }
+
+    public function admin_STORE_pass(Request $request, User $user){
+        // Retrieve form fields
+        $formFields = $request->validate([
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+        
+        // Update password
+        $user->update([
+            'password' => Hash::make($formFields['new_password']),
+        ]);
+
+        return redirect('/users/perfil')->with('message', 'Password actualizado correctamente.');
     }
 
     public function STORE_pass(Request $request, User $user){
@@ -33,7 +131,7 @@ class UserController extends Controller
         
         // Verify current password
         if (!Hash::check($formFields['current_password'], $user->password)) {
-            return redirect()->back()->withErrors(['current_password' => 'Incorrect current password']);
+            return redirect()->back()->withErrors(['current_password' =>        'Incorrect current password']);
         }
         // Update password
         $user->update([
@@ -106,6 +204,54 @@ class UserController extends Controller
 
         // Create User
         $user = User::create($formFields);
+
+        //Create empty personal info
+        $infoPersonal = new InformacionPersonal();
+        $infoPersonal->user_id = $user->id;
+        $infoPersonal->direccion = "n/a";
+        $infoPersonal->telefono = "n/a";
+        $infoPersonal->nacionalidad = "n/a";
+        $infoPersonal->lugar_de_nacimiento = "n/a";
+        $infoPersonal->fecha_de_nacimiento = "n/a";
+        $infoPersonal->save();
+
+        //Create empty professional experience
+        $experiencia_profesional = new Experiencia_profesional();
+        $experiencia_profesional->user_id = $user->id;
+        $experiencia_profesional->puesto1 = "n/a";
+        $experiencia_profesional->experiencia1 = "n/a";
+        $experiencia_profesional->periodo1 = "n/a";
+        $experiencia_profesional->puesto2 = "n/a";
+        $experiencia_profesional->experiencia2 = "n/a";
+        $experiencia_profesional->periodo2 = "n/a";
+        $experiencia_profesional->puesto3 = "n/a";
+        $experiencia_profesional->experiencia3 = "n/a";
+        $experiencia_profesional->periodo3 = "n/a";
+        $experiencia_profesional->puesto4 = "n/a";
+        $experiencia_profesional->experiencia4 = "n/a";
+        $experiencia_profesional->periodo4 = "n/a";
+        $experiencia_profesional->save();
+
+        $escolaridad= new Escolaridad();
+        $escolaridad->user_id=$user->id;
+        $escolaridad->posgrado1="n/a";
+        $escolaridad->institucion_educativa_p1="n/a";
+        $escolaridad->periodo_de_realizacion_p1="n/a";
+        $escolaridad->posgrado2="n/a";
+        $escolaridad->institucion_educativa_p2="n/a";
+        $escolaridad->periodo_de_realizacion_p2="n/a";
+        $escolaridad->licenciatura="n/a";
+        $escolaridad->institucion_educativa_lic="n/a";
+        $escolaridad->cedula="n/a";
+        $escolaridad->periodo_de_realizacion_lic="n/a";
+        $escolaridad->carrera_tecnica="n/a";
+        $escolaridad->institucion_educativa_ct="n/a";
+        $escolaridad->periodo_de_realizacion_ct="n/a";
+        $escolaridad->preparatoria="n/a";
+        $escolaridad->institucion_educativa_prepa="n/a";
+        $escolaridad->periodo_de_realizacion_prepa="n/a";
+        $escolaridad->save();
+
 
         // Login
         auth()->login($user);
@@ -189,6 +335,52 @@ class UserController extends Controller
             $userRecord->password = Hash::make($password);
             // Save the user record to the database
             $userRecord->save();
+
+            $infoPersonal = new InformacionPersonal();
+            $infoPersonal->user_id = $userRecord->id;
+            $infoPersonal->direccion = "n/a";
+            $infoPersonal->telefono = "n/a";
+            $infoPersonal->nacionalidad = "n/a";
+            $infoPersonal->lugar_de_nacimiento = "n/a";
+            $infoPersonal->fecha_de_nacimiento = "n/a";
+            $infoPersonal->save();
+
+            //Create empty professional experience
+        $experiencia_profesional = new Experiencia_profesional();
+        $experiencia_profesional->user_id = $userRecord->id;
+        $experiencia_profesional->puesto1 = "n/a";
+        $experiencia_profesional->experiencia1 = "n/a";
+        $experiencia_profesional->periodo1 = "n/a";
+        $experiencia_profesional->puesto2 = "n/a";
+        $experiencia_profesional->experiencia2 = "n/a";
+        $experiencia_profesional->periodo2 = "n/a";
+        $experiencia_profesional->puesto3 = "n/a";
+        $experiencia_profesional->experiencia3 = "n/a";
+        $experiencia_profesional->periodo3 = "n/a";
+        $experiencia_profesional->puesto4 = "n/a";
+        $experiencia_profesional->experiencia4 = "n/a";
+        $experiencia_profesional->periodo4 = "n/a";
+        $experiencia_profesional->save();
+
+        $escolaridad= new Escolaridad();
+        $escolaridad->user_id=$userRecord->id;
+        $escolaridad->posgrado1="n/a";
+        $escolaridad->institucion_educativa_p1="n/a";
+        $escolaridad->periodo_de_realizacion_p1="n/a";
+        $escolaridad->posgrado2="n/a";
+        $escolaridad->institucion_educativa_p2="n/a";
+        $escolaridad->periodo_de_realizacion_p2="n/a";
+        $escolaridad->licenciatura="n/a";
+        $escolaridad->institucion_educativa_lic="n/a";
+        $escolaridad->cedula="n/a";
+        $escolaridad->periodo_de_realizacion_lic="n/a";
+        $escolaridad->carrera_tecnica="n/a";
+        $escolaridad->institucion_educativa_ct="n/a";
+        $escolaridad->periodo_de_realizacion_ct="n/a";
+        $escolaridad->preparatoria="n/a";
+        $escolaridad->institucion_educativa_prepa="n/a";
+        $escolaridad->periodo_de_realizacion_prepa="n/a";
+        $escolaridad->save();
         }
 
         // Redirect the user back to the upload form
