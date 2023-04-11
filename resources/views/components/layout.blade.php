@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="images/favicon.ico" />
+    <link rel="icon" href="{{asset('/images/favicon.ico')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -28,31 +28,13 @@
             },
         }
     </script>
-    <script>
-        $(document).ready(function() {
-            // Set up event listener for "Add activity" button
-            $('#add-activity-btn').click(function() {
-                // Get the last activity fieldset (or the activities container if none exist)
-                var lastActivityFieldset = $('#activities-container fieldset:last-child');
-                if (lastActivityFieldset.length === 0) {
-                    lastActivityFieldset = $('#activities-container');
-                }
-
-                // Clone the last activity fieldset and clear its input values
-                var newActivityFieldset = lastActivityFieldset.clone(true, true);
-                newActivityFieldset.find('input, textarea').val('');
-
-                // Add the new activity fieldset to the end of the activities container
-                $('#activities-container').append(newActivityFieldset);
-            });
-        });
-    </script>
+   
     <title>LESP MICH | Sistema de Enseñanza</title>
 </head>
 
 <body class="mb-48">
 
-    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 w-screen">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class="flex items-center">
               <img src="{{ asset('images/logolesp.png')}}" class="h-16 mr-3 sm:h-9 md:h-28" alt="LESP Logo" />

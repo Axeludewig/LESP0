@@ -53,7 +53,7 @@ class PdfController extends Controller
         $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
 
         $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
-        $qrCodeContent = 'https://6dc8-2806-103e-5-9c10-80aa-8d23-33dc-b0e5.ngrok.io/validaciones/search?' . $query;
+        $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
 
         $valor_curricular = $formFields['valor_curricular'];
         $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];

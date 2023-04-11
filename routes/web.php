@@ -84,6 +84,12 @@ Route::put('/users/esco/{user}', [UserController::class, 'update_esco'])->middle
 // ---- USUARIO --- INFORMACIÓN PERSONAL UPDATEEEE-----
 Route::put('/users/exp/{user}', [UserController::class, 'update_exp'])->middleware('auth');
 
+// EVALUACIÓN DE PRUEBA
+Route::get('/users/eval', [UserController::class, 'eval'])->middleware('auth');
+
+Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('auth');
+
+Route::post('/users/eval/{user}', [UserController::class, 'eval_submit'])->middleware('auth');
 
 // EXPEDIENTE
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
@@ -97,7 +103,7 @@ Route::put('/users/password/STORE/{user}', [UserController::class, 'STORE_pass']
 Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth');
 
 // -- USUARIO -- ACTUALIZAR EMAIL!!
-Route::get('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
+Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
 // ADMIN --- EDITAR USUARIOS FORM
 Route::get('/admin/update_user/{user}', [UserController::class, 'update'])->middleware('auth');

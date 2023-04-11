@@ -13,10 +13,89 @@ use League\Csv\Reader;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use PhpOffice\PhpSpreadsheet\Reader\Xls\Escher;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class UserController extends Controller
 {
+    public function eval_submit(Request $request, User $user){
+        $formFields = $request->validate([
+            'nombre' => 'required',
+            'q1' => 'required',
+            'q2' => 'required',
+            'q3' => 'required',
+            'q4' => 'required',
+            'q5' => 'required',
+            'fecha_de_terminacion' => 'required',
+            'nombre_user' => 'required',
+            'valor_curricular' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required'
+        ]);
+
+        $r1 = $formFields['q1'];
+        $r2 = $formFields['q2'];
+        $r3 = $formFields['q3'];
+        $r4 = $formFields['q4'];
+        $r5 = $formFields['q5'];
+    
+        if ($r1+$r2+$r3+$r4+$r5 >= 4){
+            $path = base_path('FIRMAS.png');
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path); 
+            $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    
+            $path2 = base_path('gob.jpg');
+            $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+            $data2 = file_get_contents($path2);
+            $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+    
+            $path3 = base_path('SS1.png');
+            $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+            $data3 = file_get_contents($path3);
+            $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+    
+            $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
+            $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
+    
+            $valor_curricular = $formFields['valor_curricular'];
+            $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];
+            $nombre_del_curso = $formFields['nombre'];
+            $user_id = auth()->user()->rfc;
+            $tipo = 'Asistente';
+    
+            $folio = 'test';
+    
+            $qrcode = (new QRCode())->render($qrCodeContent);
+    
+            // Create a new instance of dompdf
+            $pdf = new Dompdf();
+    
+            // Generate the PDF
+            $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+    
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'vertical');
+    
+            // Render the PDF
+            $pdf->render();
+    
+            $filename = $formFields['nombre'] . '.pdf';
+            return $pdf->stream($filename);
+        } else {
+            echo 'reprobaoOOOOo';
+        }
+
+    
+    }
+
+    public function eval(){
+        return view('users.eval');
+    }
+
     public function update_info(Request $request, InformacionPersonal $user){
         $formFields = $request->validate([
             'user_id' => 'required',
@@ -423,7 +502,7 @@ class UserController extends Controller
 
     public function update_email(Request $request, User $user){
         $formFields = $request->validate([
-            'email' =>  ['nullable', 'email'],
+            'email' =>  ['required', 'email'],
         ]);
         
         $user->update($formFields);

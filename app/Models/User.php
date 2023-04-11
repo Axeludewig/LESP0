@@ -94,4 +94,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Experiencia_profesional::class);
     }
+
+    
+    public function calificaciones()
+    {
+        return $this->hasOne(Calificaciones::class);
+    }
 }

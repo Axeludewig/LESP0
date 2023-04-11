@@ -13,7 +13,7 @@
             <div class="flex flex-col items-center justify-center">
                 <div class="w-64 h-64 border-2 border-gray-400 bg-gray-100 rounded-full overflow-hidden">
                     <img id="picture-box"
-                        src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('/images/no-image.png') }}"
+                        src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('/images/Default_pfp.svg.png') }}"
                         alt="Profile Picture" class="w-full h-full object-cover">
                 </div>
 
@@ -28,36 +28,36 @@
         </form>
 
         <div class="flex items-center place-content-center text-center align-center">
-            <div class="justify-center w-1/2 md:grid md:grid-cols-2 md:grid-rows-2 gap-4 ">
+            <div class="justify-center w-1/2 md:grid md:grid-cols-2 md:grid-rows-2 gap-4 font-sans">
                 <div class="mt-4 flex flex-col items-center  text-xl">
                     <a href="/users/cursos"
                     class="bg-red-600 font-semibold flex justify-center items-center  text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 md:h-20 ">
-                    Ir a Mis Cursos
+                    Ir a Mis Cursos &nbsp; <i class="fa-solid fa-landmark"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/info/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Información Personal
+                    Información Personal &nbsp; <i class="fa-solid fa-address-card"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/esco/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Escolaridad
+                    Escolaridad &nbsp; <i class="fa-solid fa-graduation-cap"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/exp/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Experiencia Profesional
+                    Experiencia Profesional &nbsp;<i class="fa-solid fa-briefcase"></i>
                     </a>
                 </div>
             </div>
         </div>
 
 
-        <div class="mt-12 md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
+        <div class="mt-12 md:grid md:grid-cols-2 md:grid-rows-2 gap-14 font-sans px-14 w-screen ">
             <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
             
                 <h3 class="text-2xl text-center">
@@ -106,31 +106,33 @@
                 </h3>
             </div>
         </div>
-
-    <div class="md:m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200 w-full">
+        <div class="flex place-content-center text-xl text-center mt-6">
+    <div class="md:m-6 flex flex-col items-center mt-4 place-content-center bg-gray-50 border border-gray-200 rounded p-6  hover:bg-gray-200 w-3/4">
         <h3 class="text-2xl text-center">
             <p><span class="font-semibold">Perfil del puesto:</span><br></p>
         </h3>
     </div>
-
-            <form>
-            <div class="flex place-content-center text-xl text-center">
-                <a href="/users/password"
-                    class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56">
-                    Cambiar contraseña
-                </a>
+        </div>
+            <div>
+                <form>
+                <div class="flex place-content-center text-xl text-center mt-6">
+                    <a href="/users/password"
+                        class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56">
+                        Cambiar contraseña
+                    </a>
+                </div>
+                </form>
             </div>
-            </form>
 
             <div>
-                <form action="/users/email/{{auth()->user()->id}}">
+                <form action="/users/email/{{auth()->user()->id}}" method="POST">
                     <div class="flex flex-col items-center mt-4 place-content-center text-xl text-center">
                     @csrf
                     @method('PUT')
                     <label for="email" class="ml-3 mr-3 font-semibold">Agregar o cambiar correo electrónico (email):</label>
-            <input type="text" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-56 mt-2"></input>
+            <input type="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-56 mt-2"></input>
                     
-                        <a href="" class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 mt-4">Actualizar correo</a>
+                        <button type="submit" class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 mt-4">Actualizar correo</button>
                     </div>
                 </form>
             </div>

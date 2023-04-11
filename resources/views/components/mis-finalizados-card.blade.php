@@ -3,7 +3,7 @@
 <x-card>
     <div class="flex">
         <img class="hidden object-contain w-48 mr-6 md:block"
-            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
+            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"   
             alt="" />
         <div>
             <h3 class="text-2xl">

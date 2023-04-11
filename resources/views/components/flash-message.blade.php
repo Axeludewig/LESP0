@@ -5,7 +5,7 @@
     <p>
       {{session('message')}}
     </p>
-    <button class="w-10 flex text-center justify-center items-center text-sm  ml-4 py-1 px-3 bg-white text-laravel rounded-lg"
+    <button class="w-10 flex text-center justify-center items-center text-sm  ml-4 py-1 px-3 bg-white text-laravel rounded-lg font-bold"
             onclick="this.parentElement.style.display='none'">
       X
   </div>
