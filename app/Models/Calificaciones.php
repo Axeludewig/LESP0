@@ -11,8 +11,10 @@ class Calificaciones extends Model
     protected $fillable = [
         'id_evaluacion',
         'id_user',
-
+        'oportunidad',
+        'calificacion'
     ];
+    
     use HasFactory;
     public function evaluacion()
     {

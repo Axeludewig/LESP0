@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_cuestionario');
             $table->string('nombre');
+            $table->string('video');
+            $table->string('numero_consecutivo');
             $table->timestamps();
         });
 
@@ -88,9 +90,7 @@ return new class extends Migration
     public function down(): void
     {
         
-        Schema::dropIfExists('calificaciones');
-        Schema::dropIfExists('cuestionarios');
-        Schema::dropIfExists('evaluaciones');
+        Schema::dropIfExists('calificaciones', 'cuestionarios', 'evaluaciones');
         //
     }
 };
