@@ -24,5 +24,10 @@ class Evaluacion extends Model
     {
         return $this->hasOne(Calificaciones::class, 'id_evaluacion');
     }
+
+    public function permisos()
+    {
+        return $this->hasMany(Permisos_eval::class, 'id_eval');
+    }
     use HasFactory;
 }

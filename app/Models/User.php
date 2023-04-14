@@ -100,4 +100,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Calificaciones::class);
     }
+
+    public function permisos(){
+        return $this->hasMany(Permisos_eval::class);
+    }
 }

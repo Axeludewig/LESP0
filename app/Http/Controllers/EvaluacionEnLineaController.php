@@ -12,9 +12,28 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpParser\Node\Expr\Eval_;
 
 class EvaluacionEnLineaController extends Controller
 {
+    public function show(){
+        $user_id = auth()->user()->id;
+        $permisos = DB::table('permisos_eval')->where('id_usuario',$user_id)->get();
+
+        if ($permisos->count() > 0) {
+        $evaluaciones = DB::table('evaluaciones')
+            ->join('permisos_eval', 'evaluaciones.id', '=', 'permisos_eval.id_eval')
+            ->whereIn('permisos_eval.id', $permisos->pluck('id')->toArray())
+            ->get();
+
+        return view('users.showevals', [
+            'evaluaciones' => $evaluaciones
+        ]);
+        } else {
+            return view('users.showevals-sinpermiso');
+        }
+    }
+
     public function eval_submit(Request $request, User $user){
         $formFields = $request->validate([
             'eval_id' => 'required',

@@ -97,6 +97,9 @@ Route::get('/users/xeval/{eval}', [EvaluacionEnLineaController::class, 'evaluaci
 
 Route::post('/users/xeval/{user}', [EvaluacionEnLineaController::class, 'eval_submit'])->middleware('auth');
 
+Route::get('/users/showevals', [EvaluacionEnLineaController::class, 'show'])->middleware('auth');
+
+
 // EXPEDIENTE /////////
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
 
@@ -126,8 +129,6 @@ Route::get('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'cursosen
 
 //M --- ADMIN --- STOREEEE CURSO EN LÍNEA
 Route::post('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'STORE_cursosenlinea'])->middleware('auth');
-
-
 
 //Mostrar QRs de acceso a capacitaciones
 Route::get('/admin/qrs', [CursosController::class, 'qrs'])->middleware('auth');

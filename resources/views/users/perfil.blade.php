@@ -35,6 +35,12 @@
                     Ir a Mis Cursos &nbsp; <i class="fa-solid fa-landmark"></i>
                     </a>
                 </div>
+                <div class="mt-4 flex flex-col items-center  text-xl">
+                    <a href="/users/showevals"
+                    class="bg-red-600 font-semibold flex justify-center items-center  text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 md:h-20 ">
+                    Ir a Evaluaciones en Línea &nbsp; <i class="fa-solid fa-signal"></i>
+                    </a>
+                </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/info/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
