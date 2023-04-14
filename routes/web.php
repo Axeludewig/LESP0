@@ -90,11 +90,12 @@ Route::get('/users/eval', [UserController::class, 'eval'])->middleware('auth');
 
 Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('auth');
 
-Route::post('/users/eval/{user}', [UserController::class, 'eval_submit'])->middleware('auth');
 
 /////// USERS ------ EVALUACIONES EN LINEA ---------
 
-Route::get('/users/xeval/{eval}', [UserController::class, 'evaluacion'])->middleware('auth');
+Route::get('/users/xeval/{eval}', [EvaluacionEnLineaController::class, 'evaluacion'])->middleware('auth');
+
+Route::post('/users/xeval/{user}', [EvaluacionEnLineaController::class, 'eval_submit'])->middleware('auth');
 
 // EXPEDIENTE /////////
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');

@@ -117,9 +117,9 @@
                         <p>Respuesta #1:</p>
                         <div class="flex flex-row items-center justify-center gap-3">
                         <label for="p1r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                        <input type="radio" name="pregunta1_respuesta" value="opcion1" id="p1r1">
+                        <input type="radio" name="pregunta1_respuesta" value="1" id="p1r1">
                         <label for="p1r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                        <input type="radio" name="pregunta1_respuesta" value="opcion2" id="p1r2">
+                        <input type="radio" name="pregunta1_respuesta" value="2" id="p1r2">
                         </div>
                     </div>
                     
@@ -127,9 +127,9 @@
                         <p>Respuesta #2:</p>
                         <div class="flex flex-row items-center justify-center gap-3">
                         <label for="p2r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                        <input type="radio" name="pregunta2_respuesta" value="opcion1" id="p2r1">
+                        <input type="radio" name="pregunta2_respuesta" value="1" id="p2r1">
                         <label for="p2r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                        <input type="radio" name="pregunta2_respuesta" value="opcion2" id="p2r2">
+                        <input type="radio" name="pregunta2_respuesta" value="2" id="p2r2">
                         </div>
                     </div>
                     
@@ -137,9 +137,9 @@
                         <p>Respuesta #3:</p>
                         <div class="flex flex-row items-center justify-center gap-3">
                         <label for="p3r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                        <input type="radio" name="pregunta3_respuesta" value="opcion1" id="p3r1">
+                        <input type="radio" name="pregunta3_respuesta" value="1" id="p3r1">
                         <label for="p3r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                        <input type="radio" name="pregunta3_respuesta" value="opcion2" id="p3r2">
+                        <input type="radio" name="pregunta3_respuesta" value="2" id="p3r2">
                         </div>
                     </div>
                     
@@ -147,9 +147,9 @@
                         <p>Respuesta #4:</p>
                         <div class="flex flex-row items-center justify-center gap-3">
                         <label for="p4r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                        <input type="radio" name="pregunta4_respuesta" value="opcion1" id="p4r1">
+                        <input type="radio" name="pregunta4_respuesta" value="1" id="p4r1">
                         <label for="p4r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                        <input type="radio" name="pregunta4_respuesta" value="opcion2" id="p4r2">
+                        <input type="radio" name="pregunta4_respuesta" value="2" id="p4r2">
                         </div>
                     </div>
                     
@@ -157,9 +157,9 @@
                         <p>Respuesta #5:</p>
                         <div class="flex flex-row items-center justify-center gap-3">
                         <label for="p5r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                        <input type="radio" name="pregunta5_respuesta" value="opcion1" id="p5r1">
+                        <input type="radio" name="pregunta5_respuesta" value="1" id="p5r1">
                         <label for="p5r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                        <input type="radio" name="pregunta5_respuesta" value="opcion2" id="p5r2">
+                        <input type="radio" name="pregunta5_respuesta" value="2" id="p5r2">
                         </div>
                     </div>
                 </div>
