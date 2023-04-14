@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_cuestionario');
             $table->string('nombre');
             $table->string('video');
             $table->string('numero_consecutivo');
@@ -26,33 +25,18 @@ return new class extends Migration
             $table->string('pregunta1');
             $table->string('pregunta1_opcion1');
             $table->string('pregunta1_opcion2');
-            $table->string('pregunta1_opcion3');
-            $table->string('pregunta1_opcion4');
-            $table->string('pregunta1_opcion5');
             $table->string('pregunta2');
             $table->string('pregunta2_opcion1');
             $table->string('pregunta2_opcion2');
-            $table->string('pregunta2_opcion3');
-            $table->string('pregunta2_opcion4');
-            $table->string('pregunta2_opcion5');
             $table->string('pregunta3');
             $table->string('pregunta3_opcion1');
             $table->string('pregunta3_opcion2');
-            $table->string('pregunta3_opcion3');
-            $table->string('pregunta3_opcion4');
-            $table->string('pregunta3_opcion5');
             $table->string('pregunta4');
             $table->string('pregunta4_opcion1');
             $table->string('pregunta4_opcion2');
-            $table->string('pregunta4_opcion3');
-            $table->string('pregunta4_opcion4');
-            $table->string('pregunta4_opcion5');
             $table->string('pregunta5');
             $table->string('pregunta5_opcion1');
             $table->string('pregunta5_opcion2');
-            $table->string('pregunta5_opcion3');
-            $table->string('pregunta5_opcion4');
-            $table->string('pregunta5_opcion5');
             $table->string('pregunta1_respuesta');
             $table->string('pregunta2_respuesta');
             $table->string('pregunta3_respuesta');
@@ -70,10 +54,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('evaluaciones', function (Blueprint $table) {
-            $table->foreign('id_cuestionario')->references('id')->on('cuestionarios')->onDelete('cascade');
-        });
-    
         Schema::table('cuestionarios', function (Blueprint $table) {
             $table->foreign('id_evaluacion')->references('id')->on('evaluaciones')->onDelete('cascade');
         });
@@ -89,8 +69,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('cuestionarios');
+        Schema::dropIfExists('calificaciones');
+        Schema::dropIfExists('evaluaciones');
         
-        Schema::dropIfExists('calificaciones', 'cuestionarios', 'evaluaciones');
         //
     }
 };

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\EvaluacionEnLineaController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\participantesController;
@@ -84,14 +85,18 @@ Route::put('/users/esco/{user}', [UserController::class, 'update_esco'])->middle
 // ---- USUARIO --- INFORMACIÓN PERSONAL UPDATEEEE-----
 Route::put('/users/exp/{user}', [UserController::class, 'update_exp'])->middleware('auth');
 
-// EVALUACIÓN DE PRUEBA
+// EVALUACIÓN DE PRUEBA //////// USERS
 Route::get('/users/eval', [UserController::class, 'eval'])->middleware('auth');
 
 Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('auth');
 
 Route::post('/users/eval/{user}', [UserController::class, 'eval_submit'])->middleware('auth');
 
-// EXPEDIENTE
+/////// USERS ------ EVALUACIONES EN LINEA ---------
+
+Route::get('/users/xeval/{eval}', [UserController::class, 'evaluacion'])->middleware('auth');
+
+// EXPEDIENTE /////////
 Route::get('/users/expediente', [UserController::class, 'expediente'])->middleware('auth');
 
 // -- USUARIO -- CAMBIAR DE CONTRASEÑA -- USUARIO
@@ -114,6 +119,12 @@ Route::put('/admin/update_user/STORE/{user}', [UserController::class, 'STORE_upd
 // -- ADMIN --- EDITAR PASSWORD DE USUARIO
 Route::put('/admin/password/STORE/{user}', [UserController::class, 'admin_STORE_pass'])->middleware('auth');
 
+
+//M --- ADMIN --- CREAR CURSO EN LÍNEA
+Route::get('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'cursosenlinea'])->middleware('auth');
+
+//M --- ADMIN --- STOREEEE CURSO EN LÍNEA
+Route::post('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'STORE_cursosenlinea'])->middleware('auth');
 
 
 

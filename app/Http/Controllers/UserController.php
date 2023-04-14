@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Escolaridad;
+use App\Models\Evaluacion;
 use App\Models\Experiencia_profesional;
 use App\Models\InformacionPersonal;
 use App\Models\User;
@@ -21,6 +22,13 @@ use Dompdf\Options;
 
 class UserController extends Controller
 {
+    public function evaluacion(Evaluacion $eval){
+        return view('users.evaluacion', [
+            'eval' => $eval
+        ]);
+    }
+
+    
     public function eval_submit(Request $request, User $user){
         $formFields = $request->validate([
             'nombre' => 'required',

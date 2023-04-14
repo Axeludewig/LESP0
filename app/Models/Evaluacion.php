@@ -10,18 +10,17 @@ class Evaluacion extends Model
     protected $table = 'evaluaciones';
 
     protected $fillable = [
-        'id_cuestionario',
         'nombre',
         'video',
         'numero_consecutivo'
     ];
 
-    public function cuestionario()
+    public function calificaciones()
     {
-        return $this->belongsTo(Cuestionario::class, 'id_cuestionario');
+        return $this->hasOne(Calificaciones::class, 'id_evaluacion');
     }
 
-    public function calificaciones()
+    public function cuestionarios()
     {
         return $this->hasOne(Calificaciones::class, 'id_evaluacion');
     }
