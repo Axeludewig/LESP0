@@ -1,12 +1,21 @@
 @props(['eval'])
 @props(['cuestionario'])
 <x-layout>
+  <a href="/users/showevals" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+  </a>
     <style>
         #exam-questions {
           display: none;
         }
         </style>
+         <div
+         class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center ">
+         <h3 class="text-3xl ">
+             <p class="font-semibold">{{$eval->nombre}}</p>
+         </h3>
+     </div>
         <div class="flex items-center justify-center">
+         
           <video id="myVideo" controls>
             <source src="{{asset('storage/' . $eval->video)}}" type="video/mp4">
           </video>

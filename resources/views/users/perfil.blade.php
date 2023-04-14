@@ -32,31 +32,31 @@
                 <div class="mt-4 flex flex-col items-center  text-xl">
                     <a href="/users/cursos"
                     class="bg-red-600 font-semibold flex justify-center items-center  text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 md:h-20 ">
-                    Ir a Mis Cursos &nbsp; <i class="fa-solid fa-landmark"></i>
+                    Mis Cursos &nbsp; <i class="fa-solid fa-landmark"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center  text-xl">
                     <a href="/users/showevals"
                     class="bg-red-600 font-semibold flex justify-center items-center  text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring hover:scale-125 w-5/6 md:w-56 md:h-20 ">
-                    Ir a Evaluaciones en Línea &nbsp; <i class="fa-solid fa-signal"></i>
+                    Evaluaciones en Línea&nbsp;<i class="fa-solid fa-signal p-2"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/info/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Información Personal &nbsp; <i class="fa-solid fa-address-card"></i>
+                    Información Personal&nbsp;<i class="fa-solid fa-address-card p-2"></i>
                     </a>
                 </div>
-                <div class="mt-4 flex flex-col items-center text-center text-xl">
+                <div class="mt-4 flex flex-col items-center text-center justify-center text-xl">
                     <a href="/users/esco/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Escolaridad &nbsp; <i class="fa-solid fa-graduation-cap"></i>
+                    Escolaridad&nbsp;<i class="p-2 fa-solid fa-graduation-cap"></i>
                     </a>
                 </div>
                 <div class="mt-4 flex flex-col items-center text-center text-xl">
                     <a href="/users/exp/{{auth()->user()->id}}"
                     class="bg-red-600 font-semibold text-white rounded py-2 px-4 hover:bg-white hover:text-black hover:ring flex justify-center items-center hover:scale-125 w-5/6 md:w-56 md:h-20">
-                    Experiencia Profesional &nbsp;<i class="fa-solid fa-briefcase"></i>
+                    Experiencia Profesional&nbsp;<i class="fa-solid fa-briefcase"></i>
                     </a>
                 </div>
             </div>

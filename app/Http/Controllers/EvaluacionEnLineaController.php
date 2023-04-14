@@ -22,6 +22,7 @@ class EvaluacionEnLineaController extends Controller
 
         if ($permisos->count() > 0) {
         $evaluaciones = DB::table('evaluaciones')
+        ->select('evaluaciones.id as id', 'permisos_eval.id as permisos_eval_id', 'nombre')
             ->join('permisos_eval', 'evaluaciones.id', '=', 'permisos_eval.id_eval')
             ->whereIn('permisos_eval.id', $permisos->pluck('id')->toArray())
             ->get();
