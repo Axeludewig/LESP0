@@ -12,11 +12,7 @@
             <a href="/listings/create">Crear Nuevo Curso <i class="fa-sharp fa-solid fa-plus"></i></a>
         </h3>
     </div>
-    <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
-        <h3 class="text-2xl">
-            <a href="/admin/cursoenlinea">Crear Nuevo Curso en línea <i class="fa-sharp fa-solid fa-plus"></i></a>
-        </h3>
-    </div>
+  
     <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
         <h3 class="text-2xl">
             <a href="/">Cursos Disponibles <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>

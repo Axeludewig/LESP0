@@ -11,6 +11,12 @@
                 <a href="/admin/paneldecursos"> Administrar cursos <i class="fa-sharp fa-solid fa-hammer"></i></a>
             </h3>
         </div>
+        <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
+            <h3 class="text-2xl">
+                <a href="/admin/cursosenlinea"> Cursos en línea <i class="fa-solid fa-signal p-2"></i></a>
+            </h3>
+        </div>
+
 
         <div class="m-6 flex bg-gray-50 border border-gray-200 rounded p-6 place-content-center hover:bg-gray-200">
             <h3 class="text-2xl">

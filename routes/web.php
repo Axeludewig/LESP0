@@ -127,6 +127,10 @@ Route::put('/admin/password/STORE/{user}', [UserController::class, 'admin_STORE_
 //M --- ADMIN --- CREAR CURSO EN LÍNEA
 Route::get('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'cursosenlinea'])->middleware('auth');
 
+Route::get('/admin/cursosenlinea', [EvaluacionEnLineaController::class, 'cp'])->middleware('auth');
+
+Route::get('/admin/permisos', [EvaluacionEnLineaController::class, 'permisos'])->middleware('auth');
+
 //M --- ADMIN --- STOREEEE CURSO EN LÍNEA
 Route::post('/admin/cursoenlinea', [EvaluacionEnLineaController::class, 'STORE_cursosenlinea'])->middleware('auth');
 

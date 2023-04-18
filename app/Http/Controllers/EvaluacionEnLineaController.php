@@ -16,6 +16,21 @@ use PhpParser\Node\Expr\Eval_;
 
 class EvaluacionEnLineaController extends Controller
 {
+
+    public function permisos(){
+        $evals = DB::table('evaluaciones')->get();
+        $users = DB::table('users')->get();
+
+        return view('admin.permisos',[
+            'evals' => $evals,
+            'users' => $users
+        ]);
+    }
+    
+    public function cp(){
+        return view('admin.cursosenlinea');
+    }
+
     public function show(){
         $user_id = auth()->user()->id;
         $permisos = DB::table('permisos_eval')->where('id_usuario',$user_id)->get();
@@ -139,7 +154,7 @@ class EvaluacionEnLineaController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required',
             'numero_consecutivo' => 'required',
-            'video' => 'file|max:51200', // Max file size of 50MB
+            'video' => 'file|max:250000', // Max file size of 50MB
         ]);
 
         $validatedData2 = $request->validate([
