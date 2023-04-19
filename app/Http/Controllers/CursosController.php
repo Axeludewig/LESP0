@@ -23,7 +23,7 @@ class CursosController extends Controller
 
         $listing->update($formFields);
 
-        return redirect('/admin/paneldecursos')->with('message', 'Curso modificado correctamente.');
+        return back()->with('message', 'Curso modificado correctamente.');
     }
     
     //MUESTRA TODOS LOS CURSOS
