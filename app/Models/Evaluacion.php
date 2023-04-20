@@ -10,10 +10,15 @@ class Evaluacion extends Model
     protected $table = 'evaluaciones';
 
     protected $fillable = [
+        'id_curso',
         'nombre',
         'video',
         'numero_consecutivo'
     ];
+
+    public function cursos(){
+        return $this->belongsTo(Cursos::class, 'id_curso');
+    }
 
     public function calificaciones()
     {

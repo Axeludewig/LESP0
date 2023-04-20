@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_curso');
             $table->string('nombre');
             $table->string('video');
             $table->string('numero_consecutivo');
@@ -61,6 +62,10 @@ return new class extends Migration
         Schema::table('calificaciones', function (Blueprint $table) {
             $table->foreign('id_evaluacion')->references('id')->on('evaluaciones')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::table('evaluaciones', function (Blueprint $table) {
+            $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('cascade');
         });
     }
 

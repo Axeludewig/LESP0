@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cuestionario;
+use App\Models\Cursos;
 use App\Models\Evaluacion;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -150,12 +151,33 @@ class EvaluacionEnLineaController extends Controller
         return view('admin.CREATE_evaluacion');
     }
     //
-    public function STORE_cursosenlinea(Request $request){
+    public function STORE_cursosenlinea(Request $request){     
+        
         $validatedData = $request->validate([
             'nombre' => 'required',
             'numero_consecutivo' => 'required',
+            'modalidad' => 'required',
+            'tipo' => 'required',
+            'nombre_del_responsable' => 'required',
+            'coordinacion' => 'required',
+            'dirigido' => 'required',
+            'numero_de_asistentes' => 'required',
+            'horas_teoricas' => 'required',
+            'horas_practicas' => 'required',
+            'categoria' => 'required',
+            'auditorio' => 'required',
+            'fecha_de_inicio' => 'required',
+            'fecha_de_terminacion' => 'required',
+            'objetivo_general' => 'required',
+            'forma_de_evaluacion' => 'required',
+            'porcentaje_asistencia' => 'required',
+            'calificacion_requerida' => 'required',
+            'evaluacion_adquirida' => 'required',
+            'status' => 'required',
+            'tags' => 'required',
             'video' => 'file|max:250000', // Max file size of 50MB
         ]);
+
 
         $validatedData2 = $request->validate([
             'id_evaluacion' => 'required',
@@ -181,18 +203,53 @@ class EvaluacionEnLineaController extends Controller
             'pregunta5_respuesta' => 'required',
         ]);
 
+        $curso_data=[];
+
+        $curso_data['nombre'] = $validatedData['nombre'];
+        $curso_data['numero_consecutivo'] = $validatedData['numero_consecutivo'];
+        $curso_data['modalidad'] = $validatedData['modalidad'];
+        $curso_data['tipo'] = $validatedData['tipo'];
+        $curso_data['nombre_del_responsable'] = $validatedData['nombre_del_responsable'];
+        $curso_data['coordinacion'] = $validatedData['coordinacion'];
+        $curso_data['dirigido'] = $validatedData['dirigido'];
+        $curso_data['numero_de_asistentes'] = $validatedData['numero_de_asistentes'];
+        $curso_data['horas_teoricas'] = $validatedData['horas_teoricas'];
+        $curso_data['horas_practicas'] = $validatedData['horas_practicas'];
+        $curso_data['categoria'] = $validatedData['categoria'];
+        $curso_data['auditorio'] = $validatedData['auditorio'];
+        $curso_data['fecha_de_inicio'] = $validatedData['fecha_de_inicio'];
+        $curso_data['fecha_de_terminacion'] = $validatedData['fecha_de_terminacion'];
+        $curso_data['objetivo_general'] = $validatedData['objetivo_general'];
+        $curso_data['forma_de_evaluacion'] = $validatedData['forma_de_evaluacion'];
+        $curso_data['porcentaje_asistencia'] = $validatedData['porcentaje_asistencia'];
+        $curso_data['calificacion_requerida'] = $validatedData['calificacion_requerida'];
+        $curso_data['evaluacion_adquirida'] = $validatedData['evaluacion_adquirida'];
+        $curso_data['status'] = $validatedData['status'];
+        $curso_data['tags'] = $validatedData['tags'];
+        $curso_data['img'] = '/images/logolesp.png';
+
+                
+        $newCurso = Cursos::create($curso_data);
+
+        $evaluacion_data = [];
+
+        $evaluacion_data['id_curso'] = $newCurso->id;
+        $evaluacion_data['nombre'] = $newCurso->nombre;
+        $evaluacion_data['video'] = $validatedData['video'];
+        $evaluacion_data['numero_consecutivo'] = $newCurso->numero_consecutivo;
+
 
         if($request->hasFile('video')) {
             // Store the new video file in the storage directory
             $validatedData['video'] = $request->file('video')->store('videos', 'public');
 
-            $evalz = Evaluacion::create($validatedData);
+            $evalz = Evaluacion::create($evaluacion_data);
 
             $validatedData2['id_evaluacion'] = $evalz->id;
 
             $uwu = Cuestionario::create($validatedData2);
 
             return redirect()->back()->with('message', 'Curso creado correctamente.');;
-        }        
+        }      
     }
 }

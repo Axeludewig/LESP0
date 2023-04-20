@@ -52,7 +52,7 @@ Route::get('/usuarios/editar', [UserController::class, 'update'])->middleware('a
 // Formulario para crear 
 Route::get('/usuarios', [UserController::class, 'usuarios']);
 
-// Formulario para crear 
+// AGREGAR USUARIOS CON .csv
 Route::post('/usuarios', [UserController::class, 'mass_store']);
 
 // ACTUALIZAR LA FOTO DE PERFIL

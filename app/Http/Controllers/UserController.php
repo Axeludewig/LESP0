@@ -345,7 +345,13 @@ class UserController extends Controller
             $password = "123456";
             
             $userRecord->observaciones = "sin registro";
-            $userRecord->es_admin = "0";
+
+            if($userRecord->nombre == "admin"){ 
+                $userRecord->es_admin = "1";
+            } else {
+                $userRecord->es_admin = "0";
+            }
+            
             $userRecord->password = Hash::make($password);
             // Save the user record to the database
             $userRecord->save();

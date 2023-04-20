@@ -52,5 +52,8 @@ class Cursos extends Model
                     ->withPivot('nombre_participante', 'rfc_participante', 'ubicacion', 'fecha_de_inicio', 'fecha_de_terminacion', 'valor_curricular', 'img');
     }
 
+    public function evaluacion(){
+        return $this->hasOne(Evaluacion::class, 'id_curso');
+    }
 
 }
