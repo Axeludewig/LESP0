@@ -18,6 +18,17 @@ use PhpParser\Node\Expr\Eval_;
 class EvaluacionEnLineaController extends Controller
 {
 
+    public function xeval(Cursos $curso){
+
+        $eval = DB::table('evaluaciones')->where('id_curso', $curso->id)->first();
+
+        $cuestionario = DB::table('cuestionarios')->where('id', $eval->id)->first();
+        return view('users.evaluacion', [
+            'eval' => $eval,
+            'cuestionario' => $cuestionario
+        ]);
+    }
+
     public function permisos(){
         $evals = DB::table('evaluaciones')->get();
         $users = DB::table('users')->get();
@@ -49,6 +60,14 @@ class EvaluacionEnLineaController extends Controller
         } else {
             return view('users.showevals-sinpermiso');
         }
+    }
+
+    public function showall(){
+        $evals = DB::table('evaluaciones')->get();
+
+        return view ('users.showallevals', [
+            'evaluaciones' => $evals
+        ]);
     }
 
     public function eval_submit(Request $request, User $user){

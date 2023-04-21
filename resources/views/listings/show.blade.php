@@ -185,7 +185,7 @@
                                         class="border border-gray-200 rounded p-2 w-full" name="tipo"
                                         rows="10" value="Asistente" </input>
 
-                                    @if (auth()->user()->es_admin == '0')
+                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial')
                                         <button type="submit"
                                             class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                                             Registrarse
@@ -266,6 +266,8 @@
                         </form>
                     </div>
                 @endif
+                    
+                
 
             </div>
     </div>

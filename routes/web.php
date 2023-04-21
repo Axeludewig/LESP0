@@ -95,9 +95,13 @@ Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('a
 
 Route::get('/users/xeval/{eval}', [EvaluacionEnLineaController::class, 'evaluacion'])->middleware('auth');
 
+Route::get('/users/xevalz/{curso}', [EvaluacionEnLineaController::class, 'xeval'])->middleware('auth');
+
 Route::post('/users/xeval/{user}', [EvaluacionEnLineaController::class, 'eval_submit'])->middleware('auth');
 
 Route::get('/users/showevals', [EvaluacionEnLineaController::class, 'show'])->middleware('auth');
+
+Route::get('/users/showallevals', [EvaluacionEnLineaController::class, 'showall'])->middleware('auth');
 
 
 // EXPEDIENTE /////////

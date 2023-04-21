@@ -1,7 +1,7 @@
 @props(['eval'])
 @props(['cuestionario'])
 <x-layout>
-  <a href="/users/showevals" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+  <a href="/users/showallevals" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
   </a>
     <style>
         #exam-questions {

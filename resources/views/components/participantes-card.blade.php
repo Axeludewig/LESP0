@@ -28,15 +28,7 @@
                 <p><span class="font-bold">Horas prácticas:</span> {{ $listing->horas_practicas }}</p>
                 <p><span class="font-bold">Categoría:</span> {{ $listing->categoria }}</p>
                 <p><span class="font-bold">Objetivo general:</span> {{ $listing->objetivo_general }}</p>
-                <p><span class="font-bold">Forma de evaluación:</span> {{ $listing->forma_de_evaluacion }}</p>
-                <p><span class="font-bold">Porcentaje de asistencia requerido para acreditar curso del 70 al
-                        100%:</span> {{ $listing->porcentaje_asistencia }}
-                </p>
-                <p><span class="font-bold">Calificación requerida para acreditar curso (cuestionario cuando aplique) del
-                        80% al 100%: </span>
-                    {{ $listing->calificacion_requerida }}</p>
-                <p><span class="font-bold">Requiere evaluación de la capacitación adquidida (antes de los 30 días
-                        hábiles) Sí/No :</span> {{ $listing->evaluacion_adquirida }}</p>
+                
             </h2>
 
         </div>

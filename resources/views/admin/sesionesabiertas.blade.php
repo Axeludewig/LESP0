@@ -6,7 +6,7 @@
       @endif
     
       @include('partials._user_search')
-      <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center hover:text-black hover:bg-mich4">
+      <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
         <h3 class="text-2xl ">
             <p>Sesiones actualmente abiertas</p>
         </h3>
