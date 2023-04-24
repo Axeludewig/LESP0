@@ -29,7 +29,7 @@
                         $cuenta = $participantes->count();
                     @endphp
                     <div>
-                    <span class="font-semibold">Participantes:</span> {{ $cuenta }}.
+                    <span class="font-semibold">Participantes: {{ $cuenta }}.</span>
                     <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel" data-toggle="" data-target="#participants">
                         Mostrar <i class="fa-solid fa-plus"></i>
                     </button>
