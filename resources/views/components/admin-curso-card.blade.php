@@ -22,6 +22,51 @@
                         <p class="text-red-600">Status: {{$listing->status}}</p>
                     @endif                    
                 </div>
+
+                <div class="m-4">
+                    @php
+                        $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
+                        $cuenta = $participantes->count();
+                    @endphp
+                    <div>
+                    <span class="font-semibold">Participantes:</span> {{ $cuenta }}.
+                    <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel" data-toggle="" data-target="#participants">
+                        Mostrar <i class="fa-solid fa-plus"></i>
+                    </button>
+                    </div>
+                    
+                        <script>
+                            $(function() {
+                                // Hide the participant list by default
+                                $('#participants').hide();
+                    
+                                // Toggle the participant list visibility when the button is clicked
+                                $('.show-participants').click(function() {
+                                    var target = $(this).data('target');
+                                    var $target = $(target);
+                    
+                                    if ($target.attr('data-toggle') === 'hidden') {
+                                        $target.slideDown();
+                                        $target.attr('data-toggle', 'visible');
+                                    } else {
+                                        $target.slideUp();
+                                        $target.attr('data-toggle', 'hidden');
+                                    }
+                                });
+                            });
+                        </script>
+                    <div class="flex flex-col" id="participants" data-toggle="hidden">
+                        <ol>
+                            <style>ol {
+                                list-style-type: decimal;
+                            }</style>
+                        @foreach ($participantes as $participante)
+                            <li>{{ $participante->nombre_participante }}</li>
+                        @endforeach
+                        </ol>
+                    </div>
+                </div>
+                
             <div class="text-lg mt-4">
                 @if($listing->auditorio !== 'Virtual')
                 <i class="fa-solid fa-location-dot"></i> {{ $listing->auditorio }}
@@ -132,6 +177,8 @@
                 </div>
             </form>
         </div>
+    </div>
+    
 
     </div>
 </x-card>

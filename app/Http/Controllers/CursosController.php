@@ -46,8 +46,10 @@ class CursosController extends Controller
     }
 
     public function showall() {
+        $listings = Cursos::latest()->filter(request(['tag', 'search']))->paginate(6);
+
         return view('admin.showallcursos', [
-            'listings' => Cursos::latest()->filter(request(['tag', 'search']))->paginate(6)
+            'listings' => $listings,
         ]);
     }
 
