@@ -156,13 +156,16 @@
                                                 hábiles) Sí/No :</span> {{ $listing->evaluacion_adquirida }}</p>
                                     </h2>
 
-
-
+                                        @php
+                                            if ($listing->img == null) 
+                                                $listing->img = "n/a"
+                                            
+                                        @endphp
 
                                     <div class="mb-6">
                                         <label for="img" class="inline-block text-lg mb-2">
                                         </label>
-                                        <input type="text" hidden="true" contenteditable="false"
+                                        <input type="hidden"  contenteditable="false"
                                             class="border border-gray-200 rounded p-2 w-full" name="img"
                                             rows="10" value="{{ $listing->img }}"
                                             placeholder="{{ $listing->img }}">
@@ -186,6 +189,10 @@
                                         rows="10" value="Asistente" </input>
 
                                     @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial')
+
+                                        <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
+                                        <input type="hidden" name="id_curso" value="{{$listing->id}}">
+
                                         <button type="submit"
                                             class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                                             Registrarse

@@ -7,6 +7,7 @@ use App\Models\Cuestionario;
 use App\Models\Cursos;
 use App\Models\Evaluacion;
 use App\Models\User;
+use App\Models\Validaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use chillerlan\QRCode\QRCode;
@@ -63,7 +64,10 @@ class EvaluacionEnLineaController extends Controller
     }
 
     public function showall(){
-        $evals = DB::table('evaluaciones')->get();
+        $evals = DB::table('evaluaciones')
+        ->join('cursos', 'evaluaciones.id_curso', '=', 'cursos.id')
+        ->where('cursos.status', '<>', 'Finalizado')
+        ->get();
 
         return view ('users.showallevals', [
             'evaluaciones' => $evals
@@ -85,6 +89,13 @@ class EvaluacionEnLineaController extends Controller
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required'
         ]);
+
+
+        $idx = auth()->user()->id;
+        $tru = DB::table('validaciones')->where('id_user', $idx)->first();
+        if (isset($tru)) {
+            return redirect()->back()->with('message', 'Ya habías aprobado esta evaluación antes.');;
+        }      
 
         $eval_id= $formFields['eval_id'];
         $respuestas= DB::table('cuestionarios')->where('id', $eval_id)->first();
@@ -109,6 +120,52 @@ class EvaluacionEnLineaController extends Controller
 
     
         if ($puntos >= 4){
+            
+            $valor_curricular = $formFields['valor_curricular'];
+            $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];
+            $nombre_del_curso = $formFields['nombre'];
+
+            $tipo = 'Asistente';
+
+            // el objeto de la eval
+            $eval = DB::table('evaluaciones')->where('id', $eval_id)->first();
+            //el id que tiene linkeado
+            $id_curso = $eval->id_curso;
+            //el curso de ese ID
+            $curso = DB::table('cursos')->where('id', $id_curso)->first();
+            //el numero consecutivo de ese curso
+            $numero_consecutivo = $curso->numero_consecutivo;
+
+            $currentYear = date('Y');
+            $prefolio = 'B2A' . $currentYear . 'C' . $numero_consecutivo . 'F';
+
+            $count = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->count();
+
+            if ($count === 0) {
+                // If there are no matching records, set a new variable with value 01
+                $newVar = '01';
+            } else {
+                // If there are matching records, generate the next number with leading zeros if needed
+                $newVar = str_pad($count + 1, 2, '0', STR_PAD_LEFT);
+            }
+
+            $folio = $prefolio . $newVar;
+
+            $validacion = [];
+
+            $validacion['id_user']=auth()->user()->id;
+            $validacion['id_curso']=$id_curso;
+            $validacion['nombre_curso']=$nombre_del_curso;
+            $validacion['nombre_usuario']=$nombre_usuario;
+            $validacion['valor_curricular']=$valor_curricular;
+            $validacion['valor_curricular']=$valor_curricular;
+            $validacion['status']='Verificado';
+            $validacion['tipo']='Asistente';
+            $validacion['folio'] = $folio;
+
+            Validaciones::create($validacion);
+            
+
             $path = base_path('FIRMAS.png');
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $data = file_get_contents($path); 
@@ -126,14 +183,6 @@ class EvaluacionEnLineaController extends Controller
     
             $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
             $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
-    
-            $valor_curricular = $formFields['valor_curricular'];
-            $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];
-            $nombre_del_curso = $formFields['nombre'];
-            $user_id = auth()->user()->rfc;
-            $tipo = 'Asistente';
-    
-            $folio = 'test';
     
             $qrcode = (new QRCode())->render($qrCodeContent);
     

@@ -15,6 +15,17 @@
             <div class="mt-3 text-xl mb-4"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
             <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $listing->fecha_de_terminacion }}</div>
             <x-listing-tags :tagsCsv="$listing->tags" />
+                <div class="font-semibold text-xl mt-6">
+                    @if($listing->status == 'Disponible')
+                        <p class="text-green-600">Status: {{$listing->status}}</p>
+                    @endif
+                    @if($listing->status == 'En proceso')
+                        <p class="text-yellow-600">Status: {{$listing->status}}</p>
+                    @endif
+                    @if($listing->status == 'Finalizado')
+                        <p class="text-red-600">Status: {{$listing->status}}</p>
+                    @endif                    
+                </div>
             <div class="text-lg mt-4">
                 <span class="font-bold"> Auditorio:</span>
                 {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>

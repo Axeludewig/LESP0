@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('participantes', function (Blueprint $table) {
             $table->id('id');
+            $table->unsignedBigInteger('id_user')->nullable();
+            $table->unsignedBigInteger('id_curso');
             $table->string('nombre_curso');
             $table->string('rfc_participante');
             $table->string('nombre_participante');
@@ -26,6 +28,11 @@ return new class extends Migration
             $table->timestamp('fecha_de_registro')->nullable();
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::table('participantes', function (Blueprint $table) {
+            $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

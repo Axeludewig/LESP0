@@ -41,14 +41,14 @@
             </form>
         </div>
     @endif
-    @if (auth()->check() && $listing->tipo == 'Presencial')
+    @if (auth()->check() && $listing->tipo == 'Presencial' && auth()->user()->es_admin=='0')
         <div class="flex place-content-center mt-6">
                 @csrf
                 <a href="/listings/{{ $listing->id }}"
                     class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Registrarse</a>
         </div>
     @endif
-    @if (auth()->check() && $listing->tipo == 'Virtual')
+    @if (auth()->check() && $listing->tipo == 'Virtual' && auth()->user()->es_admin=='0')
         <div class="flex place-content-center mt-6">
                 <a href="/users/xevalz/{{$listing->id}}"
                     class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Ir a evaluación</a>

@@ -52,8 +52,8 @@ class ValidacionesController extends Controller
 
     public function validaciones(Request $request) {
         $formFields = $request->validate([
-            'nombre_curso' => 'required',
             'id_curso' => 'required',
+            'nombre_curso' => 'required',
             'valor_curricular' => 'required',
             'status' => 'required',
             'tipo' => 'required',
@@ -66,6 +66,7 @@ class ValidacionesController extends Controller
         $tipo = $formFields['tipo'];
         $folio = $formFields['folio'];
         $id = $formFields['id_curso'];
+        
 
         $participantes_del_curso = DB::table('participantes')
             ->where('nombre_curso', '=', $nombre_curso)
@@ -82,8 +83,16 @@ class ValidacionesController extends Controller
                 foreach ($participantes_del_curso as $participante) {
             
                     // $nombre_completo = $participante->nombre . ' ' . $participante->apellido_paterno . ' ' . $participante->apellido_materno;
+
+                    if ($participante->id_user === null) {
+                        $id_user = null;
+                    } else {
+                        $id_user = $participante->id_user;
+                    }
                     
                         DB::table('validaciones')->insert([
+                            'id_curso' => $id,
+                            'id_user' => $id_user,
                             'nombre_curso' => $nombre_curso,
                             'nombre_usuario' => $participante->nombre_participante,
                             'valor_curricular' => $valor_curricular,

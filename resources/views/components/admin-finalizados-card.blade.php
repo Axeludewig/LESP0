@@ -23,7 +23,9 @@
                 @php
                     $valor_curricular = $listing->horas_teoricas + $listing->horas_practicas;
                 @endphp
-
+                
+                <input type="hidden" name="id_curso" value="{{ $listing->id}}">
+                
                 <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_curso"
                     hidden="true" value="{{ $listing->nombre }}" />
 
@@ -36,8 +38,9 @@
 
                 <input type="text" name="tipo" hidden="true" value="Asistente" />
 
+                @php $currentYear = now()->format('Y'); @endphp
                 <input type="text" name="folio" hidden="true"
-                    value="B2A2023{{ $listing->numero_consecutivo }}F" />
+                    value="B2A{{$currentYear}}C{{ $listing->numero_consecutivo }}F" />
 
                 <button type="submit"
                     class="mt-3 w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Generar

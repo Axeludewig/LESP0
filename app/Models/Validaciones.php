@@ -9,12 +9,14 @@ class Validaciones extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_user',
+        'id_curso',
         'nombre_curso',
         'nombre_usuario',
         'valor_curricular',
         'status',
         'tipo',
-        'folio'
+        'folio',
     ];
 
     public function scopeFilter($query, array $filters) {
@@ -32,6 +34,11 @@ class Validaciones extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'nombre_usuario', 'nombre');
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    public function curso()
+    {
+        return $this->belongsTo(Cursos::class, 'id_curso', 'id');
     }
 }

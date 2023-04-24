@@ -14,9 +14,9 @@
 
         <form method="POST" action="/participantes" enctype="multipart/form-data">
             @csrf
-
-            <input type="text" hidden="true" name="nombre_curso" value="{{ $curso->nombre }}">
-            <input type="text" hidden="true" name="rfc_participante" value="N/A">
+            <input type="hidden" name="id_curso" value="{{ $curso->id }}">
+            <input type="hidden" name="nombre_curso" value="{{ $curso->nombre }}">
+            <input type="hidden" name="rfc_participante" value="N/A">
 
             <div class="mb-6">
                 <label for="nombre_participante" class="font-semibold inline-block text-lg mb-2"> Nombre completo

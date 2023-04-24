@@ -169,7 +169,7 @@
                 @error('fecha_de_inicio')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> 
 
             <div class="mb-6">
                 <label for="fecha_de_terminacion" class="inline-block text-lg mb-2">Fecha de término:</label>
@@ -492,7 +492,7 @@
                 </div>
     
                 <div class="mb-2">
-                    <input type="radio" id="sala_usos_multiples" name="auditorio" value="Sala de usos múltiples">
+                    <input type="radio" id="sala_usos_multiples" name="auditorio" value="Sala de usos múltiples" checked>
                     <label for="sala_usos_multiples" class="inline-block text-lg mb-2">Sala de usos múltiples</label>
                 </div>
     
@@ -514,16 +514,16 @@
                 <div class="mb-6">
                     <label for="fecha_de_inicio" class="inline-block text-lg mb-2">Fecha de inicio:</label>
                     <input type="date" id="fecha_de_inicio" name="fecha_de_inicio"
-                        class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_inicio') }}">
+                        class="border border-gray-200 rounded p-2 w-full" value="{{ date('Y-m-d') }}">
                     @error('fecha_de_inicio')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> 
     
                 <div class="mb-6">
                     <label for="fecha_de_terminacion" class="inline-block text-lg mb-2">Fecha de término:</label>
                     <input type="date" id="fecha_de_terminacion" name="fecha_de_terminacion"
-                        class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_terminacion') }}">
+                        class="border border-gray-200 rounded p-2 w-full" value="{{ date('Y-m-d') }}">
                     @error('fecha_de_terminacion')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -543,7 +543,7 @@
                     <label for="forma_de_evaluacion" class="inline-block text-lg mb-2">Forma de evaluación del
                         curso:<br>(Descripción opcional)</label>
                     <textarea id="forma_de_evaluacion" name="forma_de_evaluacion" class="border border-gray-200 rounded p-2 w-full"
-                        value="{{ old('forma_de_evaluacion') }}"></textarea>
+                        value="{{ old('forma_de_evaluacion')}}"></textarea>
                     @error('forma_de_evaluacion')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -552,7 +552,7 @@
                 <div class="mb-6">
                     <label for="porcentaje_asistencia" class="inline-block text-lg mb-2">Porcentaje de asistencia
                         requerido para acreditar curso:</label>
-                    <input type="text" id="porcentaje_asistencia" name="porcentaje_asistencia"
+                    <input type="number" id="porcentaje_asistencia" name="porcentaje_asistencia"
                         class="border border-gray-200 rounded p-2 w-full" value="{{ old('porcentaje_asistencia') }}">
                     @error('porcentaje_asistencia')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -560,21 +560,23 @@
                 </div>
     
                 <div class="mb-6">
-                    <label for="calificacion_requerida" class="inline-block text-lg mb-2">Calificación requerida para
-                        acreditar curso (cuestionario cuando aplique) del 80% al 100%:</label>
-                    <input type="text" id="calificacion_requerida" name="calificacion_requerida"
-                        class="border border-gray-200 rounded p-2 w-full" value="{{ old('calificacion_requerida') }}">
+                    <label for="calificacion_requerida" class="inline-block text-lg mb-2">Calificación requerida para acreditar curso (cuestionario cuando aplique):</label>
+                    <select id="calificacion_requerida" name="calificacion_requerida" class="border border-gray-200 rounded p-2 w-full" value="{{ old('calificacion_requerida') }}">
+                        <option value="0" selected>NA</option>
+                        <option value="80">80%</option>
+                        <option value="90">90%</option>
+                        <option value="100">100%</option>
+                    </select>
                     @error('calificacion_requerida')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
     
                 <div class="mb-6">
-                    <label for="evaluacion_adquirida" class="inline-block text-lg mb-2">Requiere evaluación de la
-                        capacitación adquirida (antes de los 30 días hábiles):</label><br><br>
+                    <label for="evaluacion_adquirida" class="inline-block text-lg mb-2">Requiere evaluación de la capacitación adquirida (antes de los 30 días hábiles):</label><br><br>
                     <input type="radio" id="si" name="evaluacion_adquirida" value="Sí">
                     <label for="si" class="inline-block text-lg mb-2">Sí</label><br><br>
-                    <input type="radio" id="no" name="evaluacion_adquirida" value="No">
+                    <input type="radio" id="no" name="evaluacion_adquirida" value="No" checked>
                     <label for="no" class="inline-block text-lg mb-2">No</label><br><br>
                     @error('evaluacion_adquirida')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

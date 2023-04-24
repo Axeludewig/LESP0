@@ -14,6 +14,8 @@ class participantesController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
+            'id_user' => 'required',
+            'id_curso' => 'required',
             'nombre_curso' => 'required',
             'rfc_participante' => 'required',
             'nombre_participante' => 'required',
@@ -40,6 +42,7 @@ class participantesController extends Controller
     public function storeeasy(Request $request)
     {
         $formFields = $request->validate([
+            'id_curso' => 'required',
             'nombre_curso' => 'required',
             'rfc_participante' => 'required',
             'nombre_participante' => 'required',

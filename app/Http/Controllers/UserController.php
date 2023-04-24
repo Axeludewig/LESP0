@@ -280,7 +280,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'Tu sesión ha sido cerrada!');
+        return redirect('/')->with('message', 'Tu sesión ha sido cerrada.');
 
     }
 
@@ -299,7 +299,7 @@ class UserController extends Controller
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'Tu sesión ha sido iniciada!');
+            return redirect('/')->with('message', 'Tu sesión ha sido iniciada.');
         }
 
         return back()->withErrors(['rfc' => 'Credenciales Invalidas'])->onlyInput('rfc');
@@ -443,7 +443,9 @@ class UserController extends Controller
 
     public function update_email(Request $request, User $user){
         $formFields = $request->validate([
-            'email' =>  ['required', 'email'],
+            'email' => 'required|email',
+        ], [
+            'email.email' => 'Please enter a valid email address.',
         ]);
         
         $user->update($formFields);

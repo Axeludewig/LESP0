@@ -16,7 +16,7 @@
                 <i class="fa-solid fa-location-dot"></i> {{ $listing->auditorio }}
             </div>
 
-            <div class="mt-4 ml-16 mb-4 text-lg mt-4 flex flex-col space-evenly w-1/2">
+            <div class="mt-4 ml-16 mb-4 text-lg flex flex-col space-evenly w-1/2">
 
 
                 <form method="GET" action="/pdf" enctype="multipart/form-data">

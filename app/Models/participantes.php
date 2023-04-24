@@ -10,6 +10,8 @@ class participantes extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id_user',
+        'ud_curso',
         'nombre_curso',
         'rfc_participante',
         'nombre_participante',
@@ -38,6 +40,16 @@ class participantes extends Model
     {
         return $this->belongsToMany(User::class)
                     ->withPivot('nombre_curso', 'fecha_de_inicio', 'fecha_de_terminacion', 'valor_curricular', 'img');
+    }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'id_user', 'id');
+    }
+
+    public function curso()
+    {
+        return $this->belongsToMany(Cursos::class, 'id_curso', 'id');
     }
 
 }

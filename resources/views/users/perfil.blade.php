@@ -1,8 +1,9 @@
 <x-layout>
+
     <div
         class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center ">
         <h3 class="text-3xl ">
-            <p class="font-semibold">Perfil</p>
+            <p class="">Perfil</p>
         </h3>
     </div>
 

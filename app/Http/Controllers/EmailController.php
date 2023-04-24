@@ -13,6 +13,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 use App\Http\Controllers\Controller;
+use Error;
 use Illuminate\Http\Request;
 
 require '../vendor/autoload.php';
@@ -229,6 +230,19 @@ class EmailController extends Controller
             'apellido_materno' => 'required'
         ]);
 
+        $my_id = auth()->user()->id;
+
+        $yo = DB::table('users')->where('id', $my_id)->first();
+
+        $my_email = $yo->email;
+
+        if (!filter_var($my_email, FILTER_VALIDATE_EMAIL)) {
+            return back()->with('message', 'Tu correo electrónico es incorrecto.');
+        }
+
+        if ($my_email && $my_email != 'sin registro') {
+
+
         $path = base_path('FIRMAS.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
@@ -298,7 +312,7 @@ class EmailController extends Controller
         $mail->SMTPAuth = true;
         $mail->Username = 'axelramirezludewig@gmail.com';
         $mail->Password = 'uppmigsgyglwqume';
-        $mail->addAddress('axelramirezludewig@gmail.com', 'Axel Ramírez');
+        $mail->addAddress($my_email, $nombre_usuario);
          // Set up the email
         $mail->Subject = 'Saludos ' . auth()->user()->nombre . ' ' . auth()->user()->apellido_paterno . ' ' . auth()->user()->apellido_materno;
         $mail->Body = 'Agradecemos su participación en el programa de capacitación 2023 del Laboratorio Estatal de Salud Pública de Michoacán.
@@ -315,10 +329,11 @@ class EmailController extends Controller
         // Send the email
         if ($mail->send()) {
         Storage::disk('public')->delete($filename);    
-            return back();
+            return back()->with('message', 'Correo enviado.');;
         } else {return back();}
             
-
+    }
+    else {return back()->with('message', 'No has actualizado tu correo electrónico.');}
     }
 
     public function testadmin(Request $request){
@@ -435,12 +450,10 @@ class EmailController extends Controller
             //$mail->send();
     
             // Send the email
-            if ($mail->send()) {
-            Storage::disk('public')->delete($filename);    
-                return back();
-            } else {return back();}
-
-
+                if ($mail->send()) {
+                Storage::disk('public')->delete($filename);    
+                    return back();
+                } else {return back();}
         }
     }
 
@@ -458,6 +471,7 @@ class EmailController extends Controller
         // Create a new PHPMailer instance
         
         foreach ($users as $user) {
+            if ($user->email_participante && $user->email_participante != 'sin registro') {
             $nombre_del_participante = $user->nombre_participante;
             $email = $user->email_participante;
             
@@ -549,13 +563,12 @@ class EmailController extends Controller
     
             $mail->addAttachment($publicPath);
             //$mail->send();
-    
+            
+                if ($mail->send()) {
+                    Storage::disk('public')->delete($filename);    
+                    } 
+                }
             // Send the email
-            if ($mail->send()) {
-            Storage::disk('public')->delete($filename);    
-            } 
-
-
         }
 
         return back()->with('message', 'Correos enviados.');
