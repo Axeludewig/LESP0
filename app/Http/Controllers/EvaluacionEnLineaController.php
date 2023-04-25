@@ -154,7 +154,7 @@ class EvaluacionEnLineaController extends Controller
             $currentYear = date('Y');
             $prefolio = 'B2A' . $currentYear . 'C' . $numero_consecutivo . 'F';
 
-            $count = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->count();
+            $count = DB::table('validaciones')->where('id_curso', $id_curso)->count();
 
             if ($count === 0) {
                 // If there are no matching records, set a new variable with value 01
@@ -214,7 +214,13 @@ class EvaluacionEnLineaController extends Controller
             $pdf->render();
     
             $filename = $formFields['nombre'] . '.pdf';
-            return $pdf->stream($filename);
+            //return $pdf->stream($filename); 
+
+
+            $pdfStream = $pdf->output();
+            $base64Pdf = base64_encode($pdfStream);
+            return view('users.gratz', compact('base64Pdf', 'filename'));
+            
         } else {
 
 

@@ -43,7 +43,7 @@
             <input type="hidden" name="nombre_user" value="{{auth()->user()->nombre}}">
             <input type="hidden" name="fecha_de_terminacion" value="{{$currentDate}}">
             <input type="hidden" name="valor_curricular" value="4">
-            <input type="hidden" name="nombre" value="Registro y evaluación de la capacitación manejo adecuado de Residuos Peligrosos Biológicos e Infecciosos (RPBI) de acuerdo a la &quot;NOM-087-ECOL-SSA1-2002&quot;">
+            <input type="hidden" name="nombre" value="{{$eval->nombre}}">
             <div class="flex flex-col gap-4 items-center mx-4">
               <h3 class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Preguntas de la evaluación</h3><br>
               <p class="ml-2 text-lg font-semibold text-gray-900 dark:text-gray-300">{{$cuestionario->pregunta1}}</p>

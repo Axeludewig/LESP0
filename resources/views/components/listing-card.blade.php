@@ -32,7 +32,7 @@
 
         </div>
     </div>
-    @if (!Auth::check())
+    @if (!Auth::check() && $listing->tipo=='Presencial')
         <div class="flex place-content-center mt-6">
             <form method="POST" action="/registro/{{ $listing->id }}">
                 @csrf
