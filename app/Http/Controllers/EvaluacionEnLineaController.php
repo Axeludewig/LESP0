@@ -235,7 +235,8 @@ class EvaluacionEnLineaController extends Controller
         
                     Calificaciones::create($calificacion);
         
-                    return back()->with('message', 'No has aprobado. Tienes otra oportunidad.');
+                    $message= 'Tu calificación es: ' . $calif .  '. Ya no tienes más oportunidades.';
+                    return back()->with('message', $message);
                 }
             }
 
@@ -249,7 +250,8 @@ class EvaluacionEnLineaController extends Controller
 
             Calificaciones::create($calificacion);
 
-            return back()->with('message', 'No has aprobado. Tienes otra oportunidad.');
+            $message= 'Tu calificación es: ' . $calif .  '. Tienes una segunda oportunidad.';
+                    return back()->with('message', $message);
         }
 
     
