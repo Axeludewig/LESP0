@@ -165,7 +165,7 @@
             <div class="mb-6">
                 <label for="fecha_de_inicio" class="inline-block text-lg mb-2">Fecha de inicio:</label>
                 <input type="date" id="fecha_de_inicio" name="fecha_de_inicio"
-                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_inicio') }}">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ date('Y-m-d') }}">
                 @error('fecha_de_inicio')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -174,7 +174,7 @@
             <div class="mb-6">
                 <label for="fecha_de_terminacion" class="inline-block text-lg mb-2">Fecha de término:</label>
                 <input type="date" id="fecha_de_terminacion" name="fecha_de_terminacion"
-                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('fecha_de_terminacion') }}">
+                    class="border border-gray-200 rounded p-2 w-full" value="{{ date('Y-m-d') }}">
                 @error('fecha_de_terminacion')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -202,10 +202,13 @@
                         value="n/a" />
             </div>
 
-            <div class="mt-4 flex flex-col justify-center items-center">
-                <label for="video" class="block font-medium text-gray-700">Subir video</label>
+            <div class="mt-4 flex flex-col justify-center items-center gap-4">
+                <label for="video" class="block font-semibold text-gray-700">Subir video</label>
                 <input id="video" type="file" name="video" class="mt-1">
+                <label for="pdf" class="block font-semibold text-gray-700">PDF de apoyo:</label>
+            <input type="file" name="pdf" id="pdf">
             </div>
+
             <div class="mt-6 flex flex-col justify-center items-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">Cuestionario</h2>
                 <p class="">Agregar preguntas y sus opciones de respuesta</p>
@@ -553,7 +556,7 @@
                     <label for="porcentaje_asistencia" class="inline-block text-lg mb-2">Porcentaje de asistencia
                         requerido para acreditar curso:</label>
                     <input type="number" id="porcentaje_asistencia" name="porcentaje_asistencia"
-                        class="border border-gray-200 rounded p-2 w-full" value="{{ old('porcentaje_asistencia') }}">
+                        class="border border-gray-200 rounded p-2 w-full" value="100">
                     @error('porcentaje_asistencia')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror

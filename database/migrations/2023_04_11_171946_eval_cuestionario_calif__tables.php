@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_curso');
             $table->string('nombre');
             $table->string('video');
+            $table->string('pdf');
             $table->string('numero_consecutivo');
             $table->timestamps();
         });

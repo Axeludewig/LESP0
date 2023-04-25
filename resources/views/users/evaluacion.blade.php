@@ -14,13 +14,19 @@
              <p class="font-semibold">{{$eval->nombre}}</p>
          </h3>
      </div>
+
         <div class="flex items-center justify-center">
-         
+        <a target="_blank" href="{{asset('storage/' . $eval->pdf)}}" class="p-2 rounded border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold ">Descargar material de apoyo</a>
+        </div>
+
+        <div class="flex items-center justify-center">
           <video id="myVideo" controls>
             <source src="{{asset('storage/' . $eval->video)}}" type="video/mp4">
           </video>
         </div>
+        
         <div class="flex items-center justify-center text-center mt-4">
+          
           <div id="exam-section" class="disabled">
             <h2 class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Sección de preguntas:</h2>
             <p class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Por favor mire el video completo para desbloquear esta sección.</p>

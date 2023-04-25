@@ -15,6 +15,76 @@ use Dompdf\Options;
 
 class CursosController extends Controller
 {
+    public function details(Request $request, Cursos $id_curso){
+        return view('admin.details', [
+            'listing' => $id_curso
+        ]);
+    }
+
+    public function update_final(Request $request, Cursos $listing) {
+
+
+        $formFields = $request->validate([
+            'status' => 'required'
+        ]);
+
+        $listing->update($formFields);
+
+        $formFields = $request->validate([
+            'id_curso' => 'required',
+            'nombre_curso' => 'required',
+            'valor_curricular' => 'required',
+            'status' => 'required',
+            'tipo' => 'required',
+            'folio' => 'required'
+        ]);
+
+        $nombre_curso = $formFields['nombre_curso'];
+        $valor_curricular = $formFields['valor_curricular'];
+        $status = $formFields['status'];
+        $tipo = $formFields['tipo'];
+        $folio = $formFields['folio'];
+        $id = $formFields['id_curso'];
+        
+
+        $participantes_del_curso = DB::table('participantes')
+            ->where('id_curso', '=', $id)
+            ->get();
+
+            $foliox = 1;
+
+            $trufolio = $folio . sprintf('%02d', $foliox);
+            $existe = DB::table('validaciones')->where('folio', $trufolio)->exists();
+
+            if($existe){
+                return back()->with('message', 'Ya se han generado anteriormente las validaciones.');
+            } else {
+                foreach ($participantes_del_curso as $participante) {
+            
+                    // $nombre_completo = $participante->nombre . ' ' . $participante->apellido_paterno . ' ' . $participante->apellido_materno;
+
+                    if ($participante->id_user === null) {
+                        $id_user = null;
+                    } else {
+                        $id_user = $participante->id_user;
+                    }
+                    
+                        DB::table('validaciones')->insert([
+                            'id_curso' => $id,
+                            'id_user' => $id_user,
+                            'nombre_curso' => $nombre_curso,
+                            'nombre_usuario' => $participante->nombre_participante,
+                            'valor_curricular' => $valor_curricular,
+                            'status' => $status,
+                            'tipo' => $tipo,
+                            'folio' => $folio . sprintf('%02d', $foliox),
+                        ]);
+                        $foliox++;
+                    }
+
+                    return back()->with('message', 'Éxito, curso finalizado. Validaciones generadas.');
+            }
+    }
 
     public function update(Request $request, Cursos $listing) {
         $formFields = $request->validate([

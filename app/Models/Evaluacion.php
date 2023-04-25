@@ -13,6 +13,7 @@ class Evaluacion extends Model
         'id_curso',
         'nombre',
         'video',
+        'pdf',
         'numero_consecutivo'
     ];
 

@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class participantesController extends Controller
 {
+    public function destroy(participantes $id){
+        $id->delete();
+        return back()->with('message', 'Participante eliminado correctamente.');
+    }
+
     public function store(Request $request)
     {
         $formFields = $request->validate([

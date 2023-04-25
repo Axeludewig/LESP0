@@ -118,6 +118,21 @@ Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth
 // -- USUARIO -- ACTUALIZAR EMAIL!!
 Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
+
+
+
+
+
+
+
+
+// ADMIN --- VER PARTICIPANTES DEL CURSO 
+Route::get('/admin/details/{id_curso}', [CursosController::class, 'details'])->middleware('auth');
+
+// ADMIN --- ELIMINAR PARTICIPANTES DEL CURSO
+Route::delete('/admin/destroyparticipante/{id}', [participantesController::class, 'destroy'])->middleware('auth');
+
+
 // ADMIN --- EDITAR USUARIOS FORM
 Route::get('/admin/update_user/{user}', [UserController::class, 'update'])->middleware('auth');
 
@@ -212,8 +227,10 @@ Route::get('/sesiones/misasistencias', [SesionesController::class, 'misasistenci
 
 
 
-// FINALIZAR CURSO
+// FINALIZAR CURSO /////////////////////////
 Route::put('/listings/{listing}', [CursosController::class, 'update'])->middleware('auth');
+
+Route::put('/listingsfinal/{listing}', [CursosController::class, 'update_final'])->middleware('auth');
 
 // REGISTRARSE
 Route::post('/listings', [participantesController::class, 'store'])->middleware('auth');

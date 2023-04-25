@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calificaciones;
 use App\Models\Cuestionario;
 use App\Models\Cursos;
 use App\Models\Evaluacion;
@@ -24,11 +25,22 @@ class EvaluacionEnLineaController extends Controller
         $eval = DB::table('evaluaciones')->where('id_curso', $curso->id)->first();
 
         $cuestionario = DB::table('cuestionarios')->where('id', $eval->id)->first();
+
+        $trucalif = DB::table('calificaciones')->where('id_evaluacion', $eval->id)->where('id_user', auth()->user()->id)->get();
+        
+
+        if (count($trucalif) >= 2){
+                return view('users.oportunidades', [
+                    'id_eval' => $eval->id,
+                ]);
+        }
+
         return view('users.evaluacion', [
             'eval' => $eval,
             'cuestionario' => $cuestionario
         ]);
-    }
+    
+}
 
     public function permisos(){
         $evals = DB::table('evaluaciones')->get();
@@ -90,9 +102,13 @@ class EvaluacionEnLineaController extends Controller
             'apellido_materno' => 'required'
         ]);
 
+        $eval_id = $formFields['eval_id'];
+        $eval = DB::table('evaluaciones')->where('id', $eval_id)->first();
+        $curso_id = $eval->id_curso;
 
         $idx = auth()->user()->id;
-        $tru = DB::table('validaciones')->where('id_user', $idx)->first();
+        $tru = DB::table('validaciones')->where('id_user', $idx)->where('id_curso', $curso_id)->first();
+
         if (isset($tru)) {
             return redirect()->back()->with('message', 'Ya habías aprobado esta evaluación antes.');;
         }      
@@ -116,7 +132,6 @@ class EvaluacionEnLineaController extends Controller
         if($respuesta3==$r3){++$puntos;}
         if($respuesta4==$r4){++$puntos;}
         if($respuesta5==$r5){++$puntos;}
-
 
     
         if ($puntos >= 4){
@@ -201,7 +216,40 @@ class EvaluacionEnLineaController extends Controller
             $filename = $formFields['nombre'] . '.pdf';
             return $pdf->stream($filename);
         } else {
-            echo 'reprobaoOOOOo';
+
+
+            $trucalif = DB::table('calificaciones')->where('id_evaluacion', $eval_id)->where('id_user', auth()->user()->id)->first();
+          
+
+            if (isset($trucalif)){
+                $oportunidad = $trucalif->oportunidad;
+
+                if ($oportunidad == '1'){
+                    $calif = (($puntos * 100) / 5);
+
+                    $calificacion = [];
+                    $calificacion['id_evaluacion'] = $eval_id;
+                    $calificacion['id_user'] = auth()->user()->id;
+                    $calificacion['oportunidad'] = 2;
+                    $calificacion['calificacion'] = $calif;
+        
+                    Calificaciones::create($calificacion);
+        
+                    return back()->with('message', 'No has aprobado. Tienes otra oportunidad.');
+                }
+            }
+
+            $calif = (($puntos * 100) / 5);
+
+            $calificacion = [];
+            $calificacion['id_evaluacion'] = $eval_id;
+            $calificacion['id_user'] = auth()->user()->id;
+            $calificacion['oportunidad'] = 1;
+            $calificacion['calificacion'] = $calif;
+
+            Calificaciones::create($calificacion);
+
+            return back()->with('message', 'No has aprobado. Tienes otra oportunidad.');
         }
 
     
@@ -243,7 +291,8 @@ class EvaluacionEnLineaController extends Controller
             'evaluacion_adquirida' => 'required',
             'status' => 'required',
             'tags' => 'required',
-            'video' => 'file|max:250000', // Max file size of 50MB
+            'video' => 'file|max:250000',
+            'pdf' => 'file|max:150000' // Max file size of 50MB
         ]);
 
 
@@ -304,12 +353,16 @@ class EvaluacionEnLineaController extends Controller
         $evaluacion_data['id_curso'] = $newCurso->id;
         $evaluacion_data['nombre'] = $newCurso->nombre;
         $evaluacion_data['video'] = $validatedData['video'];
+        $evaluacion_data['pdf'] = $validatedData['pdf'];
         $evaluacion_data['numero_consecutivo'] = $newCurso->numero_consecutivo;
 
 
         if($request->hasFile('video')) {
+            if($request->hasFile('pdf')) {
             // Store the new video file in the storage directory
-            $validatedData['video'] = $request->file('video')->store('videos', 'public');
+            $evaluacion_data['video'] = $request->file('video')->store('videos', 'public');
+
+            $evaluacion_data['pdf'] = $request->file('pdf')->store('apoyos', 'public');
 
             $evalz = Evaluacion::create($evaluacion_data);
 
@@ -318,6 +371,7 @@ class EvaluacionEnLineaController extends Controller
             $uwu = Cuestionario::create($validatedData2);
 
             return redirect()->back()->with('message', 'Curso creado correctamente.');;
+            }
         }      
     }
 }

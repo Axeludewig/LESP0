@@ -28,6 +28,28 @@
             </div>
         </form>
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6 mt-6 mb-6">
+            
+            
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
+                <a href="/users/esco/{{auth()->user()->id}}">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Escolaridad <i class="p-2 fa-solid fa-graduation-cap"></i></h5>
+                </a>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Posgrados, licenciatura, preparatoria.</p>
+                <a href="/users/esco/{{auth()->user()->id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Ir a Escolaridad
+                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
+                <a href="/users/exp/{{auth()->user()->id}}">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Experiencia Profesional <i class="fa-solid fa-briefcase"></i></h5>
+                </a>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Últimos 4 puestos profesionales.</p>
+                <a href="/users/exp/{{auth()->user()->id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Ir a Experiencia
+                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
             <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
                 <a href="/users/cursos">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cursos <i class="fa-solid fa-landmark"></i></h5>
@@ -58,27 +80,8 @@
                     <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </a>
             </div>
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
-                <a href="/users/esco/{{auth()->user()->id}}">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Escolaridad <i class="p-2 fa-solid fa-graduation-cap"></i></h5>
-                </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Posgrados, licenciatura, preparatoria.</p>
-                <a href="/users/esco/{{auth()->user()->id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Ir a Escolaridad
-                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </a>
-            </div>
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
-                <a href="/users/exp/{{auth()->user()->id}}">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Experiencia Profesional <i class="fa-solid fa-briefcase"></i></h5>
-                </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Últimos 4 puestos profesionales.</p>
-                <a href="/users/exp/{{auth()->user()->id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Ir a Experiencia
-                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </a>
-            </div>
         </div>
+        
         <div class="flex flex-col items-center justify-center gap-4 mx-6 mt-6 mb-6">     
             <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="hidden"></div>

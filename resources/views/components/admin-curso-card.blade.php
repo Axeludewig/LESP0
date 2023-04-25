@@ -1,25 +1,26 @@
 @props(['listing'])
 
 <x-card>
+    <div class="">
     <div class="flex">
         <img class="hidden object-contain w-48 mr-6 md:block"
             src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
             alt="" />
         <div>
             <h3 class="text-2xl">
-                <a href="/listings/{{ $listing->id }}">{{ $listing->nombre }}</a>
+                <a href="/admin/details/{{ $listing->id }}">{{ $listing->nombre }}</a>
             </h3>
             <div class="mt-3 text-xl font-bold mb-4">Inicia: {{ $listing->fecha_de_inicio }}</div>
             <div class="text-xl font-bold mb-4">Termina: {{ $listing->fecha_de_terminacion }}</div>
                 <div class="font-semibold text-xl">
                     @if($listing->status == 'Disponible')
-                        <p class="text-green-600">Status: {{$listing->status}}</p>
+                        <p class="text-green-600 animate-pulse">Status: {{$listing->status}}</p>
                     @endif
                     @if($listing->status == 'En proceso')
-                        <p class="text-yellow-600">Status: {{$listing->status}}</p>
+                        <p class="text-yellow-600 animate-pulse">Status: {{$listing->status}}</p>
                     @endif
                     @if($listing->status == 'Finalizado')
-                        <p class="text-red-600">Status: {{$listing->status}}</p>
+                        <p class="text-red-600 animate-pulse">Status: {{$listing->status}}</p>
                     @endif                    
                 </div>
 
@@ -28,45 +29,41 @@
                         $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
                         $cuenta = $participantes->count();
                     @endphp
-                    <div>
-                    <span class="font-semibold">Participantes: {{ $cuenta }}.</span>
-                    <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel" data-toggle="" data-target="#participants">
-                        Mostrar <i class="fa-solid fa-plus"></i>
-                    </button>
-                    </div>
-                    
-                        <script>
-                            $(function() {
-                                // Hide the participant list by default
-                                $('#participants').hide();
-                    
-                                // Toggle the participant list visibility when the button is clicked
-                                $('.show-participants').click(function() {
-                                    var target = $(this).data('target');
-                                    var $target = $(target);
-                    
-                                    if ($target.attr('data-toggle') === 'hidden') {
-                                        $target.slideDown();
-                                        $target.attr('data-toggle', 'visible');
-                                    } else {
-                                        $target.slideUp();
-                                        $target.attr('data-toggle', 'hidden');
-                                    }
-                                });
-                            });
-                        </script>
-                    <div class="flex flex-col" id="participants" data-toggle="hidden">
-                        <ol>
-                            <style>ol {
-                                list-style-type: decimal;
-                            }</style>
-                        @foreach ($participantes as $participante)
-                            <li>{{ $participante->nombre_participante }}</li>
-                        @endforeach
-                        </ol>
-                    </div>
+
+
+<div class="m-4">
+    <div>
+        <span class="font-semibold cursor-pointer" onclick="toggleList({{ $listing->id }})">Participantes: {{ $cuenta }}</span>
+        @if($cuenta > 0)
+        <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel"  onclick="toggleList({{ $listing->id }})">
+            Mostrar <i class="fa-solid fa-plus"></i>
+        </button>
+        @endif
+        <div class="max-h-[125px] overflow-y-auto hidden p-2" id="participantesList{{ $listing->id }}">   
+            <ul>
+                @php $num = 1; @endphp
+                @foreach ($participantes as $participante)
+                    <li>{{$num . " - "}}{{ $participante->nombre_participante }}</li>
+                @php $num++ @endphp
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleList(id) {
+        var participantesList = document.getElementById("participantesList" + id);
+        if (participantesList.style.display !== "block") {
+            participantesList.style.display = "block";
+        } else {
+            participantesList.style.display = "none";
+        }
+    }
+</script>
+
+
                 </div>
-                
             <div class="text-lg mt-4">
                 @if($listing->auditorio !== 'Virtual')
                 <i class="fa-solid fa-location-dot"></i> {{ $listing->auditorio }}
@@ -76,21 +73,44 @@
                 @endif
             </div>
             @if (auth()->user()->es_admin == '1' && $listing->status == 'En proceso')
-            <form method="POST" action="/listings/{{ $listing->id }}" enctype="multipart/form-data">
+            <form method="POST" action="/listingsfinal/{{ $listing->id }}" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
-                {{ csrf_field() }}
-                {{ method_field('put') }}
-                <input type="hidden" name="_method" value="PUT">
-                <div class="mt-4 mb-4 text-lg flex place-content-center">
-                    <label for="status" class="inline-block text-lg mb-2">
-                    </label>
-                    <input type="password" class="border border-gray-200 rounded p-2 w-full"
-                        name="status" value="Finalizado" hidden="true" />
-                        <button  data-modal-target="popup-modal3" data-modal-toggle="popup-modal3" type="button"  class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                        Finalizar Curso <i class="fa-solid fa-heart-circle-check"></i>
-                    </button>
-                </div>
+                            @method('PUT')
+                            {{ csrf_field() }}
+                            {{ method_field('put') }}
+
+                            @php
+                                $valor_curricular = $listing->horas_teoricas + $listing->horas_practicas;
+                            @endphp
+                            
+                            <input type="hidden" name="id_curso" value="{{ $listing->id}}">
+                            
+                            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_curso"
+                                hidden="true" value="{{ $listing->nombre }}" />
+
+                            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="id_curso" hidden="true"
+                                value="{{ $listing->id }}" />
+
+                            <input type="text" name="valor_curricular" hidden="true" value="{{ $valor_curricular }}" />
+
+                            <input type="text" name="status" hidden="true" value="Verificado" />
+
+                            <input type="text" name="tipo" hidden="true" value="Asistente" />
+
+                            @php $currentYear = now()->format('Y'); @endphp
+                            <input type="text" name="folio" hidden="true"
+                                value="B2A{{$currentYear}}C{{ $listing->numero_consecutivo }}F" />
+
+                            <input type="hidden" name="_method" value="PUT">
+                            <div class=" mb-4 text-lg mt-4 flex place-content-center">
+                                <label for="status" class="inline-block text-lg mb-2">
+                                </label>
+                                <input type="password" class="border border-gray-200 rounded p-2 w-full"
+                                    name="status" value="Finalizado" hidden="true" />
+                                    <button  data-modal-target="popup-modal3" data-modal-toggle="popup-modal3" type="button"  class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+                                        Finalizar Curso <i class="fa-solid fa-heart-circle-check"></i>
+                                    </button>
+                            </div>
                 <div id="popup-modal3" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative w-full max-w-md max-h-full">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -178,7 +198,5 @@
             </form>
         </div>
     </div>
-    
-
-    </div>
+</div>
 </x-card>
