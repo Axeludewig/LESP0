@@ -123,6 +123,17 @@ Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth
 // -- USUARIO -- ACTUALIZAR EMAIL!!
 Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
+
+
+
+
+
+
+
+
+// ADMIN --- DESTRUIR CALIFICACIÓN 
+Route::delete('/admin/reprobados/{id_calif}', [CalificacionesController::class, 'destroy']);
+
 // ADMIN --- GET ALL VALIDACIONES (BITÁCORA)
 Route::get('/bitacora', [CursosController::class, 'bitacora']);
 

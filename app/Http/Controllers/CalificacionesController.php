@@ -16,5 +16,10 @@ class CalificacionesController extends Controller
             'reprobados' => Calificaciones::latest()->filter(request(['search']))->paginate(12)
         ]);
     }
+
+    public function destroy(Calificaciones $id_calif) {
+        $id_calif->delete();
+        return back()->with('message', 'Calificación eliminada correctamente.');
+    }
     //
 }
