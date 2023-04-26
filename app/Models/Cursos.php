@@ -42,8 +42,22 @@ class Cursos extends Model
 
         if($filters['search'] ?? false) {
             $query->where('nombre', 'like', '%' . request('search') . '%')
-                ->orWhere('descripcion', 'like', '%' . request('search') . '%')
+                ->orWhere('tipo', 'like', '%' . request('search') . '%')
+                ->orWhere('modalidad', 'like', '%' . request('search') . '%')
+                ->orWhere('dirigido', 'like', '%' . request('search') . '%')
+                ->orWhere('coordinacion', 'like', '%' . request('search') . '%')
+                ->orWhere('categoria', 'like', '%' . request('search') . '%')
+                ->orWhere('auditorio', 'like', '%' . request('search') . '%')
+                ->orWhere('fecha_de_inicio', 'like', '%' . request('search') . '%')
+                ->orWhere('fecha_de_terminacion', 'like', '%' . request('search') . '%')
+                ->orWhere('forma_de_evaluacion', 'like', '%' . request('search') . '%')
+                ->orWhere('status', 'like', '%' . request('search') . '%')
+                ->orWhere('horas_teoricas', 'like', '%' . request('search') . '%')
+                ->orWhere('horas_practicas', 'like', '%' . request('search') . '%')
+                ->orWhere('nombre_del_responsable', 'like', '%' . request('search') . '%')
+                ->orWhere('numero_consecutivo', 'like', '%' . request('search') . '%')
                 ->orWhere('tags', 'like', '%' . request('search') . '%');
+                
         }
     }
     public function participantes()

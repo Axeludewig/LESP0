@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalificacionesController;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EvaluacionEnLineaController;
@@ -93,6 +94,10 @@ Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('a
 
 /////// USERS ------ EVALUACIONES EN LINEA ---------
 
+Route::get('/pdf_download/bitacora', [ValidacionesController::class, 'download_pdf_validacion'])->middleware('auth');
+
+Route::get('/pdf_download/{id}', [CursosController::class, 'pdf_download'])->middleware('auth');
+
 Route::get('/users/xeval/{eval}', [EvaluacionEnLineaController::class, 'evaluacion'])->middleware('auth');
 
 Route::get('/users/xevalz/{curso}', [EvaluacionEnLineaController::class, 'xeval'])->middleware('auth');
@@ -118,12 +123,11 @@ Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth
 // -- USUARIO -- ACTUALIZAR EMAIL!!
 Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
+// ADMIN --- GET ALL VALIDACIONES (BITÁCORA)
+Route::get('/bitacora', [CursosController::class, 'bitacora']);
 
-
-
-
-
-
+// ADMIN --- VER PARTICIPANTES DEL CURSO 
+Route::get('/admin/reprobados', [CalificacionesController::class, 'reprobados'])->middleware('auth');
 
 
 // ADMIN --- VER PARTICIPANTES DEL CURSO 

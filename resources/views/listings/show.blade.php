@@ -255,6 +255,8 @@
                                     @php $currentYear = now()->format('Y'); @endphp
                                     <input type="text" name="folio" hidden="true"
                                         value="B2A{{$currentYear}}C{{ $listing->numero_consecutivo }}F" />
+
+                                        <input type="hidden" name="fecha_de_registro" value="{{$listing->fecha_de_terminacion}}" />
         
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class=" mb-4 text-lg mt-4 flex place-content-center">

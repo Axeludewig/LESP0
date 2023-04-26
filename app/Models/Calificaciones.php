@@ -11,6 +11,8 @@ class Calificaciones extends Model
     protected $fillable = [
         'id_evaluacion',
         'id_user',
+        'nombre_curso',
+        'nombre_user',
         'oportunidad',
         'calificacion'
     ];
@@ -24,5 +26,15 @@ class Calificaciones extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function scopeFilter($query, array $filters) {
+        if($filters['search'] ?? false) {
+            $query->where('nombre_curso', 'like', '%' . request('search') . '%')
+                ->orWhere('nombre_user', 'like', '%' . request('search') . '%')
+                ->orWhere('calificacion', 'like', '%' . request('search') . '%')
+                ->orWhere('created_at', 'like', '%' . request('search') . '%')
+                ->orWhere('oportunidad', 'like', '%' . request('search') . '%');
+        }
     }
 }

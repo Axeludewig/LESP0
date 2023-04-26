@@ -61,14 +61,14 @@
 
     <h1 class="constancia">CONSTANCIA</h1>
 
-    <p class="nombre"><b>A: {{ $formFields['nombre_user'] }} {{ $formFields['apellido_paterno'] }}
-            {{ $formFields['apellido_materno'] }}</b></p>
+    <p class="nombre"><b>A: {{ $me->nombre }} {{ $me->apellido_paterno }}
+            {{ $me->apellido_materno }}</b></p>
 
-    <p class="parrafo2">Por su valiosa participación como <b>{{ $tipo }}</b> en el evento de capacitación
-        <b>{{ $formFields['nombre'] }}</b> realizado en el Laboratorio Estatal de Salud Pública el
-        <b>{{ $today }}</b>.
-        <br><br>Valor curricular en horas: <b>{{ $formFields['valor_curricular'] }}</b>
-        <br><br>Folio: <b>{{ $folio }}</b><br><br>
+    <p class="parrafo2">Por su valiosa participación como <b>{{ $validacion->tipo }}</b> en el evento de capacitación
+        <b>{{ $validacion->nombre_curso }}</b> realizado en el Laboratorio Estatal de Salud Pública el
+        <b>{{ $validacion->fecha_de_registro }}</b>.
+        <br><br>Valor curricular en horas: <b>{{ $validacion->valor_curricular }}</b>
+        <br><br>Folio: <b>{{ $validacion->folio }}</b><br><br>
 
 
         <img src="<?php echo $qrcode; ?>" width="125px" height="125px" />

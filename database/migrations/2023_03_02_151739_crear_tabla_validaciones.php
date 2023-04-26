@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('tipo');
             $table->string('folio')->unique();
-            $table->timestamp('fecha_de_registro')->nullable();
+            $table->string('fecha_de_registro')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

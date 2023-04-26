@@ -17,17 +17,18 @@ class Validaciones extends Model
         'status',
         'tipo',
         'folio',
+        'fecha_de_registro',
     ];
 
     public function scopeFilter($query, array $filters) {
-        if($filters['tag'] ?? false) {
-            $query->where('tags', 'like', '%' . request('tag') . '%');
-        }
-
         if($filters['search'] ?? false) {
-            $query->where('nombre', 'like', '%' . request('search') . '%')
-                ->orWhere('descripcion', 'like', '%' . request('search') . '%')
-                ->orWhere('tags', 'like', '%' . request('search') . '%');
+            $query->where('nombre_curso', 'like', '%' . request('search') . '%')
+                ->orWhere('nombre_usuario', 'like', '%' . request('search') . '%')
+                ->orWhere('folio', 'like', '%' . request('search') . '%')
+                ->orWhere('fecha_de_registro', 'like', '%' . request('search') . '%')
+                ->orWhere('tipo', 'like', '%' . request('search') . '%')
+                ->orWhere('status', 'like', '%' . request('search') . '%')
+                ->orWhere('valor_curricular', 'like', '%' . request('search') . '%');
         }
     }
 

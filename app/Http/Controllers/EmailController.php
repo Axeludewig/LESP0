@@ -566,12 +566,13 @@ class EmailController extends Controller
             
                 if ($mail->send()) {
                     Storage::disk('public')->delete($filename);    
+                    return back()->with('message', 'Correos enviados.');
                     } 
-                }
+            } else {
+                return back()->with('message', 'Error en los correos.');
+            }
             // Send the email
         }
-
-        return back()->with('message', 'Correos enviados.');
     }
 
 }

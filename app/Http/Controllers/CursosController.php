@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cursos;
 use App\Models\participantes;
+use App\Models\validaciones;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,59 @@ use Dompdf\Options;
 
 class CursosController extends Controller
 {
+    public function pdf_download(Cursos $id){
+        $me = auth()->user();
+
+        $nombre_curso = $id->nombre;
+
+        $validacion = DB::table('validaciones')->where('id_curso',$id->id)->where('id_user', $me->id)->first();
+
+        $path = base_path('FIRMAS.png');
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path); 
+            $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    
+            $path2 = base_path('gob.jpg');
+            $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+            $data2 = file_get_contents($path2);
+            $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+    
+            $path3 = base_path('SS1.png');
+            $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+            $data3 = file_get_contents($path3);
+            $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+    
+            $query = 'q=' . $me->apellido_paterno . '+' . $me->apellido_materno . '&status=Verificado&curso=' . $id->nombre;
+            $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
+    
+            $qrcode = (new QRCode())->render($qrCodeContent);
+    
+            // Create a new instance of dompdf
+            $pdf = new Dompdf();
+    
+            // Generate the PDF
+            $pdf->loadHtml(view('pdf_cursovirtual', compact(['pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'me', 'validacion'])));
+    
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'vertical');
+    
+            // Render the PDF
+            $pdf->render();
+    
+            $filename = $nombre_curso . '.pdf';
+            //return $pdf->stream($filename); 
+
+            $pdfStream = $pdf->output();
+
+            return $pdf->stream($filename);
+    }
+
+    public function bitacora(){
+        return view('users.validaciones', [
+            'validaciones' => Validaciones::latest()->filter(request(['search']))->paginate(12)
+        ]);
+    }
+
     public function details(Request $request, Cursos $id_curso){
         return view('admin.details', [
             'listing' => $id_curso
@@ -36,7 +90,8 @@ class CursosController extends Controller
             'valor_curricular' => 'required',
             'status' => 'required',
             'tipo' => 'required',
-            'folio' => 'required'
+            'folio' => 'required',
+            'fecha_de_registro' => 'required',
         ]);
 
         $nombre_curso = $formFields['nombre_curso'];
@@ -45,6 +100,7 @@ class CursosController extends Controller
         $tipo = $formFields['tipo'];
         $folio = $formFields['folio'];
         $id = $formFields['id_curso'];
+        $fecha_de_registro = $formFields['fecha_de_registro'];
         
 
         $participantes_del_curso = DB::table('participantes')
@@ -78,10 +134,11 @@ class CursosController extends Controller
                             'status' => $status,
                             'tipo' => $tipo,
                             'folio' => $folio . sprintf('%02d', $foliox),
+                            'fecha_de_registro' => $fecha_de_registro
                         ]);
                         $foliox++;
                     }
-
+                    
                     return back()->with('message', 'Éxito, curso finalizado. Validaciones generadas.');
             }
     }

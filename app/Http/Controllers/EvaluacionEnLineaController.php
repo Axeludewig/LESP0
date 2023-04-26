@@ -22,11 +22,21 @@ class EvaluacionEnLineaController extends Controller
 
     public function xeval(Cursos $curso){
 
-        $eval = DB::table('evaluaciones')->where('id_curso', $curso->id)->first();
+        $curso_id = $curso->id;
+
+        $eval = DB::table('evaluaciones')->where('id_curso', $curso_id)->first();
 
         $cuestionario = DB::table('cuestionarios')->where('id', $eval->id)->first();
 
         $trucalif = DB::table('calificaciones')->where('id_evaluacion', $eval->id)->where('id_user', auth()->user()->id)->get();
+
+        $aprobado = DB::table('validaciones')->where('id_user', auth()->user()->id)->where('id_curso', $curso_id)->first();
+
+        if(isset($aprobado)){
+            return view('users.aprobado', [
+                'curso' => $curso
+            ]);
+        }
         
 
         if (count($trucalif) >= 2){
@@ -165,6 +175,7 @@ class EvaluacionEnLineaController extends Controller
             }
 
             $folio = $prefolio . $newVar;
+            $today = date('Y-m-d');
 
             $validacion = [];
 
@@ -177,6 +188,7 @@ class EvaluacionEnLineaController extends Controller
             $validacion['status']='Verificado';
             $validacion['tipo']='Asistente';
             $validacion['folio'] = $folio;
+            $validacion['fecha_de_registro'] = $today;
 
             Validaciones::create($validacion);
             
@@ -205,7 +217,7 @@ class EvaluacionEnLineaController extends Controller
             $pdf = new Dompdf();
     
             // Generate the PDF
-            $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+            $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio', 'today'])));
     
             // Set paper size and orientation
             $pdf->setPaper('A4', 'vertical');
@@ -236,6 +248,8 @@ class EvaluacionEnLineaController extends Controller
                     $calificacion = [];
                     $calificacion['id_evaluacion'] = $eval_id;
                     $calificacion['id_user'] = auth()->user()->id;
+                    $calificacion['nombre_curso'] = $formFields['nombre'];
+                    $calificacion['nombre_user'] = auth()->user()->nombre . ' ' . auth()->user()->apellido_paterno . ' ' . auth()->user()->apellido_materno;
                     $calificacion['oportunidad'] = 2;
                     $calificacion['calificacion'] = $calif;
         
@@ -251,6 +265,8 @@ class EvaluacionEnLineaController extends Controller
             $calificacion = [];
             $calificacion['id_evaluacion'] = $eval_id;
             $calificacion['id_user'] = auth()->user()->id;
+            $calificacion['nombre_curso'] = $formFields['nombre'];
+            $calificacion['nombre_user'] = auth()->user()->nombre . ' ' . auth()->user()->apellido_paterno . ' ' . auth()->user()->apellido_materno;
             $calificacion['oportunidad'] = 1;
             $calificacion['calificacion'] = $calif;
 

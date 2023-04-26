@@ -17,6 +17,7 @@
             <div class="text-lg mt-4">
                 <i class="fa-solid fa-location-dot"></i> {{ $listing->auditorio }}
             </div>
+            <!--
             <form method="POST" action="/validaciones" enctype="multipart/form-data">
                 @csrf
 
@@ -46,7 +47,8 @@
                     class="mt-3 w-5/6 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Generar
                     Validaciones &nbsp; <i class="mt-1 content-center fa-regular fa-circle-check"></i>
                 </button>
-            </form>
+            </form> -->
+
             <form action="/emailall" enctype="multipart/form-data">
                 @csrf
 

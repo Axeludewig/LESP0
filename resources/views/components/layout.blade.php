@@ -64,6 +64,11 @@
                         </span>
                     </li>
                     <li>
+                        <a href="/bitacora" class="md:text-2xl hover:text-laravel">
+                        <span class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-laravel md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
+                            <i class="fa-solid fa-rectangle-list"></i> Bitácora</span></a>
+                    </li>
+                    <li>
                         <a href="/admin/paneldecontrol" class="hover:text-laravel">
                             <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-laravel md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
                             <i class="fa-sharp fa-solid fa-key"></i>
@@ -81,10 +86,16 @@
                     </li>
                 @else
                     {{-- DENTRO DE ESTE ELSE ESTÁ LA LÓGICA DEL USUARIO --}}
+                    
                     <li>
                         <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-laravel md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:text-laravel">
                             <i class="fa-sharp fa-solid fa-lock"></i> Bienvenido/a, {{ auth()->user()->nombre }}
                         </span>
+                    </li>
+                    <li>
+                        <a href="/bitacora" class="md:text-2xl hover:text-laravel">
+                        <span class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-laravel md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
+                            <i class="fa-solid fa-rectangle-list"></i> Bitácora</span></a>
                     </li>
                     <li>
                         <a href="/users/perfil" class="md:text-2xl hover:text-laravel">

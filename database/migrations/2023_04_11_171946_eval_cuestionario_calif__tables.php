@@ -51,6 +51,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_evaluacion');
             $table->unsignedBigInteger('id_user');
+            $table->string('nombre_curso');
+            $table->string('nombre_user');
             $table->string('oportunidad');
             $table->string('calificacion');
             $table->timestamps();
