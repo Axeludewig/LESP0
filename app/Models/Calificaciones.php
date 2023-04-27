@@ -14,7 +14,8 @@ class Calificaciones extends Model
         'nombre_curso',
         'nombre_user',
         'oportunidad',
-        'calificacion'
+        'calificacion',
+        'fecha_intento'
     ];
     
     use HasFactory;

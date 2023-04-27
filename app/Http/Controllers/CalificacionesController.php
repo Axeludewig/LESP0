@@ -19,6 +19,7 @@ class CalificacionesController extends Controller
     }
 
     public function destroy(Request $request, Calificaciones $id_calif) {
+
         $id_calif->delete();
         return back()->with('message', 'Calificación eliminada correctamente.');
     }

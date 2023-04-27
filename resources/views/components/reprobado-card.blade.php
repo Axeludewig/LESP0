@@ -12,7 +12,7 @@
         {{$reprobado->oportunidad}}
     </td>
     <td class="px-6 py-4">
-        {{$reprobado->created_at}}
+        {{$reprobado->fecha_intento}}
     </td>
     @php $hack = DB::table('calificaciones')->where('id', $reprobado->id)->first();
     $masterID = $hack->id;

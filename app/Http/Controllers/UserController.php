@@ -169,7 +169,7 @@ class UserController extends Controller
 
     public function index() {
         return view('admin.showallusers', [
-            'listings' => User::latest()->filter(request(['tag', 'search']))->paginate(10)
+            'listings' => User::oldest()->filter(request(['tag', 'search']))->paginate(10)
         ]);
     }
 
@@ -306,8 +306,11 @@ class UserController extends Controller
     }
 
     public function destroy(User $listing) {
+
+        $nombre = $listing->nombre . ' ' . $listing->apellido_paterno . ' ' . $listing->apellido_materno;
+        $message = "Usuario " . $nombre . " eliminado correctamente.";
         $listing->delete();
-        return redirect('/')->with('message', 'Usuario eliminado correctamente.');
+        return back()->with('message', $message);
     }
 
     public function mass_store(Request $request)

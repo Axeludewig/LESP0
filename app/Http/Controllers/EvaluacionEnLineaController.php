@@ -16,6 +16,9 @@ use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use PhpParser\Node\Expr\Eval_;
+use IntlDateFormatter;
+use IntlTimeZone;
+use Jenssegers\Date\Date;
 
 class EvaluacionEnLineaController extends Controller
 {
@@ -179,6 +182,9 @@ class EvaluacionEnLineaController extends Controller
 
             $validacion = [];
 
+            
+            date_default_timezone_set('America/Mexico_City');
+        
             $validacion['id_user']=auth()->user()->id;
             $validacion['id_curso']=$id_curso;
             $validacion['nombre_curso']=$nombre_del_curso;
@@ -252,6 +258,15 @@ class EvaluacionEnLineaController extends Controller
                     $calificacion['nombre_user'] = auth()->user()->nombre . ' ' . auth()->user()->apellido_paterno . ' ' . auth()->user()->apellido_materno;
                     $calificacion['oportunidad'] = 2;
                     $calificacion['calificacion'] = $calif;
+                    date_default_timezone_set('America/Mexico_City');
+                    
+                    setlocale(LC_ALL, 'es_ES');
+
+                    Date::setLocale('es');
+
+                    $date = Date::now()->format('l j F Y H:i:s');
+
+                    $calificacion['fecha_intento'] = $date;
         
                     Calificaciones::create($calificacion);
         
@@ -269,6 +284,9 @@ class EvaluacionEnLineaController extends Controller
             $calificacion['nombre_user'] = auth()->user()->nombre . ' ' . auth()->user()->apellido_paterno . ' ' . auth()->user()->apellido_materno;
             $calificacion['oportunidad'] = 1;
             $calificacion['calificacion'] = $calif;
+            date_default_timezone_set('America/Mexico_City');
+            $date = date('l jS \of F Y h:i:s A');
+            $calificacion['fecha_intento'] = $date;
 
             Calificaciones::create($calificacion);
 

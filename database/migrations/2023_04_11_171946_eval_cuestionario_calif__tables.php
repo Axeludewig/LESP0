@@ -55,6 +55,7 @@ return new class extends Migration
             $table->string('nombre_user');
             $table->string('oportunidad');
             $table->string('calificacion');
+            $table->string('fecha_intento');
             $table->timestamps();
         });
 
