@@ -12,12 +12,13 @@ class CalificacionesController extends Controller
     public function reprobados(){
         $reprobados = DB::table('calificaciones')->get();
 
+
         return view('admin.reprobados', [
             'reprobados' => Calificaciones::latest()->filter(request(['search']))->paginate(12)
         ]);
     }
 
-    public function destroy(Calificaciones $id_calif) {
+    public function destroy(Request $request, Calificaciones $id_calif) {
         $id_calif->delete();
         return back()->with('message', 'Calificación eliminada correctamente.');
     }

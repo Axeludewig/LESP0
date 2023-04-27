@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
         @foreach($reprobados as $reprobado)
-        <x-reprobado-card :reprobado="$reprobado" />
+            <x-reprobado-card :reprobado="$reprobado" />
         @endforeach
     </tbody>
 </table>
