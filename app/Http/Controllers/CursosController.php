@@ -39,7 +39,7 @@ class CursosController extends Controller
             $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
     
             $query = 'q=' . $me->apellido_paterno . '+' . $me->apellido_materno . '&status=Verificado&curso=' . $id->nombre;
-            $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
+            $qrCodeContent = 'https://42ae-2806-103e-5-62a5-cd82-300a-2a5e-7dc0.ngrok-free.app/validaciones/search?' . $query;
     
             $qrcode = (new QRCode())->render($qrCodeContent);
     

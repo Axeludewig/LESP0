@@ -276,6 +276,14 @@ Route::get('/validaciones/search', function () {
     return view('validaciones.validar', compact('listings'));
 });
 
+Route::get('/validacionesx/search', function () {
+    $query = request()->query('usuario'); // get the value of the 'q' query parameter
+    $query2 = request()->query('curso'); 
+    $listings = App\Models\Validaciones::where('nombre_usuario', 'like', "%$query%")->where('nombre_curso', 'like', "%$query2%")->get(); // replace YourModel and column_name with your actual model and column name
+
+    return view('validaciones.validar', compact('listings'));
+});
+
 // MIS CRUSOS FINALIZADOS
 Route::get('/cursos/misfinalizados', [participantesController::class, 'indexfinish'])->middleware('auth');
 

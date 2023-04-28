@@ -86,9 +86,9 @@ class ValidacionesController extends Controller
                 $data3 = file_get_contents($path3);
                 $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
         
-                $query = 'q=' . $formFields['nombre_participante'] . '&status=Verificado&curso=' . $formFields['nombre_capacitacion'];
-                $qrCodeContent = 'https://135a-2806-103e-5-62a5-8d82-1b0a-36ba-fa41.ngrok.io/validaciones/search?' . $query;
-        
+                $query = 'usuario=' . urlencode($formFields['nombre_participante']) . '&curso=' . urlencode($formFields['nombre_capacitacion']);
+$qrCodeContent = 'https://42ae-2806-103e-5-62a5-cd82-300a-2a5e-7dc0.ngrok-free.app/validacionesx/search?' . $query;
+
                 $qrcode = (new QRCode())->render($qrCodeContent);
         
                 // Create a new instance of dompdf
