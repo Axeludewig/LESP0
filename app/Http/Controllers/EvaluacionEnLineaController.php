@@ -285,9 +285,14 @@ class EvaluacionEnLineaController extends Controller
             $calificacion['oportunidad'] = 1;
             $calificacion['calificacion'] = $calif;
             date_default_timezone_set('America/Mexico_City');
-            $date = date('l jS \of F Y h:i:s A');
-            $calificacion['fecha_intento'] = $date;
+                    
+                    setlocale(LC_ALL, 'es_ES');
 
+                    Date::setLocale('es');
+
+                    $date = Date::now()->format('l j F Y H:i:s');
+
+                    $calificacion['fecha_intento'] = $date;
             Calificaciones::create($calificacion);
 
             $message= 'Tu calificación es: ' . $calif .  '. Tienes una segunda oportunidad.';

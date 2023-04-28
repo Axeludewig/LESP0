@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('validaciones', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('id_user')->nullable();
-            $table->unsignedBigInteger('id_curso');
+            $table->unsignedBigInteger('id_curso')->nullable();
             $table->string('nombre_curso');
             $table->string('nombre_usuario');
             $table->string('valor_curricular');            

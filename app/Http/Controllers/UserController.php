@@ -215,6 +215,7 @@ class UserController extends Controller
 
         // Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
+        $formFields['nombre_completo'] = $formFields['nombre'] . ' ' . $formFields['apellido_paterno'] . ' ' . $formFields['apellido_materno'];
 
         // Create User
         $user = User::create($formFields);
@@ -354,6 +355,8 @@ class UserController extends Controller
             } else {
                 $userRecord->es_admin = "0";
             }
+
+            $userRecord->nombre_completo = $row['NOMBRE'] . ' ' . $row['PATERNO'] . ' ' . $row['MATERNO'];
             
             $userRecord->password = Hash::make($password);
             // Save the user record to the database

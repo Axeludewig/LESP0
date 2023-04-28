@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('observaciones');
             $table->string('password');
             $table->boolean('es_admin');
+            $table->string('nombre_completo');
             $table->rememberToken();
             $table->timestamps();
         });

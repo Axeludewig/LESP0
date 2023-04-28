@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Escolaridad;
+use App\Models\Experiencia_profesional;
+use App\Models\InformacionPersonal;
 use Illuminate\Http\Request;
 use App\Models\Validaciones;
 use Illuminate\Support\Facades\DB;
@@ -10,9 +13,54 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
+use League\Csv\Reader;
+use App\Models\User;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Hash;
 
 class ValidacionesController extends Controller
 {
+    public function mass_store(){
+        return view ('admin.mass_store_validaciones');
+    }
+
+    public function mass_store_validaciones(Request $request){
+        // Validate the file upload
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        // Store the uploaded file to a temporary location
+        $path = $request->file('file')->store('temp');
+
+        // Open the CSV file and read the data
+        $csv = Reader::createFromPath(storage_path('app/' . $path), 'r');
+        $csv->setHeaderOffset(0);
+
+        foreach ($csv as $row) {
+            // Create a new user record
+
+            $new = new Validaciones();
+            $new->id_user = NULL;
+            $new->id_curso = NULL;
+            $new->nombre_curso = mb_convert_encoding($row['curso'], 'UTF-8', 'auto');
+            $new->nombre_usuario = mb_convert_encoding($row['user'], 'UTF-8', 'auto');
+            $new->valor_curricular = mb_convert_encoding($row['valor'], 'UTF-8', 'auto');
+            $new->status = "Verificado";
+            $new->tipo = mb_convert_encoding($row['tipo'], 'UTF-8', 'auto');
+            $new->folio = mb_convert_encoding($row['folio'], 'UTF-8', 'auto');
+            $new->fecha_de_registro = mb_convert_encoding($row['fecha'], 'UTF-8', 'auto');
+
+            try {
+                $new->save();
+            } catch (\Exception $e) {
+                return "Error at record " . $row['curso'] . "" . $row['user'] . " Error inserting data: " . $e->getMessage();
+            }
+        }
+        // Redirect the user back to the upload form
+        return redirect()->back()->with('success', 'Validaciones creadas exitosamente!');
+    }
+
     public function download_pdf_validacion(Request $request){
         $formFields = $request->validate([
             'folio' => 'required',

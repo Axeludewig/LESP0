@@ -130,6 +130,10 @@ Route::put('/users/email/{user}', [UserController::class, 'update_email'])->midd
 
 
 
+// ADMIN --- DESTRUIR CALIFICACIÓN 
+Route::get('/store_bitacora', [ValidacionesController::class, 'mass_store']);
+
+Route::post('/store_bitacora', [ValidacionesController::class, 'mass_store_validaciones']);
 
 // ADMIN --- DESTRUIR CALIFICACIÓN 
 Route::delete('/admin/reprobados/{id_calif}', [CalificacionesController::class, 'destroy']);

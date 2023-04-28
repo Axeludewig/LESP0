@@ -62,5 +62,9 @@
           <p>Se enlistarán aquí cuando el administrador actualize la base de datos.</p>
       </div>
         @endunless
+
+        <div class="mt-6 p-4">
+            {{$validaciones->links()}}
+          </div>
     
 </x-layout>

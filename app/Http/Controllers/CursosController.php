@@ -65,7 +65,7 @@ class CursosController extends Controller
 
     public function bitacora(){
         return view('users.validaciones', [
-            'validaciones' => Validaciones::latest()->filter(request(['search']))->paginate(12)
+            'validaciones' => Validaciones::orderBy('id', 'desc')->filter(request(['search']))->paginate(400)
         ]);
     }
 
@@ -76,7 +76,7 @@ class CursosController extends Controller
     }
 
     public function update_final(Request $request, Cursos $listing) {
-
+        //dd($request);
 
         $formFields = $request->validate([
             'status' => 'required'
