@@ -70,4 +70,12 @@ class Cursos extends Model
         return $this->hasOne(Evaluacion::class, 'id_curso');
     }
 
+    public function actividades(){
+        return $this->hasMany(Actividades::class, 'id_curso');
+    }
+
+    public function ponentes(){
+        return $this->hasMany(Ponentes::class, 'id_curso');
+    }
+
 }

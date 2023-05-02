@@ -14,6 +14,9 @@ class Evaluacion extends Model
         'nombre',
         'video',
         'pdf',
+        'pdf2',
+        'pdf3',
+        'pdf4',
         'numero_consecutivo'
     ];
 

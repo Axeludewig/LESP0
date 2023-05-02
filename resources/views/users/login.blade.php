@@ -35,12 +35,13 @@
         </button>
       </div>
 
+      <!--
       <div class="mt-8">
         <p>
           ¿Aún no tienes una cuenta?
           <a href="/register" class="text-laravel">Registrarse</a>
         </p>
-      </div>
+      </div> -->
     </form>
   </x-card>
 </x-layout>

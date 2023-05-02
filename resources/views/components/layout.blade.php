@@ -74,7 +74,10 @@
                             <i class="fa-sharp fa-solid fa-key"></i>
                             Control</span></a>
                     </li>
-
+                    <li class="">
+                        <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
+                        <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registro</span></a>
+                    </li>
                     <li>
                         <form class="inline" method="POST" action="/logout">
                             @csrf
@@ -115,11 +118,11 @@
                     </li>
                 @endif
             @else
-                {{-- DENTRO DE ESTE ELSE ESTÁ LA LÓGICA DEL USUARIO NO AUTENTICADO --}}
+                {{-- DENTRO DE ESTE ELSE ESTÁ LA LÓGICA DEL USUARIO NO AUTENTICADO 
                 <li class="">
                     <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
                     <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registro</span></a>
-                </li>
+                </li>--}}
                 <li>
                         <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
                         <a href="/login" class="hover:text-laravel">

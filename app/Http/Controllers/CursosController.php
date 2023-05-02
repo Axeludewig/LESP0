@@ -13,6 +13,7 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Storage;
 
 class CursosController extends Controller
 {
@@ -131,8 +132,8 @@ class CursosController extends Controller
                             'nombre_curso' => $nombre_curso,
                             'nombre_usuario' => $participante->nombre_participante,
                             'valor_curricular' => $valor_curricular,
-                            'status' => $status,
-                            'tipo' => $tipo,
+                            'status' => "Verificado",
+                            'tipo' => $participante->tipo,
                             'folio' => $folio . sprintf('%02d', $foliox),
                             'fecha_de_registro' => $fecha_de_registro
                         ]);
@@ -216,11 +217,55 @@ class CursosController extends Controller
             'tags' => 'required',
         ]);
 
+        $responsable = DB::table('users')->where('id', $formFields['nombre_del_responsable'])->first();
+
+        $formFields['nombre_del_responsable'] = $responsable->nombre_completo;
+
+        $currentYear = date("Y");
+        if ($currentYear == "2023") {
+            $pivot = DB::table('pivot_table2')->first();
+            $consec = $pivot->consecutivo;
+            $formFields['numero_consecutivo'] = $consec + 1;
+            $pivot->consecutivo = $formFields['numero_consecutivo'];
+            DB::table('pivot_table2')
+                ->where('id', $pivot->id)
+                ->update(['consecutivo' => $formFields['numero_consecutivo']]);
+        } else {
+            $lastConsec = DB::table('pivot_table2')
+                ->where('year', $currentYear)
+                ->max('consecutivo');
+            $formFields['numero_consecutivo'] = ($lastConsec ?? 0) + 1;
+            if (!$lastConsec) {
+                // if there are no records for the current year, insert a new record into the pivot table
+                DB::table('pivot_table2')->insert([
+                    'consecutivo' => 1,
+                    'year' => $currentYear,
+                ]);
+            }
+        }
+
         if($request->hasFile('img')) {
             $formFields['img'] = $request->file('img')->store('images', 'public');
         }
 
-        Cursos::create($formFields);
+        $curso = Cursos::create($formFields);
+
+        $responsable_data = [];
+        $responsable_data['id_user'] = $responsable->id;
+        $responsable_data['id_curso'] = $curso->id;
+        $responsable_data['nombre_curso'] = $curso->nombre;
+        $responsable_data['rfc_participante'] = $responsable->rfc;
+        $responsable_data['nombre_participante'] = $responsable->nombre_completo;
+        $responsable_data['email_participante'] = $responsable->email;
+        $responsable_data['ubicacion'] = $curso->auditorio;
+        $responsable_data['fecha_de_inicio'] = $curso->fecha_de_inicio;
+        $valor_curricular = $curso->horas_teoricas + $curso->horas_practicas;
+        $responsable_data['fecha_de_terminacion']= $curso->fecha_de_terminacion;
+        $responsable_data['valor_curricular'] = $valor_curricular;
+        $responsable_data['tipo'] = "Ponente";
+        $responsable_data['img'] = $curso->img;
+
+        Participantes::create($responsable_data);
 
         return redirect('/')->with('message', 'Curso creado correctamente.');
     }
@@ -236,16 +281,29 @@ class CursosController extends Controller
         
         $qrCodes = [];
 
+        $options = new QROptions([
+            'version' => 5,
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'imageTransparent' => false,
+            'eccLevel' => QRCode::ECC_L,
+            'scale' => 10,
+            'addQuietzone' => true,
+            'margin' => 10,
+            'logoPath' => asset('/images/logolesp.png'),// Path to the logo file
+            'logoWidth' => 150, // Width of the logo in pixels
+        ]);
+        
+
         foreach ($cursos as $curso){
-            $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/registro/' . $curso->id;
-            $qrCodeImage = (new QRCode())->render($qrCodeContent);
+            $qrCodeContent = 'https://d04b-2806-103e-5-62a5-2c1e-5c72-7ec2-d4a.ngrok-free.app/registro/' . $curso->id;
+            $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
             $qrCodes[] = [
                 'name' => $curso->nombre,
                 'image' => $qrCodeImage,
                 'id_curso' => $curso->id
             ];
         }
-
 
         return view('admin.qrs', [
             'qrCodes' => $qrCodes, // Pass the array of QR codes to the view
@@ -260,7 +318,7 @@ class CursosController extends Controller
 
         $id_curso = $formFields['id_curso'];
 
-        $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/registro/' . $id_curso;
+        $qrCodeContent = 'https://d04b-2806-103e-5-62a5-2c1e-5c72-7ec2-d4a.ngrok-free.app/registro/' . $id_curso;
 
         $nombre_curso = $formFields['nombre_curso'];
         

@@ -28,6 +28,8 @@ class PdfController extends Controller
 
     public function generatePdf(Request $request)
     {
+        dd($request);
+
         $formFields = $request->validate([
             'nombre' => 'required',
             'fecha_de_terminacion' => 'required',

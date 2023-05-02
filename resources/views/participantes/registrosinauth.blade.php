@@ -63,12 +63,13 @@
                 </button>
             </div>
 
+            <!--
             <div class="mt-8">
                 <p>
                     ¿Ya tienes una cuenta?
                     <a href="/login" class="text-laravel">Iniciar Sesión</a>
                 </p>
-            </div>
+            </div> -->
         </form>
     </x-card>
 </x-layout>

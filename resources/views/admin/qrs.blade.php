@@ -13,7 +13,7 @@
         </h3>
     </div>
 
-    <div class="gap-4 space-y-4 md:space-y-0 mx-4 lg:flex-row">
+    <div class="mt-6 flex flex-col items-center justify-center gap-4 mx-6">
 
         @unless(count($qrCodes) == 0)
             @foreach ($qrCodes as $qrCode)

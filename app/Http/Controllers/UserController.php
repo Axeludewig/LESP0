@@ -267,11 +267,9 @@ class UserController extends Controller
         $escolaridad->periodo_de_realizacion_prepa="n/a";
         $escolaridad->save();
 
+        $message = "Usuario " . "$user->nombre" . " " . "$user->apellido_paterno" . " " . $user->apellido_materno. " creado."; 
 
-        // Login
-        auth()->login($user);
-
-        return redirect('/')->with('message', 'Usuario creado y sesión iniciada!');
+        return back()->with('message', $message);
     }
 
     // Logout User

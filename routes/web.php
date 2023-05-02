@@ -304,7 +304,7 @@ Route::get('/listings/manage', [participantesController::class, 'index'])->middl
 Route::get('/listings/{listing}', [CursosController::class, 'show']);
 
 // Show Register/Create Form
-Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+Route::get('/register', [UserController::class, 'create'])->middleware('auth');
 
 // Create New Usertag
 Route::post('/users', [UserController::class, 'store']);

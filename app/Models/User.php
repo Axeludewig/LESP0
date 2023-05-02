@@ -99,10 +99,18 @@ class User extends Authenticatable
     
     public function calificaciones()
     {
-        return $this->hasOne(Calificaciones::class);
+        return $this->hasMany(Calificaciones::class);
     }
 
     public function permisos(){
         return $this->hasMany(Permisos_eval::class);
+    }
+
+    public function actividades(){
+        return $this->hasMany(Actividades::class);
+    }
+
+    public function ponentes(){
+        return $this->hasMany(Ponentes::class);
     }
 }

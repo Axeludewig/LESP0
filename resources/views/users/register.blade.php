@@ -202,7 +202,7 @@
                 <label for="es_admin" class="inline-block text-lg mb-2">
                 </label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="es_admin"
-                    value="1" hidden="true" />
+                    value="0" hidden="true" />
 
                 @error('es_admin')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -215,13 +215,12 @@
                     Registrar
                 </button>
             </div>
-
-            <div class="mt-8">
+<!--            <div class="mt-8">
                 <p>
                     ¿Ya tienes una cuenta?
                     <a href="/login" class="text-laravel">Iniciar Sesión</a>
                 </p>
-            </div>
+            </div>-->
         </form>
     </x-card>
 </x-layout>

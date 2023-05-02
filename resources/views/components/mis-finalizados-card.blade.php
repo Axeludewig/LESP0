@@ -19,33 +19,24 @@
             <div class="mt-4 ml-16 mb-4 text-lg flex flex-col space-evenly w-1/2">
 
 
-                <form method="GET" action="/pdf" enctype="multipart/form-data">
-                    @csrf
+                <form action="/pdf_download/bitacora">
                     @php
-                        $valor_curricular = $listing->horas_teoricas + $listing->horas_practicas;
+                        $validacion = DB::table('validaciones')->where('id_curso', $listing->id)->where('id_user', auth()->user()->id)->first();
                     @endphp
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre"
-                        hidden="true" value="{{ $listing->nombre }}" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="fecha_de_terminacion"
-                        hidden="true" value="{{ $listing->fecha_de_terminacion }}" />
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="nombre_user"
-                        hidden="true" value="{{ auth()->user()->nombre }}" />
 
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="valor_curricular"
-                        hidden="true" value="{{ $valor_curricular }}" />
-
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="apellido_paterno"
-                        hidden="true" value="{{ auth()->user()->apellido_paterno }}" />
-
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="apellido_materno"
-                        hidden="true" value="{{ auth()->user()->apellido_materno }}" />
-
-                    <button type="submit"
+                    <input type="hidden" name="folio" value="{{$validacion->folio}}">
+                    <input type="hidden" name="nombre_participante" value="{{$validacion->nombre_usuario}}">
+                    <input type="hidden" name="nombre_capacitacion" value="{{$validacion->nombre_curso}}">
+                    <input type="hidden" name="tipo_participacion" value="{{$validacion->tipo}}">
+                    <input type="hidden" name="fecha_capacitacion" value="{{$validacion->fecha_de_registro}}">
+                    <input type="hidden" name="valor_curricular" value="{{$validacion->valor_curricular}}">
+                     <button type="submit"
                         class="w-5/6 m-4 bg-laravel text-white rounded py-2 px-4 hover:bg-black  flex place-content-center justify-center content-center">Descargar
                         constancia <i
                             class="m-4 mt-1 justify-center place-self-center content-center fa-solid fa-file-arrow-down"></i>
                     </button>
                 </form>
+
 
                 <form method="GET" action="/emailme" enctype="multipart/form-data">
                     @csrf

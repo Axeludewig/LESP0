@@ -62,6 +62,7 @@ class ValidacionesController extends Controller
     }
 
     public function download_pdf_validacion(Request $request){
+        //dd($request);
         $formFields = $request->validate([
             'folio' => 'required',
             'nombre_participante' => 'required',
@@ -87,7 +88,7 @@ class ValidacionesController extends Controller
                 $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
         
                 $query = 'usuario=' . urlencode($formFields['nombre_participante']) . '&curso=' . urlencode($formFields['nombre_capacitacion']);
-$qrCodeContent = 'https://42ae-2806-103e-5-62a5-cd82-300a-2a5e-7dc0.ngrok-free.app/validacionesx/search?' . $query;
+                $qrCodeContent = 'https://d04b-2806-103e-5-62a5-2c1e-5c72-7ec2-d4a.ngrok-free.app/validacionesx/search?' . $query;
 
                 $qrcode = (new QRCode())->render($qrCodeContent);
         

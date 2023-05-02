@@ -15,8 +15,19 @@
          </h3>
      </div>
 
-        <div class="flex items-center justify-center">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-3">
+        @if ($eval->pdf != null)
         <a target="_blank" href="{{asset('storage/' . $eval->pdf)}}" class="border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold px-6 p-4 rounded-full">Descargar material de apoyo</a>
+        @endif
+        @if ($eval->pdf2 != null)
+        <a target="_blank" href="{{asset('storage/' . $eval->pdf2)}}" class="border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold px-6 p-4 rounded-full">Descargar material de apoyo</a>
+        @endif
+        @if ($eval->pdf3 != null)
+        <a target="_blank" href="{{asset('storage/' . $eval->pdf3)}}" class="border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold px-6 p-4 rounded-full">Descargar material de apoyo</a>
+        @endif
+        @if ($eval->pdf4 != null)
+        <a target="_blank" href="{{asset('storage/' . $eval->pdf4)}}" class="border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold px-6 p-4 rounded-full">Descargar material de apoyo</a>
+        @endif
         </div>
 
         <div class="flex items-center justify-center">

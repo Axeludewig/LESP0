@@ -7,6 +7,7 @@ use App\Models\Calificaciones;
 use App\Models\Cuestionario;
 use App\Models\Cursos;
 use App\Models\Evaluacion;
+use App\Models\participantes;
 use App\Models\User;
 use App\Models\Validaciones;
 use Illuminate\Http\Request;
@@ -163,6 +164,9 @@ class EvaluacionEnLineaController extends Controller
             $curso = DB::table('cursos')->where('id', $id_curso)->first();
             //el numero consecutivo de ese curso
             $numero_consecutivo = $curso->numero_consecutivo;
+
+            
+
 
             $currentYear = date('Y');
             $prefolio = 'B2A' . $currentYear . 'C' . $numero_consecutivo . 'F';
@@ -339,7 +343,10 @@ class EvaluacionEnLineaController extends Controller
             'status' => 'required',
             'tags' => 'required',
             'video' => 'file|max:250000',
-            'pdf' => 'file|max:150000' // Max file size of 50MB
+            'pdf' => 'file|max:150000',
+            'pdf2' => 'file|max:150000',
+            'pdf3' => 'file|max:150000', // Max file size of 150MB
+            'pdf4' => 'file|max:150000'
         ]);
 
 
@@ -367,6 +374,10 @@ class EvaluacionEnLineaController extends Controller
             'pregunta5_respuesta' => 'required',
         ]);
 
+        $responsable = DB::table('users')->where('id', $validatedData['nombre_del_responsable'])->first();
+
+        $validatedData['nombre_del_responsable'] = $responsable->nombre_completo;
+
         $curso_data=[];
 
         $curso_data['nombre'] = $validatedData['nombre'];
@@ -392,8 +403,49 @@ class EvaluacionEnLineaController extends Controller
         $curso_data['tags'] = $validatedData['tags'];
         $curso_data['img'] = '/images/logolesp.png';
 
+        $currentYear = date("Y");
+        if ($currentYear == "2023") {
+            $pivot = DB::table('pivot_table2')->first();
+            $consec = $pivot->consecutivo;
+            $curso_data['numero_consecutivo'] = $consec + 1;
+            $pivot->consecutivo = $curso_data['numero_consecutivo'];
+            DB::table('pivot_table2')
+                ->where('id', $pivot->id)
+                ->update(['consecutivo' => $curso_data['numero_consecutivo']]);
+        } else {
+            $lastConsec = DB::table('pivot_table2')
+                ->where('year', $currentYear)
+                ->max('consecutivo');
+                $curso_data['numero_consecutivo'] = ($lastConsec ?? 0) + 1;
+            if (!$lastConsec) {
+                // if there are no records for the current year, insert a new record into the pivot table
+                DB::table('pivot_table2')->insert([
+                    'consecutivo' => 1,
+                    'year' => $currentYear,
+                ]);
+            }
+        }
+
                 
         $newCurso = Cursos::create($curso_data);
+
+         $responsable_data = [];
+        $responsable_data['id_user'] = $responsable->id;
+        $responsable_data['id_curso'] = $newCurso->id;
+        $responsable_data['nombre_curso'] = $newCurso->nombre;
+        $responsable_data['rfc_participante'] = $responsable->rfc;
+        $responsable_data['nombre_participante'] = $responsable->nombre_completo;
+        $responsable_data['email_participante'] = $responsable->email;
+        $responsable_data['ubicacion'] = $newCurso->auditorio;
+        $responsable_data['fecha_de_inicio'] = $newCurso->fecha_de_inicio;
+        $valor_curricular = $newCurso->horas_teoricas + $newCurso->horas_practicas;
+        $responsable_data['fecha_de_terminacion']= $newCurso->fecha_de_terminacion;
+        $responsable_data['valor_curricular'] = $valor_curricular;
+        $responsable_data['tipo'] = "Ponente";
+        $responsable_data['img'] = $newCurso->img;
+
+        participantes::create($responsable_data);
+
 
         $evaluacion_data = [];
 
@@ -410,6 +462,18 @@ class EvaluacionEnLineaController extends Controller
             $evaluacion_data['video'] = $request->file('video')->store('videos', 'public');
 
             $evaluacion_data['pdf'] = $request->file('pdf')->store('apoyos', 'public');
+
+            if($request->hasFile('pdf2')) {
+            $evaluacion_data['pdf2'] = $request->file('pdf2')->store('apoyos', 'public'); 
+            }
+
+            if($request->hasFile('pdf3')) {
+                $evaluacion_data['pdf3'] = $request->file('pdf3')->store('apoyos', 'public'); 
+                }
+
+            if($request->hasFile('pdf4')) {
+                    $evaluacion_data['pdf4'] = $request->file('pdf4')->store('apoyos', 'public'); 
+                    }
 
             $evalz = Evaluacion::create($evaluacion_data);
 

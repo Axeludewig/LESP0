@@ -65,10 +65,16 @@
             </div>
 
             <div class="mb-6">
-                <label for="nombre_del_responsable" class="inline-block text-lg mb-2">Nombre del responsable del evento
-                    de capacitación:</label>
-                <input type="text" id="nombre_del_responsable" name="nombre_del_responsable"
-                    class="border border-gray-200 rounded p-2 w-full" value="{{ old('nombre_del_responsable') }}">
+                @php
+                    $allusers = DB::table('users')->orderBy('nombre')->get();
+                @endphp
+                <label for="nombre_del_responsable" class="inline-block text-lg mb-2">Nombre del responsable del evento de capacitación:</label>
+                <select id="nombre_del_responsable" name="nombre_del_responsable" class="border border-gray-200 rounded p-2 w-full">
+                    <option value="">Seleccionar responsable</option>
+                    @foreach($allusers as $user)
+                        <option value="{{ $user->id }}" {{ old('nombre_del_responsable') == $user->id ? 'selected' : '' }}>{{ $user->nombre_completo }}</option>
+                    @endforeach
+                </select>
                 @error('nombre_del_responsable')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -203,11 +209,32 @@
             </div>
 
             <div class="mt-4 flex flex-col justify-center items-center gap-4">
+                <div class="border-4 p-4 m-1">
                 <label for="video" class="block font-semibold text-gray-700">Subir video</label>
                 <input id="video" type="file" name="video" class="mt-1">
+                </div>
+
+                <div class="border-4 p-4 m-1">
                 <label for="pdf" class="block font-semibold text-gray-700">PDF de apoyo:</label>
-            <input type="file" name="pdf" id="pdf">
+                <input type="file" name="pdf" id="pdf" ">
+                </div>
+
+                <div class="border-4 p-4 m-1">
+                <label for="pdf2" class="block font-semibold text-gray-700">PDF de apoyo:</label>
+                <input type="file" name="pdf2" id="pdf">
+                </div>
+
+                <div class="border-4 p-4 m-1">
+                <label for="pdf3" class="block font-semibold text-gray-700">PDF de apoyo:</label>
+                <input type="file" name="pdf3" id="pdf">
+                </div>
+
+                <div class="border-4 p-4 m-1">
+                <label for="pdf4" class="block font-semibold text-gray-700">PDF de apoyo:</label>
+                <input type="file" name="pdf4" id="pdf">
+                </div>
             </div>
+            
 
             <div class="mt-6 flex flex-col justify-center items-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">Cuestionario</h2>
@@ -398,10 +425,16 @@
                 </div>
     
                 <div class="mb-6">
-                    <label for="nombre_del_responsable" class="inline-block text-lg mb-2">Nombre del responsable del evento
-                        de capacitación:</label>
-                    <input type="text" id="nombre_del_responsable" name="nombre_del_responsable"
-                        class="border border-gray-200 rounded p-2 w-full" value="{{ old('nombre_del_responsable') }}">
+                    @php
+                        $allusers = DB::table('users')->orderBy('nombre')->get();
+                    @endphp
+                    <label for="nombre_del_responsable" class="inline-block text-lg mb-2">Nombre del responsable del evento de capacitación:</label>
+                    <select id="nombre_del_responsable" name="nombre_del_responsable" class="border border-gray-200 rounded p-2 w-full">
+                        <option value="">Seleccionar responsable</option>
+                        @foreach($allusers as $user)
+                            <option value="{{ $user->id }}" {{ old('nombre_del_responsable') == $user->id ? 'selected' : '' }}>{{ $user->nombre_completo }}</option>
+                        @endforeach
+                    </select>
                     @error('nombre_del_responsable')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror

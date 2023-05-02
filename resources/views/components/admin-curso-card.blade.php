@@ -33,6 +33,49 @@
 
 <div class="m-4">
     <div>
+        <div class="flex -space-x-4 max-w-full">
+            @if ($participantes->count() < 4)
+            @foreach ($participantes as $participante)
+            @php
+            $user = DB::table('users')->where('id', $participante->id_user)->first(); 
+            $pfp = $user->profile_pic;
+            @endphp
+            @if ($pfp !== null)
+            <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
+            @else
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            @endif
+            @endforeach
+            @else
+
+            @php $count = 0; @endphp
+
+            @foreach ($participantes as $participante)
+
+            @php
+            $user = DB::table('users')->where('id', $participante->id_user)->first(); 
+            $pfp = $user->profile_pic;
+            @endphp
+
+            @if ($pfp !== null && $count !== 3)
+            <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
+            @php $count++; @endphp
+            @endif
+
+            @if ($pfp == null && $count !== 3)
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            @php $count++; @endphp
+            @endif
+
+            @endforeach
+            @if ($count = 4)
+            <a class="flex items-center justify-center w-10 h-10  md:w-24 md:h-24 text-lg font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800" href="#">+{{$cuenta-3}}</a>
+            @endif
+
+            
+            @endif
+
+        </div>
         <span class="font-semibold cursor-pointer" onclick="toggleList({{ $listing->id }})">Participantes: {{ $cuenta }}</span>
         @if($cuenta > 0)
         <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel"  onclick="toggleList({{ $listing->id }})">
@@ -100,6 +143,8 @@
                             @php $currentYear = now()->format('Y'); @endphp
                             <input type="text" name="folio" hidden="true"
                                 value="B2A{{$currentYear}}C{{ $listing->numero_consecutivo }}F" />
+
+                                <input type="text" hidden name="fecha_de_registro" value="{{$listing->fecha_de_terminacion}}" />
 
                             <input type="hidden" name="_method" value="PUT">
                             <div class=" mb-4 text-lg mt-4 flex place-content-center">
