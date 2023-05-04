@@ -466,7 +466,7 @@ class UserController extends Controller
     {
     // Validate the file upload
     $validatedData = $request->validate([
-        'profile_pic' => 'image|max:2048', // Max file size of 2MB
+        'profile_pic' => 'image|max:15000', // Max file size of 2MB
     ]);
 
     $oldProfilePicPath = '/storage' . $id_usuario->profile_pic;
