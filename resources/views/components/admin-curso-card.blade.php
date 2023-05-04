@@ -29,10 +29,11 @@
                         $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
                         $cuenta = $participantes->count();
                     @endphp
+                </div>
 
 
-<div class="m-4">
-    <div>
+        <div class="m-4">
+        <div>
         <div class="flex -space-x-4 max-w-full">
             @if ($participantes->count() < 4)
             @foreach ($participantes as $participante)
@@ -63,7 +64,7 @@
             @endif
 
             @if ($pfp == null && $count !== 3)
-            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="/prueba_pics_submit/{{$user->id}}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
             @php $count++; @endphp
             @endif
 
@@ -92,7 +93,7 @@
             </ul>
         </div>
     </div>
-</div>
+
 
 <script>
     function toggleList(id) {

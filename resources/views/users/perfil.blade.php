@@ -13,9 +13,13 @@
             @csrf
             <div class="flex flex-col items-center justify-center">
                 <div class="w-64 h-64 border-2 border-gray-400 bg-gray-100 rounded-full overflow-hidden shadow-xl">
+                    @if (auth()->user()->profile_pic)
                     <img id="picture-box"
                         src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('/images/Default_pfp.svg.png') }}"
                         alt="Profile Picture" class="w-full h-full object-cover ">
+                    @else
+                    <img src="/prueba_pics_submit/{{auth()->user()->id}}" class="w-full h-full object-cover"/>
+                    @endif
                 </div>
 
                 <div class="mt-4 text-center flex-col justify-center items-center">

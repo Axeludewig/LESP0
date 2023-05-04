@@ -401,7 +401,7 @@ class EvaluacionEnLineaController extends Controller
         $curso_data['evaluacion_adquirida'] = $validatedData['evaluacion_adquirida'];
         $curso_data['status'] = $validatedData['status'];
         $curso_data['tags'] = $validatedData['tags'];
-        $curso_data['img'] = '/images/logolesp.png';
+        $curso_data['img'] = 'images/logolesp.png';
 
         $currentYear = date("Y");
         if ($currentYear == "2023") {

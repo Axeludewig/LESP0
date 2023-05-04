@@ -10,7 +10,7 @@
                 <a href="/listings/{{ $listing->id }}"><span class="font-bold">{{ $listing->nombre }}</span></a>
             </h3>
             <img class="object-contain mr-6 sm:hidden"
-                src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
+                src="{{ $listing->img ? asset('storage/' . $listing->img) : 'images/no-image.png' }}"
                 alt="" />
             <div class="mt-3 text-xl mb-4"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
             <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $listing->fecha_de_terminacion }}</div>
@@ -23,7 +23,77 @@
                 <p class="text-center animate-pulse text-violet-600 text-2xl">CURSO PRESENCIAL</p>
                 <span class="font-bold"> Auditorio:</span>
                 {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>
+                <div class="m-4">
+                    @php
+                        $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
+                        $cuenta = $participantes->count();
+                    @endphp
+                </div>
+
+
+        <div class="m-4">
+        <div>
+        <div class="flex -space-x-4 max-w-full">
+            @if ($participantes->count() < 4)
+            @foreach ($participantes as $participante)
+            @php
+            $user = DB::table('users')->where('id', $participante->id_user)->first(); 
+            $pfp = $user->profile_pic;
+            @endphp
+            @if ($pfp !== null)
+            <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
+            @else
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            @endif
+            @endforeach
+            @else
+
+            @php $count = 0; @endphp
+
+            @foreach ($participantes as $participante)
+
+            @php
+            $user = DB::table('users')->where('id', $participante->id_user)->first(); 
+            $pfp = $user->profile_pic;
+            @endphp
+
+            @if ($pfp !== null && $count !== 3)
+            <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
+            @php $count++; @endphp
+            @endif
+
+            @if ($pfp == null && $count !== 3)
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="/prueba_pics_submit/{{$user->id}}" alt=""> 
+            @php $count++; @endphp
+            @endif
+
+            @endforeach
+            @if ($count = 4)
+            <a class="flex items-center justify-center w-10 h-10  md:w-24 md:h-24 text-lg font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800" href="#">+{{$cuenta-3}}</a>
+            @endif
+
+            
+            @endif
+
+        </div>
+        <div class="mt-4">
+        <span class="font-semibold">Participantes: {{ $cuenta }}</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleList(id) {
+        var participantesList = document.getElementById("participantesList" + id);
+        if (participantesList.style.display !== "block") {
+            participantesList.style.display = "block";
+        } else {
+            participantesList.style.display = "none";
+        }
+    }
+</script>
                 @endif
+                
             </div>
             <h2 class="text-lg">
                 <p><span class="font-bold">Modalidad a realizar:</span> {{ $listing->modalidad }}</p>

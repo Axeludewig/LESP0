@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cursos;
 use App\Models\participantes;
+use App\Models\User;
 use App\Models\validaciones;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,9 +15,21 @@ use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Storage;
+use LasseRafn;
 
 class CursosController extends Controller
 {
+    public function prueba_pics_submit(Request $request, User $user){
+        $avatar = new LasseRafn\InitialAvatarGenerator\InitialAvatar();
+
+        $image = $avatar->name($user->nombre_completo)->fontSize(0.25)->size(256)->generate();
+        return $image->stream('png', 100);
+    }
+
+    public function prueba_pics(){
+        return view('admin.prueba_pics_2');
+    }
+
     public function pdf_download(Cursos $id){
         $me = auth()->user();
 
