@@ -134,6 +134,7 @@ Route::put('/users/email/{user}', [UserController::class, 'update_email'])->midd
 
 Route::get('/prueba_pics', [CursosController::class, 'prueba_pics']);
 Route::get('/prueba_pics_submit/{user}', [CursosController::class, 'prueba_pics_submit']);
+Route::get('/prueba_pics_nombre/{id}', [CursosController::class, 'prueba_pics_nombre']);
 
 // ADMIN --- DESTRUIR CALIFICACIÓN 
 Route::get('/store_bitacora', [ValidacionesController::class, 'mass_store']);

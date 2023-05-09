@@ -2,12 +2,12 @@
     <a href="/" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
     </a>
     <div class="mx-4">
-        <x-card class="p-10">
+        <x-card class="p-10 mb-48">
             <div class="flex flex-col items-center justify-center text-center">
                 <img class="hidden object-contain w-48 mr-6 md:block"
                     src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
                     alt="" /><br>
-                <h3 class="text-5xl mb-2">
+                <h3 class="text-2xl md:text-5xl mb-2">
                     <span class="font-bold">{{ $listing->nombre }}</span>
                 </h3>
                 <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>

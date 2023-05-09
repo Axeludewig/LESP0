@@ -1,5 +1,5 @@
 <x-layout>
-  <x-card class="p-10 max-w-lg mx-auto mt-24">
+  <x-card class="p-10 max-w-lg mx-auto mt-24 mb-[131px]">
     <header class="text-center">
       <h2 class="text-2xl font-bold uppercase mb-1">Iniciar Sesión</h2>
       <p class="mb-4">Inicia sesión para acceder a tu perfil</p>
@@ -43,5 +43,7 @@
         </p>
       </div> -->
     </form>
+    
   </x-card>
+
 </x-layout>

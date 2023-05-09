@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('informacion_personal', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('nacionalidad');
-            $table->string('lugar_de_nacimiento');
-            $table->string('fecha_de_nacimiento');
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('nacionalidad')->nullable();
+            $table->string('lugar_de_nacimiento')->nullable();
+            $table->string('fecha_de_nacimiento')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

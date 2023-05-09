@@ -1,5 +1,5 @@
 <x-layout>
-    <x-card class="p-10 max-w-lg mx-auto mt-24">
+    <x-card class="p-10 max-w-lg mx-auto mt-24 mb-52">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">Importar usuarios</h2>
             <p class="mb-4">A partir de un archivo .csv</p>

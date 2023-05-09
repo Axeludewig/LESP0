@@ -39,12 +39,14 @@
             @foreach ($participantes as $participante)
             @php
             $user = DB::table('users')->where('id', $participante->id_user)->first(); 
-            $pfp = $user->profile_pic;
+            if ($user){
+                $pfp = $user->profile_pic; 
+            }
             @endphp
             @if ($pfp !== null)
             <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
             @else
-            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800"  src="/prueba_pics_nombre/{{$participante->id}}" alt=""> 
             @endif
             @endforeach
             @else
@@ -55,7 +57,10 @@
 
             @php
             $user = DB::table('users')->where('id', $participante->id_user)->first(); 
-            $pfp = $user->profile_pic;
+            if ($user){
+                $pfp = $user->profile_pic; 
+            }   
+            
             @endphp
 
             @if ($pfp !== null && $count !== 3)

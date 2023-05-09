@@ -43,7 +43,7 @@
             <p class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Por favor mire el video completo para desbloquear esta sección.</p>
           </div>
         </div>
-      <div id="exam-questions ">
+      <div id="exam-questions">
           <form id="exam-form" action="/users/xeval/{{$eval->id}}" method="POST">
             @csrf
             @method('POST')

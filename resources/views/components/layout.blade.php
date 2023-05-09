@@ -32,20 +32,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        *{ font-family: Poppins;}
-        </style>
+        *{ font-family: Montserrat;}
+        #title{ font-family: Lato; }
+        a{ font-family: Poppins;}
+        h5{ font-family: Poppins;}
+    </style>
    
     <title>LESP MICH | Sistema de Enseñanza</title>
 </head>
 
-<body class="mb-48">
+<body class="mb-48" style="margin: 0; padding: 0;">
 
     <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 w-full">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class="flex items-center">
               <img src="{{ asset('images/logolesp.png')}}" class="h-16 mr-3 sm:h-9 md:h-28" alt="LESP Logo" />
-              <span class="self-center text-xl md:text-4xl font-semibold whitespace-nowrap dark:text-white hover:scale-125">LESP Michoacán</span>
+              <span class="self-center text-xl md:text-4xl font-semibold whitespace-nowrap dark:text-white hover:scale-110">LESP Michoacán</span>
           </a>
           <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
@@ -140,13 +145,13 @@
     <main>
         {{ $slot }}
     </main>
-    <footer
-        class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black h-24 mt-24 opacity-90 md:justify-center">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+    <x-flash-message />
+    <footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black  opacity-90 md:justify-center h-[150px] p-24">
         <p class="ml-2">&copy; 2023, Laboratorio Estatal de Salud Pública de Michoacán</p>
 
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
-    <x-flash-message />
+    
 </body>
 
 </html>

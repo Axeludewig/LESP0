@@ -26,6 +26,15 @@ class CursosController extends Controller
         return $image->stream('png', 100);
     }
 
+    public function prueba_pics_nombre(Request $request, participantes $id){
+        $avatar = new LasseRafn\InitialAvatarGenerator\InitialAvatar();
+
+        $image = $avatar->name($id->nombre_participante)->fontSize(0.25)->size(256)->generate();
+        return $image->stream('png', 100);
+    }
+
+
+
     public function prueba_pics(){
         return view('admin.prueba_pics_2');
     }
@@ -309,7 +318,7 @@ class CursosController extends Controller
         
 
         foreach ($cursos as $curso){
-            $qrCodeContent = 'https://d04b-2806-103e-5-62a5-2c1e-5c72-7ec2-d4a.ngrok-free.app/registro/' . $curso->id;
+            $qrCodeContent = 'http://189.243.1.21/registro/' . $curso->id;
             $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
             $qrCodes[] = [
                 'name' => $curso->nombre,
@@ -331,7 +340,7 @@ class CursosController extends Controller
 
         $id_curso = $formFields['id_curso'];
 
-        $qrCodeContent = 'https://d04b-2806-103e-5-62a5-2c1e-5c72-7ec2-d4a.ngrok-free.app/registro/' . $id_curso;
+        $qrCodeContent = 'http://189.243.1.21/registro/' . $id_curso;
 
         $nombre_curso = $formFields['nombre_curso'];
         

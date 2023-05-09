@@ -2,14 +2,14 @@
 
 <x-card>
     <div class="flex">
-        <img class="hidden object-contain w-48 mr-6 md:block"
+        <img class="hidden object-contain w-24 md:w-48 mr-6 md:block"
             src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
             alt="" />
         <div class="overflow-hidden">
-            <h3 class="text-2xl truncate">
+            <h3 class="text-xl md:text-3xl truncate mb-3">
                 <a href="/listings/{{ $listing->id }}"><span class="font-bold">{{ $listing->nombre }}</span></a>
             </h3>
-            <img class="object-contain mr-6 sm:hidden"
+            <img class="object-contain mr-6 p-4 sm:hidden"
                 src="{{ $listing->img ? asset('storage/' . $listing->img) : 'images/no-image.png' }}"
                 alt="" />
             <div class="mt-3 text-xl mb-4"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
@@ -38,12 +38,14 @@
             @foreach ($participantes as $participante)
             @php
             $user = DB::table('users')->where('id', $participante->id_user)->first(); 
-            $pfp = $user->profile_pic;
+            if ($user){
+                $pfp = $user->profile_pic; 
+            }    
             @endphp
             @if ($pfp !== null)
             <img class="w-10 h-10 md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('storage/' . $pfp) }}" alt="Foto de perfil de {{$user->nombre_completo}}"> 
             @else
-            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800" src="{{asset('/images/Default_pfp.svg.png') }}" alt=""> 
+            <img class="w-10 h-10  md:w-24 md:h-24 border-2 border-white rounded-full dark:border-gray-800"  src="/prueba_pics_nombre/{{$participante->id}}" alt=""> 
             @endif
             @endforeach
             @else
@@ -53,8 +55,9 @@
             @foreach ($participantes as $participante)
 
             @php
-            $user = DB::table('users')->where('id', $participante->id_user)->first(); 
-            $pfp = $user->profile_pic;
+            $user = DB::table('users')->where('id', $participante->id_user)->first(); if ($user){
+                $pfp = $user->profile_pic; 
+            }    
             @endphp
 
             @if ($pfp !== null && $count !== 3)
@@ -113,7 +116,7 @@
             <form method="POST" action="/registro/{{ $listing->id }}">
                 @csrf
                 <a href="/registro/{{ $listing->id }}"
-                    class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Registrarse</a>
+                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px]">Registro</a>
             </form>
         </div>
     @endif
@@ -121,13 +124,13 @@
         <div class="flex place-content-center mt-6">
                 @csrf
                 <a href="/listings/{{ $listing->id }}"
-                    class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Registrarse</a>
+                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2  w-[215px]">Registro</a>
         </div>
     @endif
     @if (auth()->check() && $listing->tipo == 'Virtual' && auth()->user()->es_admin=='0')
         <div class="flex place-content-center mt-6">
                 <a href="/users/xevalz/{{$listing->id}}"
-                    class="hover:ring p-4 bg-mich5 text-white rounded-xl hover:bg-mich4 hover:text-black border-2 border-violet-600 hover:border-gray-500">Ir a evaluación</a>
+                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">Ir a evaluación</a>
         </div>
     @endif
 </x-card>

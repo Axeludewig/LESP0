@@ -5,12 +5,12 @@
 
   @include('partials._search')
   <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
-    <h3 class="text-2xl ">
+    <h3 class="text-2xl md:text-3xl">
         <p>Cursos disponibles</p>
     </h3>
   </div>
 
-  <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+  <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 ">
 
     @unless(count($listings) == 0)
 
@@ -23,7 +23,7 @@
 
     @else
   </div>
-    <div class="flex flex-col justify-center text-center text-2xl items-center">
+    <div class="flex flex-col justify-center text-center text-2xl items-center mb-64">
       <p>No se encontró ningún curso. </p>
       <div class="animate-bounce hover:text-laravel text-red-500 text-4xl m-6">Próximamente</div>
       <!--
