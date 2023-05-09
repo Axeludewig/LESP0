@@ -12,19 +12,18 @@
         </h3>
       </div>
     
-      <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 ">
+      
     
         @unless(count($listings) == 0)
     
-      
+        <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 ">
     
         @foreach($listings as $listing)
         <x-asistencias-card :listing="$listing" />
         @endforeach
     
     
-        @else
-        <p>No hay ningún registro.</p>
+        @else<p class="text-center mb-80 font-semibold p-4">No hay ningún registro</p>
         @endunless
     
       </div>

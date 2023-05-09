@@ -16,7 +16,7 @@
 
     <div
         class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center hover:text-black hover:bg-mich4">
-        <h3 class="text-2xl "> @php
+        <h3 class="text-2xl"> @php
             $totalHours = 0;
         @endphp
             <p> Total de horas: @foreach ($listings as $listing)
@@ -42,15 +42,15 @@
         </h3>
     </div>
 
-    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+    
 
         @unless(count($listings) == 0)
-
+        <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 mb-52">
             @foreach ($listings as $listing)
                 <x-expediente-card :listing="$listing" />
             @endforeach
         @else
-            <p>No hay cursos finalizados.</p>
+            <p class="text-center mb-40 font-semibold p-4">No hay cursos finalizados.</p>
         @endunless
 
     </div>

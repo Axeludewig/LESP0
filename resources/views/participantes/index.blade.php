@@ -8,21 +8,22 @@
     @include('partials._search')
 
     <div
-        class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center ">
+        class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
         <h3 class="text-2xl ">
-            <p>Cursos registrados.</p>
+            <p>Cursos registrados</p>
         </h3>
     </div>
 
-    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+    
 
         @unless(count($listings) == 0)
+        <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 mb-96">
 
             @foreach ($listings as $listing)
                 <x-participantes-card :listing="$listing" />
             @endforeach
         @else
-            <p>No tienes cursos en proceso.</p>
+        <p class="text-center mb-80 font-semibold p-4">No tienes cursos en proceso.</p>
         @endunless
 
     </div>

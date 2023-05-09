@@ -6,7 +6,7 @@
                 <p>Panel de Control del Administrador</p>
             </h3>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6 ">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6 mb-80">
             <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
                 <a href="/admin/paneldecursos">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cursos <i class="fa-solid fa-landmark"></i></h5>

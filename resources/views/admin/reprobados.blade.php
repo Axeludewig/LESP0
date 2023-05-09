@@ -5,12 +5,12 @@
     </a>
     <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
         <h3 class="text-2xl ">
-            <p>Cursos disponibles</p>
+            <p>Calificaciones</p>
         </h3>
     </div>
     @include('partials._calificaciones_search')
         @unless(count($reprobados) == 0)
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-72">
             
             <table class="w-full  text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -46,7 +46,7 @@
     
         @else
       </div>
-        <div class="flex flex-col justify-center text-center text-2xl items-center">
+        <div class="flex flex-col justify-center text-center text-2xl items-center mb-72">
           <p>No se encontró ninguna calificación. </p>
           <div class="animate-bounce hover:text-laravel text-red-500 text-4xl m-6">Próximamente</div>
           <!--

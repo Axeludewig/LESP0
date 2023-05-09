@@ -1,7 +1,7 @@
 <x-layout>
     <a href="/admin/paneldecursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
     </a>
-    <x-card class="p-10 max-w-lg mx-auto mt-24">
+    <x-card class="p-10 max-w-lg mx-auto mt-24 mb-80">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">Crear curso</h2>
             <p class="mb-4">Tipo de capacitación:</p>

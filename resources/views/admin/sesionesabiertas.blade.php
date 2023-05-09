@@ -24,7 +24,7 @@
     
     
         @else
-        <p>No hay ningún registro.</p>
+        <p class="text-center mb-80 font-semibold p-4">No hay ningún registro.</p>
         @endunless
     
       </div>

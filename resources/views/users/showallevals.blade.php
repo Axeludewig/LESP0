@@ -9,6 +9,9 @@
         <p class="">Evaluaciones en línea</p>
     </h3>
 </div>
+    @if (count($evaluaciones) == 0)
+    <p class="text-center mb-[420px] font-semibold p-4">No hay ningún registro.</p>
+    @endif
     @foreach($evaluaciones as $evals)
     <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6">
         <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full md:my-4">

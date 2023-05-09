@@ -30,7 +30,7 @@
   
     </div>
   
-    <div class="mt-6 p-4">
+    <div class="mt-6 p-4 mb-24">
       {{$listings->links()}}
     </div>
   </x-layout>
