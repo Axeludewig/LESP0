@@ -3,6 +3,7 @@
     @include('partials._hero')
   @endif
 
+  
   @include('partials._search')
   <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
     <h3 class="text-2xl md:text-3xl">

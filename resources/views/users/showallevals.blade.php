@@ -28,4 +28,5 @@
           </div>
     </div>
     @endforeach
+    <div class="mb-96"></div>
 </x-layout>

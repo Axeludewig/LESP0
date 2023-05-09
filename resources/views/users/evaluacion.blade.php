@@ -30,13 +30,13 @@
         @endif
         </div>
 
-        <div class="flex items-center justify-center">
-          <video id="myVideo" controls>
+        <div class="flex items-center justify-center w-full h-auto max-w-full">
+          <video id="myVideo" class="w-full h-auto max-w-full md:max-w-[1550px] border border-gray-200 rounded-2xl dark:border-gray-700 shadow-2xl" controls autoplay>
             <source src="{{asset('storage/' . $eval->video)}}" type="video/mp4">
           </video>
         </div>
         
-        <div class="flex items-center justify-center text-center mt-4">
+        <div class="flex items-center justify-center text-center mt-4 mb-72">
           
           <div id="exam-section" class="disabled">
             <h2 class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Sección de preguntas:</h2>
