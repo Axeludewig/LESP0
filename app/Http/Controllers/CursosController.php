@@ -19,6 +19,14 @@ use LasseRafn;
 
 class CursosController extends Controller
 {
+    public function create_presencial(){
+        return view('admin.create_presencial');
+    }
+
+    public function create_enlinea(){
+        return view('admin.create_enlinea');
+    }
+
     public function prueba_pics_submit(Request $request, User $user){
         $avatar = new LasseRafn\InitialAvatarGenerator\InitialAvatar();
 
@@ -215,6 +223,7 @@ class CursosController extends Controller
     }
 
     public function store(Request $request) {
+
         $formFields = $request->validate([
             'nombre' => 'required',
             'numero_consecutivo' => 'required',

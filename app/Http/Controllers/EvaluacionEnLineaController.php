@@ -319,7 +319,7 @@ class EvaluacionEnLineaController extends Controller
     }
     //
     public function STORE_cursosenlinea(Request $request){     
-        
+
         $validatedData = $request->validate([
             'nombre' => 'required',
             'numero_consecutivo' => 'required',
@@ -335,13 +335,13 @@ class EvaluacionEnLineaController extends Controller
             'auditorio' => 'required',
             'fecha_de_inicio' => 'required',
             'fecha_de_terminacion' => 'required',
-            'objetivo_general' => 'required',
-            'forma_de_evaluacion' => 'required',
+            'forma_de_evaluacion' => 'required',            
             'porcentaje_asistencia' => 'required',
             'calificacion_requerida' => 'required',
             'evaluacion_adquirida' => 'required',
             'status' => 'required',
             'tags' => 'required',
+            'objetivo_general' => 'required',
             'video' => 'file|max:250000',
             'pdf' => 'file|max:150000',
             'pdf2' => 'file|max:150000',
@@ -481,7 +481,9 @@ class EvaluacionEnLineaController extends Controller
 
             $uwu = Cuestionario::create($validatedData2);
 
-            return redirect()->back()->with('message', 'Curso creado correctamente.');;
+            $pathz = "/users/xevalz/" . $newCurso->id;
+
+            return redirect($pathz)->with('message', 'Curso creado correctamente.');;
             }
         }      
     }

@@ -1,7 +1,36 @@
 <x-layout>
-    <a href="/admin/paneldecursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
-    </a>
-    <x-card class="p-10 max-w-lg mx-auto mt-24 mb-80">
+    <div class="flex justify-center md:mr-80">
+        <a href="/admin/paneldecursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+        </a>
+        </div>
+    <div class="flex items-center justify-center">
+        <div class="border-2 p-4 md:w-1/2 rounded-xl shadow-xl">
+            <x-card class="p-10 max-w-lg mx-auto mt-24 mb-12 rounded-xl">
+                <a href="/admin/create_presencial" class="w-full p-0 m-0">
+                    <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
+                        Crear un curso presencial
+                    </div>
+                </a>
+            </x-card>
+            
+            <x-card class="p-10 max-w-lg mx-auto mt-12 mb-12 rounded-xl">
+                <a href="/admin/create_enlinea" class="w-full p-0 m-0">
+                    <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
+                        Crear un curso en línea
+                    </div>
+                </a>
+            </x-card>
+
+            <x-card class="p-10 max-w-lg mx-auto mt-12 mb-24 rounded-xl">
+                <a href="/admin/create_actividad" class="w-full p-0 m-0">
+                    <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
+                        Crear una actividad
+                    </div>
+                </a>
+            </x-card>
+        </div>
+    </div>
+    <x-card class="p-10 max-w-lg mx-auto mt-24 ">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">Crear curso</h2>
             <p class="mb-4">Tipo de capacitación:</p>
@@ -588,8 +617,19 @@
                 <div class="mb-6">
                     <label for="porcentaje_asistencia" class="inline-block text-lg mb-2">Porcentaje de asistencia
                         requerido para acreditar curso:</label>
-                    <input type="number" id="porcentaje_asistencia" name="porcentaje_asistencia"
-                        class="border border-gray-200 rounded p-2 w-full" value="100">
+                        <select id="porcentaje_asistencia" name="porcentaje_asistencia" class="border border-gray-200 rounded p-2 w-full" value="{{ old('porcentaje_asistencia') }}">
+                            <option value="0" selected>NA</option>
+                            <option value="10">10%</option>
+                            <option value="20">20%</option>
+                            <option value="30">30%</option>
+                            <option value="40">40%</option>
+                            <option value="50">50%</option>
+                            <option value="60">60%</option>
+                            <option value="70">70%</option>
+                            <option value="80">80%</option>
+                            <option value="90">90%</option>
+                            <option value="100">100%</option>
+                        </select>>
                     @error('porcentaje_asistencia')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -674,4 +714,8 @@
 
         
     </x-card>
+
+    
+    
+
 </x-layout>

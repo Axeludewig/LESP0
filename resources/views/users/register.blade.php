@@ -1,5 +1,5 @@
 <x-layout>
-    <x-card class="p-10 max-w-lg mx-auto mt-24">
+    <x-card class="p-10 max-w-lg mx-auto mt-24 mb-48">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">REGISTRO</h2>
             <p class="mb-4">Crea una cuenta</p>

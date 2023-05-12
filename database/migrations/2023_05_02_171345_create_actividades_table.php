@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('archivo1')->nullable();
             $table->string('acrhivo2')->nullable();
             $table->string('acrhivo3')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
+            $table->string('nombre')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
 

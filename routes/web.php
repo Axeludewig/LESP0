@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActividadesController;
 use App\Http\Controllers\CalificacionesController;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
@@ -128,6 +129,23 @@ Route::put('/users/email/{user}', [UserController::class, 'update_email'])->midd
 
 
 
+
+
+
+
+
+
+////// ADMIN CREAR ACTIVIDAD 
+
+Route::get('/admin/create_actividad', [ActividadesController::class, 'create_actividad']);
+
+////// ADMIN CREAR CURSO PRESENCIAL
+
+Route::get('/admin/create_presencial', [CursosController::class, 'create_presencial']);
+
+////// ADMIN CREAR CURSO EN LINEA
+
+Route::get('/admin/create_enlinea', [CursosController::class, 'create_enlinea']);
 
 
 
