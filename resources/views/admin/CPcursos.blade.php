@@ -106,5 +106,4 @@
                 </a>
         </div>
     </div>
-    
 </x-layout>

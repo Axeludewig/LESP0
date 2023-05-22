@@ -160,14 +160,26 @@ class UserController extends Controller
     }
 
     public function cursospanel() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.CPcursos');
     }
 
     public function admincontrolpanel() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.CP');
     }
 
     public function index() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.showallusers', [
             'listings' => User::oldest()->filter(request(['tag', 'search']))->paginate(10)
         ]);

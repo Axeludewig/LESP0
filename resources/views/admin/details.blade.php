@@ -1,12 +1,12 @@
 <x-layout>
     <a href="/admin/showallcursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
     </a>
-    <div class="m-4">
+    <div class="m-4 mb-80">
         
     <x-card>
         <div class="flex justify-center">
             <img class="hidden object-contain w-48 mr-6 md:block"
-                src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
+                src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/SS1.png') }}"
                 alt="" />
             <div>
                 <h3 class="text-2xl">

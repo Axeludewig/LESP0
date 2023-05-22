@@ -25,6 +25,10 @@ class ListingController extends Controller
 
     // Show Create Form
     public function create() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('listings.create');
     }
 

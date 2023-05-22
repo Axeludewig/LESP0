@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('fecha_de_terminacion');
             $table->string('valor_curricular');
             $table->string('tipo');
-            $table->string('img');
+            $table->string('img')->nullable();
             $table->timestamp('fecha_de_registro')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -14,7 +14,7 @@
         @endif
         <div class="overflow-hidden">
             <h3 class="text-xl md:text-3xl truncate mb-3">
-                <a href="/listings/{{ $listing->id }}"><span class="font-bold">{{ $listing->nombre }}</span></a>
+                <a href="/users/actividades/{{$listing->id}}"><span class="font-bold">{{ $listing->nombre }}</span></a>
             </h3>
             @if($listing->img !== null)
             <img class="object-contain mr-6 p-4 sm:hidden"
@@ -35,14 +35,9 @@
                 <p class="text-center animate-pulse text-green-600 text-2xl">CURSO VIRTUAL</p>
                 @endif
                 @if($listing->auditorio !== 'Virtual')
-                    @if($listing->tipo == 'Presencial')
-                    <p class="text-center animate-pulse text-violet-600 text-2xl">CURSO PRESENCIAL</p>
-                    @endif
                     @if($listing->tipo == 'Actividad')
                     <p class="text-center animate-pulse text-violet-600 text-2xl">CURSO CON ACTIVIDAD</p>
                     @endif
-                <span class="font-bold"> Auditorio:</span>
-                {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>
                 <div class="m-4">
                     @php
                         $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
@@ -98,66 +93,34 @@
             
             @endif
 
-        </div>
-        <div class="mt-4">
-        <span class="font-semibold">Participantes: {{ $cuenta }}</span>
+            </div>
+            <div class="mt-4">
+            <span class="font-semibold">Participantes: {{ $cuenta }}</span>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    function toggleList(id) {
-        var participantesList = document.getElementById("participantesList" + id);
-        if (participantesList.style.display !== "block") {
-            participantesList.style.display = "block";
-        } else {
-            participantesList.style.display = "none";
-        }
-    }
-</script>
                 @endif
-                
             </div>
             <h2 class="text-lg">
-                <p><span class="font-bold">Modalidad a realizar:</span> {{ $listing->modalidad }}</p>
-                <p><span class="font-bold">Tipo de capacitación:</span> {{ $listing->tipo }}</p>
                 <p><span class="font-bold">Responsable del evento:</span> {{ $listing->nombre_del_responsable }}</p>
                 <p><span class="font-bold">Personal al que va dirigido:</span> {{ $listing->dirigido }}</p>
-                <p><span class="font-bold">Horas teóricas:</span> {{ $listing->horas_teoricas }}</p>
-                <p><span class="font-bold">Horas prácticas:</span> {{ $listing->horas_practicas }}</p>
                 <p><span class="font-bold">Objetivo general:</span> {{ $listing->objetivo_general }}</p>
-                
-            </h2>
 
+                @php
+                    $entregado = DB::table('revision')->where('id_user', auth()->user()->id)->where('id_curso', $listing->id)->first();
+                @endphp
+                @if ($entregado !== null)
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-xl md:text-3xl m-4 p-4 animate-pulse text-green-500">YA HAS ENTREGADO EVIDENCIA</p>
+                    <a href="/users/evidencias/{{$entregado->id}}">
+                    <button type="submit" class="inline-flex items-center px-5 py-2.5  font-medium text-center text-white bg-laravel rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 hover:scale-105 hover:text-xl">
+                        Ver evidencia
+                    </button>
+                    </a>
+                </div>
+                @endif
+            </h2>
         </div>
     </div>
-    @if (!Auth::check() && $listing->tipo=='Presencial')
-        <div class="flex place-content-center mt-6">
-            <form method="POST" action="/registro/{{ $listing->id }}">
-                @csrf
-                <a href="/registro/{{ $listing->id }}"
-                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px]">Registro</a>
-            </form>
-        </div>
-    @endif
-    @if (auth()->check() && $listing->tipo == 'Presencial' && auth()->user()->es_admin=='0')
-        <div class="flex place-content-center mt-6">
-                @csrf
-                <a href="/listings/{{ $listing->id }}"
-                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2  w-[215px]">Registro</a>
-        </div>
-    @endif
-    @if (auth()->check() && $listing->tipo == 'Actividad' && auth()->user()->es_admin=='0')
-        <div class="flex place-content-center mt-6">
-                @csrf
-                <a href="/listings/{{ $listing->id }}"
-                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2  w-[215px]">Registro</a>
-        </div>
-    @endif
-    @if (auth()->check() && $listing->tipo == 'Virtual' && auth()->user()->es_admin=='0')
-        <div class="flex place-content-center mt-6">
-                <a href="/users/xevalz/{{$listing->id}}"
-                    class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">Ir a evaluación</a>
-        </div>
-    @endif
 </x-card>

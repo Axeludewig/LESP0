@@ -20,10 +20,18 @@ use LasseRafn;
 class CursosController extends Controller
 {
     public function create_presencial(){
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.create_presencial');
     }
 
     public function create_enlinea(){
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+
         return view('admin.create_enlinea');
     }
 
@@ -175,6 +183,9 @@ class CursosController extends Controller
     }
 
     public function update(Request $request, Cursos $listing) {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         $formFields = $request->validate([
             'status' => 'required'
         ]);
@@ -192,6 +203,10 @@ class CursosController extends Controller
     }
 
     public function showfinalizados() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.finalizados', [
             'listings' => Cursos::latest()->where('status', 'Finalizado')->filter(request(['tag', 'search']))->paginate(6)
         ]);
@@ -204,6 +219,10 @@ class CursosController extends Controller
     }
 
     public function showall() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         $listings = Cursos::latest()->filter(request(['tag', 'search']))->paginate(6);
 
         return view('admin.showallcursos', [
@@ -219,10 +238,16 @@ class CursosController extends Controller
     }
 
     public function create() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         return view('listings.create');
     }
 
     public function store(Request $request) {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
 
         $formFields = $request->validate([
             'nombre' => 'required',
@@ -248,11 +273,14 @@ class CursosController extends Controller
             'tags' => 'required',
         ]);
 
+
+
         $responsable = DB::table('users')->where('id', $formFields['nombre_del_responsable'])->first();
 
         $formFields['nombre_del_responsable'] = $responsable->nombre_completo;
 
         $currentYear = date("Y");
+
         if ($currentYear == "2023") {
             $pivot = DB::table('pivot_table2')->first();
             $consec = $pivot->consecutivo;
@@ -264,7 +292,9 @@ class CursosController extends Controller
         } else {
             $lastConsec = DB::table('pivot_table2')
                 ->where('year', $currentYear)
-                ->max('consecutivo');
+                ->orderBy('consecutivo', 'desc')
+                ->limit(1)
+                ->value('consecutivo');
             $formFields['numero_consecutivo'] = ($lastConsec ?? 0) + 1;
             if (!$lastConsec) {
                 // if there are no records for the current year, insert a new record into the pivot table
@@ -274,6 +304,7 @@ class CursosController extends Controller
                 ]);
             }
         }
+        
 
         if($request->hasFile('img')) {
             $formFields['img'] = $request->file('img')->store('images', 'public');
@@ -307,6 +338,9 @@ class CursosController extends Controller
     }
 
     public function qrs(){
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         
         $cursos = DB::table('cursos')->get();
         

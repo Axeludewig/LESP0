@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_curso');
             $table->unsignedBigInteger('id_ponente');
             $table->string('archivo1')->nullable();
-            $table->string('acrhivo2')->nullable();
-            $table->string('acrhivo3')->nullable();
+            $table->string('archivo2')->nullable();
+            $table->string('archivo3')->nullable();
             $table->string('status')->nullable();
             $table->string('nombre')->nullable();
             $table->string('descripcion')->nullable();

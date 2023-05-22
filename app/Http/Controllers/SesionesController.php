@@ -13,16 +13,28 @@ class SesionesController extends Controller
 {
     //
     public function sesiones() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.cpsesiones');
     }
 
     public function create() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         return view('admin.crearsesion', [
             'listings' => Cursos::latest()->where('status', 'En proceso')->filter(request(['tag', 'search']))->paginate(6)
         ]);
     }
 
     public function store(Request $request) {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+
         $formFields = $request->validate([
             'id_curso' => 'required',
             'fecha_sesion' => 'required',
@@ -41,6 +53,9 @@ class SesionesController extends Controller
 
     public function show()
     {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         // Retrieve all open sessions from the database
         $listings = Sesiones::where('status', 'abierta')->get();
     
@@ -66,6 +81,9 @@ class SesionesController extends Controller
 
     public function showcerradas()
     {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         // Retrieve all open sessions from the database
         $listings = Sesiones::where('status', 'cerrada')->get();
     
@@ -73,11 +91,18 @@ class SesionesController extends Controller
     }
 
     public function history() {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         $listings = Sesiones::all();
         return view('admin.history', compact('listings'));
     }
 
     public function cerrarsesion(Request $request, Sesiones $sesionid) {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         $formFields = $request->validate([
             'status' => 'required'
         ]);
@@ -88,6 +113,10 @@ class SesionesController extends Controller
     }
 
     public function destroy(Sesiones $id_sesion) {
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
+        
         $id_sesion->delete();
         return redirect('/admin/sesiones')->with('message', 'Sesión eliminada correctamente.');
     }

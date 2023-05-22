@@ -124,11 +124,14 @@ Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth
 // -- USUARIO -- ACTUALIZAR EMAIL!!
 Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
+// -- USUARIO -- ACTUALIZAR EMAIL!!
+Route::get('/users/actividades', [ActividadesController::class, 'CP'])->middleware('auth');
 
+Route::get('/users/actividades/{actividad}', [ActividadesController::class, 'details'])->middleware('auth');
 
+Route::post('/users/actividades', [ActividadesController::class, 'store_revision'])->middleware('auth');
 
-
-
+Route::get('/users/evidencias/{revision}', [ActividadesController::class, 'show_evidencias'])->middleware('auth');
 
 
 
@@ -137,40 +140,43 @@ Route::put('/users/email/{user}', [UserController::class, 'update_email'])->midd
 
 ////// ADMIN CREAR ACTIVIDAD 
 
-Route::get('/admin/create_actividad', [ActividadesController::class, 'create_actividad']);
+Route::get('/admin/create_actividad', [ActividadesController::class, 'create_actividad'])->middleware('auth');
+
+Route::post('/admin/create_actividad', [ActividadesController::class, 'store_actividad'])->middleware('auth');
 
 ////// ADMIN CREAR CURSO PRESENCIAL
 
-Route::get('/admin/create_presencial', [CursosController::class, 'create_presencial']);
+Route::get('/admin/create_presencial', [CursosController::class, 'create_presencial'])->middleware('auth');
 
 ////// ADMIN CREAR CURSO EN LINEA
 
-Route::get('/admin/create_enlinea', [CursosController::class, 'create_enlinea']);
+Route::get('/admin/create_enlinea', [CursosController::class, 'create_enlinea'])->middleware('auth');
 
 
+Route::get('/prueba_pics', [CursosController::class, 'prueba_pics'])->middleware('auth');
 
-
-Route::get('/prueba_pics', [CursosController::class, 'prueba_pics']);
 Route::get('/prueba_pics_submit/{user}', [CursosController::class, 'prueba_pics_submit']);
+
 Route::get('/prueba_pics_nombre/{id}', [CursosController::class, 'prueba_pics_nombre']);
 
-// ADMIN --- DESTRUIR CALIFICACIÓN 
-Route::get('/store_bitacora', [ValidacionesController::class, 'mass_store']);
-
-Route::post('/store_bitacora', [ValidacionesController::class, 'mass_store_validaciones']);
 
 // ADMIN --- DESTRUIR CALIFICACIÓN 
-Route::delete('/admin/reprobados/{id_calif}', [CalificacionesController::class, 'destroy']);
+Route::get('/store_bitacora', [ValidacionesController::class, 'mass_store'])->middleware('auth');
+
+Route::post('/store_bitacora', [ValidacionesController::class, 'mass_store_validaciones'])->middleware('auth');
+
+// ADMIN --- DESTRUIR CALIFICACIÓN 
+Route::delete('/admin/reprobados/{id_calif}', [CalificacionesController::class, 'destroy'])->middleware('auth');
 
 // ADMIN --- GET ALL VALIDACIONES (BITÁCORA)
-Route::get('/bitacora', [CursosController::class, 'bitacora']);
+Route::get('/bitacora', [CursosController::class, 'bitacora'])->middleware('auth');
 
 // ADMIN --- VER PARTICIPANTES DEL CURSO 
-Route::get('/admin/reprobados', [CalificacionesController::class, 'reprobados'])->middleware('auth');
+Route::get('/admin/reprobados', [CalificacionesController::class, 'reprobados'])->middleware('auth')->middleware('auth');
 
 
 // ADMIN --- VER PARTICIPANTES DEL CURSO 
-Route::get('/admin/details/{id_curso}', [CursosController::class, 'details'])->middleware('auth');
+Route::get('/admin/details/{id_curso}', [CursosController::class, 'details'])->middleware('auth')->middleware('auth');
 
 // ADMIN --- ELIMINAR PARTICIPANTES DEL CURSO
 Route::delete('/admin/destroyparticipante/{id}', [participantesController::class, 'destroy'])->middleware('auth');

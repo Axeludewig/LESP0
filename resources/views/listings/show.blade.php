@@ -188,7 +188,7 @@
                                         class="border border-gray-200 rounded p-2 w-full" name="tipo"
                                         rows="10" value="Asistente" </input>
 
-                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial')
+                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial' ||$listing->tipo == 'Actividad' )
 
                                         <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
                                         <input type="hidden" name="id_curso" value="{{$listing->id}}">

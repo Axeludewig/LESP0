@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 class CalificacionesController extends Controller
 {
     public function reprobados(){
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         $reprobados = DB::table('calificaciones')->get();
 
 
@@ -19,7 +22,9 @@ class CalificacionesController extends Controller
     }
 
     public function destroy(Request $request, Calificaciones $id_calif) {
-
+        if (auth()->user()->es_admin == 0){
+            return view('users.sinpermiso');
+        }
         $id_calif->delete();
         return back()->with('message', 'Calificación eliminada correctamente.');
     }

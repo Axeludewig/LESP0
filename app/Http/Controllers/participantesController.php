@@ -74,18 +74,16 @@ class participantesController extends Controller
     // Manage Listings
     public function index()
     {
-
-        $user_id = auth()->user()->rfc;
-        $cursos_en_proceso = DB::table('participantes')
-            ->where('rfc_participante', $user_id)
-            ->join('cursos', 'participantes.nombre_curso', '=', 'cursos.nombre')
-            ->where('cursos.status', 'En proceso')
-            ->orWhere('cursos.status', 'Disponible')
-            ->select('cursos.*')
-            ->get();
-
+        $registrados = DB::table('participantes')
+        ->where('id_user', auth()->user()->id)
+        ->pluck('id_curso'); // Retrieve only the 'id' column from the query results
+        
+            
         return view('participantes.index', [
-            'listings' => $cursos_en_proceso
+            'listings' => Cursos::latest()
+                ->whereIn('id', $registrados) // Use 'whereIn' to filter by an array of IDs
+                ->filter(request(['tag', 'search']))
+                ->paginate(6)
         ]);
     }
 

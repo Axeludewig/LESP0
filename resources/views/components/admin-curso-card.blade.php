@@ -4,7 +4,7 @@
     <div class="">
     <div class="flex">
         <img class="hidden object-contain w-48 mr-6 md:block"
-            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
+            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/ss1.png') }}"
             alt="" />
         <div>
             <h3 class="text-2xl">
@@ -181,7 +181,7 @@
                     </div>
                 </div>
             </form>
-        @elseif (auth()->user()->es_admin == '1' && $listing->status == 'Disponible')
+        @elseif (auth()->user()->es_admin == '1' && $listing->status == 'Disponible' && $listing->tipo !== 'Actividad')
             <form method="POST" action="/listings/{{ $listing->id }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
