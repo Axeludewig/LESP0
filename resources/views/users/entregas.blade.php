@@ -3,31 +3,27 @@
       @include('partials._hero')
     @endif
   
-    
+    @if (Auth::check())
     @include('partials._search')
-    <a href="/users/cursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
-    </a>
     <div class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center">
       <h3 class="text-2xl md:text-3xl">
-          <p>Actividades disponibles</p>
+          <p>Actividades</p>
       </h3>
     </div>
   
-    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 ">
+    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 mb-48">
   
-      @unless(count($listings) == 0)
+      @unless(count($actividades) == 0)
   
-    
-  
-      @foreach($listings as $listing)
-      <x-actividad-card :listing="$listing" />
+      @foreach($actividades as $actividad)
+      <x-revision-card :actividad="$actividad" />
       @endforeach
   
   
       @else
     </div>
       <div class="flex flex-col justify-center text-center text-2xl items-center mb-64">
-        <p>No se encontró ninguna actividad.</p>
+        <p>No se encontró ningún curso. </p>
         <div class="animate-bounce hover:text-laravel text-red-500 text-4xl m-6">Próximamente</div>
         <!--
         <div class="animate-pulse">
@@ -40,9 +36,7 @@
       @endunless
   
   </div>
-  
-    <div class="mt-6 p-4">
-      {{$listings->links()}}
-    </div>
+
+    @endif
   </x-layout>
   

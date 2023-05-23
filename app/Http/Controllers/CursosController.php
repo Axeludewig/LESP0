@@ -190,9 +190,12 @@ class CursosController extends Controller
             'status' => 'required'
         ]);
 
-        $listing->update($formFields);
+        if ($listing->update($formFields)){
 
         return back()->with('message', 'Curso modificado correctamente.');
+    } else {
+        return back()->with('message', 'Error.');
+    }
     }
     
     //MUESTRA TODOS LOS CURSOS

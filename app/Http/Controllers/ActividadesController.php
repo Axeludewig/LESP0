@@ -8,11 +8,87 @@ use App\Models\Cursos;
 use App\Models\participantes;
 use App\Models\Ponentes;
 use App\Models\Revision;
+use App\Models\Validaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ActividadesController extends Controller
 {
+    public function aprobar(Request $request){
+        $formFields = $request->validate([
+            'user' => 'required',
+            'curso' => 'required'
+        ]);
+
+        $user = DB::table('users')->where('id', $formFields['user'])->first();
+        $curso = DB::table('cursos')->where('id', $formFields['curso'])->first();
+
+        $currentYear = date('Y');
+        $prefolio = 'B2A' . $currentYear . 'C' . $curso->numero_consecutivo . 'F';
+
+        $count = DB::table('validaciones')->where('id_curso', $curso->id)->count();
+
+        if ($count === 0) {
+            // If there are no matching records, set a new variable with value 01
+            $newVar = '01';
+        } else {
+            // If there are matching records, generate the next number with leading zeros if needed
+            $newVar = str_pad($count + 1, 2, '0', STR_PAD_LEFT);
+        }
+
+        $folio = $prefolio . $newVar;
+        $today = date('Y-m-d');
+
+        $validacion = [];
+
+            
+            date_default_timezone_set('America/Mexico_City');
+        
+            $validacion['id_user']=$user->id;
+            $validacion['id_curso']=$curso->id;
+            $validacion['nombre_curso']=$curso->nombre;
+            $validacion['nombre_usuario']=$user->nombre_completo;
+            $validacion['valor_curricular']=$curso->horas_teoricas + $curso->horas_practicas;
+            $validacion['status']='Verificado';
+            $validacion['tipo']='Asistente';
+            $validacion['folio'] = $folio;
+            $validacion['fecha_de_registro'] = $today;
+
+            $existe = DB::table('validaciones')->where('id_user', $user->id)->where('id_curso', $curso->id)->first();
+
+            if($existe == null) {
+                Validaciones::create($validacion);
+
+                return back()->with('message', "Usuario aprobado. Su constancia está en la bitácora.");
+            }
+            if($existe !== null) {
+                return back()->with('message', "Validacion generada anteriormente.");
+            }
+            
+    }
+
+    public function show_revisiones(){
+        $actividades = DB::table('actividades')->where('id_user', auth()->user()->id)->get();
+
+        return view('users.revisiones', [
+            'actividades' => $actividades
+        ]);
+    }
+
+    public function single_revision(Request $request){
+        $formFields = $request->validate([
+            'id_curso' => 'required'
+        ]);
+
+        $id_curso = $formFields['id_curso'];
+
+        $revisiones = DB::table('revision')->where('id_curso', $id_curso)->get();
+
+        return view('users.revisar', [
+            'revisiones' => $revisiones
+        ]);
+    }
+
     public function show_evidencias(Revision $revision){
         return view('users.evidencias', [
             'revision' => $revision
@@ -65,6 +141,8 @@ class ActividadesController extends Controller
     return view('users.actividades', [
         'listings' => Cursos::latest()
             ->where('tipo', 'Actividad')
+            ->where('status', 'Disponible')
+            ->orWhere('status', 'En proceso')
             ->whereIn('id', $registrados) // Use 'whereIn' to filter by an array of IDs
             ->filter(request(['tag', 'search']))
             ->paginate(6)
@@ -223,8 +301,6 @@ class ActividadesController extends Controller
         $actividad_data['status'] = "Disponible";
         $actividad_data['nombre'] = $curso->nombre;
         $actividad_data['descripcion'] = $ff2['descripcion'];
-        
-        Ponentes::create($ponente_data);
         Actividades::create($actividad_data);
 
         return redirect('/')->with('message', 'Curso creado correctamente.');

@@ -188,7 +188,7 @@
                                         class="border border-gray-200 rounded p-2 w-full" name="tipo"
                                         rows="10" value="Asistente" </input>
 
-                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial' ||$listing->tipo == 'Actividad' )
+                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial' |$listing->tipo == 'Actividad' )
 
                                         <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
                                         <input type="hidden" name="id_curso" value="{{$listing->id}}">
@@ -212,16 +212,16 @@
 
                 @if (auth()->check())
                     @if (auth()->user()->es_admin == '1')
-                        <div class="flex flex-col items-center justify-center place-content-center text-center mt-6">
+                        <!--<div class="flex flex-col items-center justify-center place-content-center text-center mt-6">
                             <form method="GET" action="/cursos/export" enctype="multipart/form-data">
                                 @csrf
 
-
+                                
                                 <button type="submit"
                                     class="w-full bg-laravel text-white rounded py-2 px-4 hover:bg-black flex place-content-center">
                                     Generar Carta Descriptiva &nbsp; <i class="fa-sharp fa-solid fa-pen-to-square"></i>
                                 </button>
-                            </form>
+                            </form>-->
                     @endif
 
                 @endif

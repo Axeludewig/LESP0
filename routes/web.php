@@ -133,6 +133,15 @@ Route::post('/users/actividades', [ActividadesController::class, 'store_revision
 
 Route::get('/users/evidencias/{revision}', [ActividadesController::class, 'show_evidencias'])->middleware('auth');
 
+Route::get('/users/revisiones', [ActividadesController::class, 'show_revisiones'])->middleware('auth');
+
+Route::get('/users/single_revision', [ActividadesController::class, 'single_revision'])->middleware('auth');
+
+Route::get('/users/aprobar', [ActividadesController::class, 'aprobar'])->middleware('auth');
+
+
+
+
 
 
 
