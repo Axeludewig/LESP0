@@ -13,9 +13,19 @@
             alt="" />
         @endif
         <div class="overflow-hidden">
+            @php
+            $entregado = DB::table('revision')->where('id_user', auth()->user()->id)->where('id_curso', $listing->id)->first();
+            @endphp
+            @if ($entregado !== null)
+            <h3 class="text-xl md:text-3xl truncate mb-3">
+                <span class="font-bold">{{ $listing->nombre }}</span>
+            </h3>
+            @endif
+            @if ($entregado == null)
             <h3 class="text-xl md:text-3xl truncate mb-3">
                 <a href="/users/actividades/{{$listing->id}}"><span class="font-bold">{{ $listing->nombre }}</span></a>
             </h3>
+            @endif
             @if($listing->img !== null)
             <img class="object-contain mr-6 p-4 sm:hidden"
                 src="{{ $listing->img ? asset('storage/' . $listing->img) : 'images/no-image.png' }}"

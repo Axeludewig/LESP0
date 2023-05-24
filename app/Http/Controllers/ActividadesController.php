@@ -185,7 +185,6 @@ class ActividadesController extends Controller
             'calificacion_requerida'=> 'required',
             'evaluacion_adquirida'=> 'required',
             'status' => 'required',
-            'tags' => 'required',
         ]);
 
         $ff2 = $request -> validate(['descripcion' => 'required']);

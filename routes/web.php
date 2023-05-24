@@ -149,6 +149,8 @@ Route::get('/users/aprobar', [ActividadesController::class, 'aprobar'])->middlew
 
 ////// ADMIN CREAR ACTIVIDAD 
 
+Route::post('/admin/adduser', [ParticipantesController::class, 'agregar_user'])->middleware('auth');
+
 Route::get('/admin/create_actividad', [ActividadesController::class, 'create_actividad'])->middleware('auth');
 
 Route::post('/admin/create_actividad', [ActividadesController::class, 'store_actividad'])->middleware('auth');

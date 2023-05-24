@@ -33,7 +33,7 @@ return new class extends Migration
             $table->integer('calificacion_requerida');
             $table->string('evaluacion_adquirida');
             $table->string('status');
-            $table->string('tags');
+            $table->string('tags')->nullable();
             $table->string('img')->nullable();
             $table->timestamps('');
             $table->rememberToken();

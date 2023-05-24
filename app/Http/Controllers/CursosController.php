@@ -16,6 +16,8 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Storage;
 use LasseRafn;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
+
 
 class CursosController extends Controller
 {
@@ -273,7 +275,6 @@ class CursosController extends Controller
             'calificacion_requerida'=> 'required',
             'evaluacion_adquirida'=> 'required',
             'status' => 'required',
-            'tags' => 'required',
         ]);
 
 
@@ -308,9 +309,13 @@ class CursosController extends Controller
             }
         }
         
+        if ($request->hasFile('img')) {
+            $relativePath = $request->file('img')->store('images', 'public');
 
-        if($request->hasFile('img')) {
-            $formFields['img'] = $request->file('img')->store('images', 'public');
+            $optimizerChain = OptimizerChainFactory::create();
+            $optimizerChain->optimize(public_path('storage/' . $relativePath));
+            
+            $formFields['img'] = $relativePath;
         }
 
         $curso = Cursos::create($formFields);
@@ -340,43 +345,49 @@ class CursosController extends Controller
         return redirect('/admin/showallcursos')->with('message', 'Curso eliminado correctamente.');
     }
 
-    public function qrs(){
-        if (auth()->user()->es_admin == 0){
-            return view('users.sinpermiso');
-        }
-        
-        $cursos = DB::table('cursos')->get();
-        
-        $qrCodes = [];
-
-        $options = new QROptions([
-            'version' => 5,
-            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
-            'imageBase64' => false,
-            'imageTransparent' => false,
-            'eccLevel' => QRCode::ECC_L,
-            'scale' => 10,
-            'addQuietzone' => true,
-            'margin' => 10,
-            'logoPath' => asset('/images/logolesp.png'),// Path to the logo file
-            'logoWidth' => 150, // Width of the logo in pixels
-        ]);
-        
-
-        foreach ($cursos as $curso){
-            $qrCodeContent = 'http://189.243.1.21/registro/' . $curso->id;
-            $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
-            $qrCodes[] = [
-                'name' => $curso->nombre,
-                'image' => $qrCodeImage,
-                'id_curso' => $curso->id
-            ];
-        }
-
-        return view('admin.qrs', [
-            'qrCodes' => $qrCodes, // Pass the array of QR codes to the view
-        ]);
+    public function qrs(Request $request)
+{
+    if (auth()->user()->es_admin == 0) {
+        return view('users.sinpermiso');
     }
+
+    $search = $request->query('search');
+
+    $cursos = DB::table('cursos')
+        ->where('nombre', 'like', "%$search%")
+        ->get();
+
+    $qrCodes = [];
+
+    $options = new QROptions([
+        'version' => 5,
+        'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+        'imageBase64' => false,
+        'imageTransparent' => false,
+        'eccLevel' => QRCode::ECC_L,
+        'scale' => 10,
+        'addQuietzone' => true,
+        'margin' => 10,
+        'logoPath' => asset('/images/logolesp.png'), // Path to the logo file
+        'logoWidth' => 150, // Width of the logo in pixels
+    ]);
+
+    foreach ($cursos as $curso) {
+        $qrCodeContent = 'http://lespmich.hopto.org/registro/' . $curso->id;
+        $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
+        $qrCodes[] = [
+            'name' => $curso->nombre,
+            'image' => $qrCodeImage,
+            'id_curso' => $curso->id
+        ];
+    }
+
+    return view('admin.qrs', [
+        'qrCodes' => $qrCodes, // Pass the array of QR codes to the view
+    ]); 
+}
+
+    
 
     public function descargarqr(Request $request){
         $formFields = $request->validate([

@@ -11,6 +11,47 @@ use Illuminate\Support\Facades\DB;
 
 class participantesController extends Controller
 {
+    public function agregar_user(Request $request){
+
+        $formFields = $request->validate([
+            'id_curso' => 'required',
+            'nombre_del_responsable' => 'required' // Validate the selected users
+        ]);
+        
+    
+        $cursoId = $formFields['id_curso']; 
+        $real_curso = DB::table('cursos')->where('id', $cursoId)->first();
+    
+        $existingParticipants = participantes::where('id_curso', $cursoId)
+        ->whereIn('id_user', $formFields['nombre_del_responsable'])
+        ->get();
+
+    
+        $existingUserIds = $existingParticipants->pluck('id_user')->toArray();
+    
+        $newParticipants = array_diff($formFields['nombre_del_responsable'], $existingUserIds);
+    
+        foreach ($newParticipants as $userId) {
+            $real_user = DB::table('users')->where('id', $userId)->first();
+            participantes::create([
+                'id_curso' => $cursoId,
+                'id_user' => $userId,
+                'nombre_curso' => $real_curso->nombre,
+                'rfc_participante' => $real_user->rfc,
+                'nombre_participante' => $real_user->nombre_completo,
+                'email_participante' => $real_user->email ?? "",
+                'ubicacion' => $real_curso->auditorio,
+                'fecha_de_inicio' => $real_curso->fecha_de_inicio,
+                'fecha_de_terminacion' => $real_curso->fecha_de_terminacion,
+                'valor_curricular' => $real_curso->horas_practicas + $real_curso->horas_teoricas,
+                'tipo' => "Asistente",
+            ]);
+        }
+
+        return back()->with('message', 'Usuarios agregados como participantes.');
+    
+    }
+
     public function destroy(participantes $id){
         $id->delete();
         return back()->with('message', 'Participante eliminado correctamente.');

@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="icon" href="{{asset('/images/favicon.ico')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -46,11 +47,11 @@
 
 <body class="mb-48" style="margin: 0; padding: 0;">
 
-    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 w-full">
+    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded  w-full">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class="flex items-center">
               <img src="{{ asset('images/logolesp.png')}}" class="h-16 mr-3 sm:h-9 md:h-28" alt="LESP Logo" />
-              <span class="self-center text-xl md:text-4xl font-semibold whitespace-nowrap dark:text-white hover:scale-110">LESP Michoacán</span>
+              <span class="self-center text-xl md:text-4xl font-semibold whitespace-nowrap hover:scale-110">LESP Michoacán</span>
           </a>
           <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
@@ -147,11 +148,11 @@
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
     <x-flash-message />
-    <footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black  opacity-90 md:justify-center h-[150px] p-24">
+    <footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black  opacity-90 md:justify-center h-[150px] p-24 mt-96">
         <p class="ml-2">&copy; 2023, Laboratorio Estatal de Salud Pública de Michoacán</p>
 
     </footer>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 
 </html>
