@@ -41,7 +41,7 @@
                             @php
                             $allusers = DB::table('users')->orderBy('nombre')->get();
                             @endphp
-                            <select id="nombre_del_responsable" name="nombre_del_responsable" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <select required id="nombre_del_responsable" name="nombre_del_responsable" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Seleccionar responsable</option>
                                 @foreach($allusers as $user)
                                     <option value="{{ $user->id }}" {{ old('nombre_del_responsable') == $user->id ? 'selected' : '' }}>{{ $user->nombre_completo }}</option>
@@ -76,7 +76,7 @@
                         </div> 
                         <div>
                             <label for="dirigido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Personal al que va dirigido</label>
-                            <input type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('dirigido') }}">
+                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('dirigido') }}">
                             @error('dirigido')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -90,7 +90,7 @@
                         </div>
                         <div class="">
                             <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas teóricas:</label>
-                            <input type="number" id="horas_teoricas" name="horas_teoricas"
+                            <input required type="number" id="horas_teoricas" name="horas_teoricas"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('horas_teoricas') }}">
                             @error('horas_teoricas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="">
                             <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas prácticas:</label>
-                            <input type="number" id="horas_practicas" name="horas_practicas"
+                            <input required type="number" id="horas_practicas" name="horas_practicas"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('horas_practicas') }}">
                             @error('horas_practicas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

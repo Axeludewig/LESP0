@@ -88,7 +88,7 @@ class ValidacionesController extends Controller
                 $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
         
                 $query = 'usuario=' . urlencode($formFields['nombre_participante']) . '&curso=' . urlencode($formFields['nombre_capacitacion']);
-                $qrCodeContent = 'http://189.243.1.21/validacionesx/search?' . $query;
+                $qrCodeContent = 'http://lespmich.hopto.org/validacionesx/search?' . $query;
 
                 $qrcode = (new QRCode())->render($qrCodeContent);
         

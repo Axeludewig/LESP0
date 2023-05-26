@@ -5,12 +5,23 @@
         <img class="hidden object-contain w-48 mr-6 md:block"
             src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
             alt="" />
-        <div>
-            <h3 class="text-2xl">
+        <div class="overflow-hidden">
+            <h3 class="text-2xl md:text-3xl truncate mb-3 font-extrabold">
                 <a href="/listings/{{ $listing->id }}">{{ $listing->nombre }}</a>
             </h3>
-            <div class="mt-3 text-xl font-bold mb-4">Inicia: {{ $listing->fecha_de_inicio }}</div>
-            <div class="text-xl font-bold mb-4">Termina: {{ $listing->fecha_de_terminacion }}</div>
+            @if($listing->auditorio == 'Virtual')
+                <p class=" animate-pulse text-green-600 md:text-2xl">CURSO VIRTUAL</p>
+                @endif
+                @if($listing->auditorio !== 'Virtual')
+                    @if($listing->tipo == 'Presencial')
+                    <p class=" animate-pulse text-violet-600 md:text-2xl">CURSO PRESENCIAL</p>
+                    @endif
+                    @if($listing->tipo == 'Actividad')
+                    <p class=" animate-pulse text-violet-600 md:text-2xl">CURSO CON ACTIVIDAD</p>
+                    @endif
+                @endif
+            <div class="mt-3 text-xl font-semibold mb-4">Inicia: {{ $listing->fecha_de_inicio }}</div>
+            <div class="text-xl font-semibold mb-4">Termina: {{ $listing->fecha_de_terminacion }}</div>
 
             <x-listing-tags :tagsCsv="$listing->tags" />
 
@@ -48,16 +59,34 @@
                     Validaciones &nbsp; <i class="mt-1 content-center fa-regular fa-circle-check"></i>
                 </button>
             </form> -->
+            @if($listing->tipo == 'Actividad')
+                <div class="p-8 truncate mb-3">
+                    <p class="whitespace-normal">
+                        No se pueden enviar las constancias de actividad. Éstas se obtienen al ser aprobado por el ponente.
+                    </p>
+                </div>
+            @endif
 
+            @if($listing->tipo == 'Virtual')
+                <div class="p-8 truncate mb-3">
+                    <p class="whitespace-normal">
+                        No se pueden enviar las constancias de curso virtual. Éstas se obtienen al aprobar la evaluación en línea.
+                    </p>
+                </div>
+            @endif
+        
+
+            @if ($listing->tipo !== 'Actividad' && $listing->tipo !== 'Virtual')
             <form action="/emailall" enctype="multipart/form-data">
                 @csrf
 
-                <input type="hidden" name="nombre_curso" value="{{$listing->nombre}}">
+                <input type="hidden" name="id_curso" value="{{$listing->id}}">
 
                 <button type="submit"
-                    class="mt-3 w-5/6 bg-laravel text-white rounded py-2 px-2 hover:bg-black  flex place-content-center justify-center content-center">Enviar Constancias &nbsp; <i class="mt-1 content-center fa-regular fa-circle-check"></i>
+                    class="mt-3 w-[200px] bg-laravel text-white rounded py-2 px-2 hover:bg-black  flex place-content-center justify-center content-center">Enviar Constancias &nbsp; <i class="content-center fa-regular fa-circle-check my-auto"></i>
                 </button>
             </form>
+            @endif
         </div>
     </div>
 </x-card>

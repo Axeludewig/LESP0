@@ -397,7 +397,7 @@ class CursosController extends Controller
 
         $id_curso = $formFields['id_curso'];
 
-        $qrCodeContent = 'http://189.243.1.21/registro/' . $id_curso;
+        $qrCodeContent = 'http://lespmich.hopto.org/registro/' . $id_curso;
 
         $nombre_curso = $formFields['nombre_curso'];
         

@@ -222,6 +222,7 @@ class EmailController extends Controller
 
     public function test(Request $request){
         $formFields = $request->validate([
+            'id_curso' => 'required',
             'nombre' => 'required',
             'fecha_de_terminacion' => 'required',
             'nombre_user' => 'required',
@@ -229,6 +230,8 @@ class EmailController extends Controller
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required'
         ]);
+
+        $id_curso = $formFields['id_curso'];
 
         $my_id = auth()->user()->id;
 
@@ -259,7 +262,7 @@ class EmailController extends Controller
         $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
 
         $query = 'q=' . $formFields['apellido_paterno'] . '+' . $formFields['apellido_materno'] . '&status=Verificado&curso=' . $formFields['nombre'];
-        $qrCodeContent = 'https://c883-2806-103e-5-9c10-b136-d021-a014-a865.ngrok.io/validaciones/search?' . $query;
+        $qrCodeContent = 'http://lespmich.hopto.org/validaciones/search?' . $query;
 
         $fecha_de_terminacion = $formFields['fecha_de_terminacion'];
         $valor_curricular = $formFields['valor_curricular'];
@@ -268,11 +271,11 @@ class EmailController extends Controller
         $user_id = auth()->user()->rfc;
         $tipo = DB::table('participantes')
         ->where('rfc_participante', $user_id)
-        ->where('nombre_curso', $nombre_del_curso)
+        ->where('id_curso', $id_curso)
         ->value('tipo');
 
         $folio = DB::table('validaciones')
-        ->where('nombre_curso', '=', $nombre_del_curso)
+        ->where('id_curso', '=', $id_curso)
         ->where('nombre_usuario', '=', $nombre_usuario)
         ->value('folio');
 
@@ -281,8 +284,13 @@ class EmailController extends Controller
         // Create a new instance of dompdf
         $pdf = new Dompdf();
 
+        $today = DB::table('validaciones')
+        ->where('id_curso', '=', $id_curso)
+        ->where('nombre_usuario', '=', $nombre_usuario)
+        ->value('fecha_de_registro');
+
         // Generate the PDF
-        $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+        $pdf->loadHtml(view('pdf', compact(['formFields', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio', 'today'])));
 
         // Set paper size and orientation
         $pdf->setPaper('A4', 'vertical');
@@ -338,13 +346,13 @@ class EmailController extends Controller
 
     public function testadmin(Request $request){
         $formFields = $request->validate([
-            'nombre_curso' => 'required',
+            'id_curso' => 'required',
         ]);
 
-        $nombre_del_curso = $formFields['nombre_curso'];
+        $id_curso = $formFields['id_curso'];
         $curso = DB::table('cursos')->
-        where('nombre', $nombre_del_curso)->first();
-        $participantes = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->get();
+        where('id', $id_curso)->first();
+        $participantes = DB::table('validaciones')->where('id_curso', $id_curso)->get();
         $users = DB::table('users')
             ->join('participantes', 'users.rfc', '=', 'participantes.rfc_participante')
             ->select('users.*')
@@ -364,6 +372,8 @@ class EmailController extends Controller
         $mail->SMTPAuth = true;
         $mail->Username = 'axelramirezludewig@gmail.com';
         $mail->Password = 'uppmigsgyglwqume';
+
+        dd($users);
 
         foreach ($users as $user) {
             $nombre_del_participante = $user->nombre;
@@ -391,7 +401,7 @@ class EmailController extends Controller
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
                 $query = 'q=' . $user->apellido_paterno . '+' . $user->apellido_materno . '&status=Verificado&curso=' . $curso->nombre;
-                $qrCodeContent = 'https://c883-2806-103e-5-9c10-b136-d021-a014-a865.ngrok.io/validaciones/search?' . $query;
+                $qrCodeContent = 'https://lespmich.hopto.org/validaciones/search?' . $query;
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
     
@@ -459,21 +469,35 @@ class EmailController extends Controller
 
     public function testadmin2(Request $request){
         $formFields = $request->validate([
-            'nombre_curso' => 'required',
+            'id_curso' => 'required',
         ]);
 
-        $nombre_del_curso = $formFields['nombre_curso'];
+        $id_curso = $formFields['id_curso'];
         $curso = DB::table('cursos')->
-        where('nombre', $nombre_del_curso)->first();
-        $participantes = DB::table('validaciones')->where('nombre_curso', $nombre_del_curso)->get();
-        $users = DB::table('participantes')->where('nombre_curso', $nombre_del_curso)->get();
+        where('id', $id_curso)->first();
+        $participants = DB::table('participantes')
+        ->leftJoin('users', 'participantes.id_user', '=', 'users.id')
+        ->where('participantes.id_curso', $id_curso)
+        ->get(['participantes.*', 'users.*']);
 
-        // Create a new PHPMailer instance
         
-        foreach ($users as $user) {
-            if ($user->email_participante && $user->email_participante != 'sin registro') {
+        // Create a new PHPMailer instance
+        $failedCount = 0;
+        $sin_registro_count = 0;
+        foreach ($participants as $user) {
+
+            $email = $user->email;
+
+            if($email == 'sin registro'){
+                $email = $user->email_participante;
+            }
+
+            if($email == 'sin registro'){
+                $sin_registro_count++;
+            }
+
+            if ($email && $email !== 'sin registro') {
             $nombre_del_participante = $user->nombre_participante;
-            $email = $user->email_participante;
             
             // CÓDIGO PARA LAS IMÁGENES 
             // CÓDIGO PARA LAS IMÁGENES 
@@ -497,7 +521,7 @@ class EmailController extends Controller
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
                 $query = 'q=' . $nombre_del_participante . '&status=Verificado&curso=' . $curso->nombre;
-                $qrCodeContent = 'https://8eca-2806-103e-5-62a5-bd47-7f34-32e5-aea3.ngrok.io/validaciones/search?' . $query;
+                $qrCodeContent = 'http://lespmich.hopto.org/validaciones/search?' . $query;
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
             // QUERY QUE APARECERÁ EN EL CÓDIGO QR
     
@@ -507,10 +531,13 @@ class EmailController extends Controller
                 $valor_curricular = $curso->horas_teoricas + $curso->horas_practicas;
 
                 $nombre_del_curso = $curso->nombre;
-                $tipo = $user->tipo;
+                $tipo = DB::table('validaciones')
+                ->where('id_curso', '=', $id_curso)
+                ->where('nombre_usuario', '=', $nombre_del_participante)
+                ->value('tipo');
         
                 $folio = DB::table('validaciones')
-                ->where('nombre_curso', '=', $nombre_del_curso)
+                ->where('id_curso', '=', $id_curso)
                 ->where('nombre_usuario', '=', $nombre_del_participante)
                 ->value('folio');
             // DATOS DEL CURSO PARA EL PDF/CONSTANCIA
@@ -566,12 +593,20 @@ class EmailController extends Controller
             
                 if ($mail->send()) {
                     Storage::disk('public')->delete($filename);    
-                    return back()->with('message', 'Correos enviados.');
-                    } 
+                    } else {
+                        $failedCount++;
+                    }
             } else {
-                return back()->with('message', 'Error en los correos.');
+                $failedCount++;
             }
             // Send the email
+        }
+
+    
+        if ($failedCount > 0) {
+            return back()->with('message', $failedCount . ' correos no se pudieron enviar. De los cuales, ' . $sin_registro_count . ' no han registrado su correo electrónico.');
+        } else {
+            return back()->with('message', 'Correos enviados.');
         }
     }
 

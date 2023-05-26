@@ -59,7 +59,7 @@
                             @php
                             $allusers = DB::table('users')->orderBy('nombre')->get();
                             @endphp
-                            <form action="/admin/adduser" method="POST">
+                            <form action="/admin/adduser" method="POST" id="form">
                                 @csrf
                             <select id="nombre_del_responsable" name="nombre_del_responsable" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Seleccionar usuario</option>
@@ -150,7 +150,7 @@
                     @endif
                 </div>
                 @if (auth()->user()->es_admin == '1' && $listing->status == 'En proceso')
-                <form method="POST" action="/listingsfinal/{{ $listing->id }}" enctype="multipart/form-data">
+                <form method="POST" action="/listingsfinal/{{ $listing->id }}" enctype="multipart/form-data" >
                     @csrf
                                 @method('PUT')
                                 {{ csrf_field() }}
@@ -327,7 +327,7 @@
 });
 
 $(document).ready(function() {
-  $('form').submit(function(e) {
+  $('#form').submit(function(e) {
     var addedUsersContainer = $('#added-users-container');
     if (addedUsersContainer.is(':empty')) {
       e.preventDefault(); // Prevent form submission

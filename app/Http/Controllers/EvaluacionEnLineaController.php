@@ -340,7 +340,6 @@ class EvaluacionEnLineaController extends Controller
             'calificacion_requerida' => 'required',
             'evaluacion_adquirida' => 'required',
             'status' => 'required',
-            'tags' => 'required',
             'objetivo_general' => 'required',
             'video' => 'file|max:250000',
             'pdf' => 'file|max:150000',
