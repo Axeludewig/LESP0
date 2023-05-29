@@ -140,6 +140,7 @@ Route::get('/users/single_revision', [ActividadesController::class, 'single_revi
 Route::get('/users/aprobar', [ActividadesController::class, 'aprobar'])->middleware('auth');
 
 
+Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->middleware('auth');
 
 
 

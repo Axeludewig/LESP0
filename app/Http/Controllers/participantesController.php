@@ -74,10 +74,13 @@ class participantesController extends Controller
             'img' => 'required'
         ]);
 
+        
         $nombre_curso = $formFields['nombre_curso'];
         $rfc_participante = $formFields['rfc_participante'];
-
-        if (DB::table('participantes')->where('nombre_curso', $nombre_curso)->where('rfc_participante', $rfc_participante)->exists()) {
+        $id_curso = $formFields['id_curso'];
+        $id_user = $formFields['id_user'];
+        
+        if (DB::table('participantes')->where('id_curso', $id_curso)->where('id_user', $id_user)->exists()) {
             return redirect('/')->with('message', 'Ya te has registrado anteriormente.');
         } else {
             participantes::create($formFields);

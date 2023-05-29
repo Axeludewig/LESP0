@@ -20,6 +20,12 @@ use Illuminate\Support\Facades\Hash;
 
 class ValidacionesController extends Controller
 {
+    public function mibitacora(){
+        return view('users.validaciones', [
+            'validaciones' => Validaciones::where('nombre_usuario', auth()->user()->nombre_completo)->orderBy('id', 'desc')->filter(request(['search']))->paginate(400)
+        ]);
+    }
+
     public function mass_store(){
         return view ('admin.mass_store_validaciones');
     }

@@ -4,7 +4,7 @@
     <div class="flex">
         @if($listing->img !== null)
         <img class="hidden object-contain w-24 md:w-48 mr-6 md:block"
-            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
+            src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/SS1.png') }}"
             alt="" />
         @endif
         @if($listing->img == null)
@@ -16,6 +16,17 @@
             <h3 class="text-xl md:text-3xl truncate mb-3">
                 <a href="/listings/{{ $listing->id }}"><span class="font-bold">{{ $listing->nombre }}</span></a>
             </h3>
+            <div class="font-semibold md:text-xl">
+                @if($listing->status == 'Disponible')
+                    <p class="text-green-600 animate-pulse">Status: {{$listing->status}}</p>
+                @endif
+                @if($listing->status == 'En proceso')
+                    <p class="text-yellow-600 animate-pulse">Status: {{$listing->status}}</p>
+                @endif
+                @if($listing->status == 'Finalizado')
+                    <p class="text-red-600 animate-pulse">Status: {{$listing->status}}</p>
+                @endif                    
+            </div>
             @if($listing->img !== null)
             <img class="object-contain mr-6 p-4 sm:hidden"
                 src="{{ $listing->img ? asset('storage/' . $listing->img) : 'images/no-image.png' }}"
@@ -52,6 +63,9 @@
 
 
         <div class="m-4">
+            <div class="mt-4">
+                <span class="font-semibold">Participantes: {{ $cuenta }}</span>
+            </div>
         <div>
         <div class="flex -space-x-4 max-w-full">
             @if ($participantes->count() < 4)
@@ -99,9 +113,7 @@
             @endif
 
         </div>
-        <div class="mt-4">
-        <span class="font-semibold">Participantes: {{ $cuenta }}</span>
-        </div>
+        
     </div>
 </div>
 
@@ -141,23 +153,56 @@
         </div>
     @endif
     @if (auth()->check() && $listing->tipo == 'Presencial' && auth()->user()->es_admin=='0')
+        @php    
+            $registrado = DB::table('participantes')->where('id_curso', $listing->id)->where('id_user', auth()->user()->id)->first();
+        @endphp    
+
+        @if (!$registrado)
         <div class="flex place-content-center mt-6">
                 @csrf
                 <a href="/listings/{{ $listing->id }}"
                     class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2  w-[215px]">Registro</a>
         </div>
+        @endif
+        @if ($registrado)
+        <div class="flex place-content-center mt-6">
+            <button class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">
+                <p class="">Estás registrado.</p>
+            </button>
+        </div>
+        @endif
     @endif
     @if (auth()->check() && $listing->tipo == 'Actividad' && auth()->user()->es_admin=='0')
+        @php    
+            $validado = DB::table('validaciones')->where('id_curso', $listing->id)->where('id_user', auth()->user()->id)->first();
+        @endphp  
+        @if ($validado == null)
         <div class="flex place-content-center mt-6">
                 @csrf
                 <a href="/listings/{{ $listing->id }}"
                     class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2  w-[215px]">Registro</a>
         </div>
+        @endif
+        @if ($validado !== null)
+        <div class="flex place-content-center mt-6">
+                <button class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">Has aprobado este curso.</a>
+        </div>
+        @endif
     @endif
     @if (auth()->check() && $listing->tipo == 'Virtual' && auth()->user()->es_admin=='0')
+        @php    
+            $validado = DB::table('validaciones')->where('id_curso', $listing->id)->where('id_user', auth()->user()->id)->first();
+        @endphp  
+        @if ($validado !== null)
+        <div class="flex place-content-center mt-6">
+                <button class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">Has aprobado este curso.</a>
+        </div>
+        @endif
+        @if ($validado == null)
         <div class="flex place-content-center mt-6">
                 <a href="/users/xevalz/{{$listing->id}}"
                     class="text-black hover:text-white bg-mich4 border-2 border-laravel from-laravel to-mich4 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 w-[215px] ">Ir a evaluación</a>
         </div>
+        @endif
     @endif
 </x-card>

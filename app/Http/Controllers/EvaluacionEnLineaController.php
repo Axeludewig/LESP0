@@ -340,6 +340,7 @@ class EvaluacionEnLineaController extends Controller
             'calificacion_requerida' => 'required',
             'evaluacion_adquirida' => 'required',
             'status' => 'required',
+            'tags' => 'required',
             'objetivo_general' => 'required',
             'video' => 'file|max:250000',
             'pdf' => 'file|max:150000',
@@ -400,7 +401,7 @@ class EvaluacionEnLineaController extends Controller
         $curso_data['evaluacion_adquirida'] = $validatedData['evaluacion_adquirida'];
         $curso_data['status'] = $validatedData['status'];
         $curso_data['tags'] = $validatedData['tags'];
-        $curso_data['img'] = 'images/logolesp.png';
+        $curso_data['img'] = null;
 
         $currentYear = date("Y");
         if ($currentYear == "2023") {

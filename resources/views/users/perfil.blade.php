@@ -9,28 +9,7 @@
 
     <div>
         <!-- DIV PARA LA FOTO Y LA INFORMACIÓN DEL PERFIL -->
-        <form action="/profilepic/{{ auth()->user()->id }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="flex flex-col items-center justify-center">
-                <div class="w-64 h-64 border-2 border-gray-400 bg-gray-100 rounded-full overflow-hidden shadow-xl">
-                    @if (auth()->user()->profile_pic)
-                    <img id="picture-box"
-                        src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('/images/Default_pfp.svg.png') }}"
-                        alt="Profile Picture" class="w-full h-full object-cover ">
-                    @else
-                    <img src="/prueba_pics_submit/{{auth()->user()->id}}" class="w-full h-full object-cover"/>
-                    @endif
-                </div>
-
-                <div class="mt-4 text-center flex-col justify-center items-center">
-                    <label for="profile_pic" class="block font-medium text-gray-700">Subir Foto de Perfil</label>
-                    <input id="profile_pic" type="file" name="profile_pic" class="mt-1">
-                </div>
-                <div class="mt-4">
-                    <button type="submit" class="bg-mich5 text-white px-4 py-2 rounded font-medium">Guardar</button>
-                </div>
-            </div>
-        </form>
+        
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6 mt-6 mb-6">
             
             
@@ -85,7 +64,28 @@
                 </a>
             </div>
         </div>
-        
+        <form action="/profilepic/{{ auth()->user()->id }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="flex flex-col items-center justify-center">
+                <div class="w-64 h-64 border-2 border-gray-400 bg-gray-100 rounded-full overflow-hidden shadow-xl">
+                    @if (auth()->user()->profile_pic)
+                    <img id="picture-box"
+                        src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('/images/Default_pfp.svg.png') }}"
+                        alt="Profile Picture" class="w-full h-full object-cover ">
+                    @else
+                    <img src="/prueba_pics_submit/{{auth()->user()->id}}" class="w-full h-full object-cover"/>
+                    @endif
+                </div>
+
+                <div class="mt-4 text-center flex-col justify-center items-center">
+                    <label for="profile_pic" class="block font-medium text-gray-700">Subir Foto de Perfil</label>
+                    <input id="profile_pic" type="file" name="profile_pic" class="mt-1">
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="bg-mich5 text-white px-4 py-2 rounded font-medium">Guardar</button>
+                </div>
+            </div>
+        </form>
         <div class="flex flex-col items-center justify-center gap-4 mx-6 mt-6 mb-6">     
             <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="hidden"></div>
