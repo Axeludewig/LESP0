@@ -95,7 +95,7 @@ Route::get('/users/eval/{user}', [UserController::class, 'eval'])->middleware('a
 
 /////// USERS ------ EVALUACIONES EN LINEA ---------
 
-Route::get('/pdf_download/bitacora', [ValidacionesController::class, 'download_pdf_validacion'])->middleware('auth');
+Route::get('/pdf_download/bitacora', [ValidacionesController::class, 'download_pdf_validacion']);
 
 Route::get('/pdf_download/{id}', [CursosController::class, 'pdf_download'])->middleware('auth');
 
@@ -181,7 +181,7 @@ Route::post('/store_bitacora', [ValidacionesController::class, 'mass_store_valid
 Route::delete('/admin/reprobados/{id_calif}', [CalificacionesController::class, 'destroy'])->middleware('auth');
 
 // ADMIN --- GET ALL VALIDACIONES (BITÁCORA)
-Route::get('/bitacora', [CursosController::class, 'bitacora'])->middleware('auth');
+Route::get('/bitacora', [CursosController::class, 'bitacora']);
 
 // ADMIN --- VER PARTICIPANTES DEL CURSO 
 Route::get('/admin/reprobados', [CalificacionesController::class, 'reprobados'])->middleware('auth')->middleware('auth');

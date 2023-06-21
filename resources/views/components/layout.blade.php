@@ -130,11 +130,17 @@
                     <a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registro</span></a>
                 </li>--}}
                 <li>
+                    <a href="/bitacora" class="md:text-2xl hover:text-laravel">
+                    <span class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-laravel md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
+                        <i class="fa-solid fa-rectangle-list"></i> Bitácora</span></a>
+                </li>
+                <li>
                         <span class=" md:text-2xl block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-125">
                         <a href="/login" class="hover:text-laravel">
                             <i class="fa-solid fa-arrow-right-to-bracket hover:text-laravel"></i> Iniciar
                         Sesión</span></a>
                 </li>
+                
 
             @endauth
             </ul>
