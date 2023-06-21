@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_curso');
             $table->string('archivo1')->nullable();
-            $table->string('archivo1')->nullable();
-            $table->string('archivo1')->nullable();
+            $table->string('archivo2')->nullable();
+            $table->string('archivo3')->nullable();
             $table->string('especial')->nullable();
             $table->timestamps();
         });

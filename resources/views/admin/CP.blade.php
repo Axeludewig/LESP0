@@ -7,22 +7,22 @@
             </h3>
         </div>
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 mx-6 mb-80">
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  hover:scale-105 shadow-xl w-full">
                 <a href="/admin/paneldecursos">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cursos <i class="fa-solid fa-landmark"></i></h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Cursos <i class="fa-solid fa-landmark"></i></h5>
                 </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Presenciales, en línea, sesiones.</p>
-                <a href="/admin/paneldecursos" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <p class="mb-3 font-normal text-gray-700 ">Presenciales, en línea, sesiones.</p>
+                <a href="/admin/paneldecursos" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300">
                     Ir a Cursos
                     <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </a>
             </div>
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full">
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg hover:scale-105 shadow-xl w-full">
                 <a href="/admin/showallusers">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Usuarios <i class="fa-solid fa-user-doctor"></i></h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Usuarios <i class="fa-solid fa-user-doctor"></i></h5>
                 </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Buscar, agregar, editar, eliminar.</p>
-                <a href="/admin/showallusers" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <p class="mb-3 font-normal text-gray-700">Buscar, agregar, editar, eliminar.</p>
+                <a href="/admin/showallusers" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-laravel rounded-lg hover:bg-mich4  hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300">
                     Ir a Usuarios
                     <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </a>
