@@ -6,13 +6,19 @@
     <div class="flex items-center justify-center">
         <div class="border-2 p-4 md:w-1/2 rounded-xl shadow-xl mb-48">
             <x-card class="p-10 max-w-lg mx-auto mt-24 mb-12 rounded-xl">
+                <a href="/admin/create_sesion" class="w-full p-0 m-0">
+                    <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
+                        Crear una sesion
+                    </div>
+                </a>
+            </x-card>
+            <x-card class="p-10 max-w-lg mx-auto mt-12 mb-12 rounded-xl">
                 <a href="/admin/create_presencial" class="w-full p-0 m-0">
                     <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
                         Crear un curso presencial
                     </div>
                 </a>
             </x-card>
-            
             <x-card class="p-10 max-w-lg mx-auto mt-12 mb-12 rounded-xl">
                 <a href="/admin/create_enlinea" class="w-full p-0 m-0">
                     <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
@@ -20,7 +26,6 @@
                     </div>
                 </a>
             </x-card>
-
             <x-card class="p-10 max-w-lg mx-auto mt-12 mb-24 rounded-xl">
                 <a href="/admin/create_actividad" class="w-full p-0 m-0">
                     <div class="text-center font-semibold border-2 p-6 hover:scale-105 rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">

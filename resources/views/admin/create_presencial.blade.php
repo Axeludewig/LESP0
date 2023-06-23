@@ -14,22 +14,8 @@
                             <input type="text" name="nombre" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="{{old('nombre')}}">
                         </div>
                             <input type="hidden" name="numero_consecutivo" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="" value="1" required="">
-                        <div class="w-full">
-                            <label for="modalidad" class="block mb-2 text-sm font-medium text-gray-900 ">Modalidad a realizar</label>
-                            <select name="modalidad" id="modalidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="$2999" required="">
-                                value="{{ old('modalidad') }}">
-                            <option value="curso">Curso</option>
-                            <option value="sesion">Sesión</option>
-                            <option value="congreso">Congreso</option>
-                            <option value="diplomado">Diplomado</option>
-                            <option value="simposio">Simposio</option>
-                            <option value="curso-taller">Curso-Taller</option>
-                            <option value="videoconferencia">Videoconferencia</option>
-                            </select>
-                            @error('modalidad')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                        </div>
+                            <input hidden type="text" name="modalidad" value="Curso" />
+
                         <label for="tipo" class="hidden text-lg mb-2">Tipo de capacitación:</label>
                         <input type="hidden" name="tipo" value="Presencial" id="tipo">
                         @error('tipo')
@@ -75,14 +61,14 @@
                         </div> 
                         <div>
                             <label for="dirigido" class="block mb-2 text-sm font-medium text-gray-900">Personal al que va dirigido</label>
-                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" value="{{ old('dirigido') }}">
+                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" value="{{ old('dirigido', 'Todo el personal') }}">
                             @error('dirigido')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
                             <label for="numero_de_asistentes" class="block mb-2 text-sm font-medium text-gray-900 ">No. de asistentes esperados</label>
-                            <input type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" value="{{ old('numero_de_asistentes') }}">
+                            <input type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" value="{{ old('numero_de_asistentes', '10') }}">
                             @error('numero_de_asistentes')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -90,7 +76,7 @@
                         <div class="">
                             <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas teóricas:</label>
                             <input required type="number" id="horas_teoricas" name="horas_teoricas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas', '2') }}">
                             @error('horas_teoricas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -98,7 +84,7 @@
                         <div class="">
                             <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas prácticas:</label>
                             <input required type="number" id="horas_practicas" name="horas_practicas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas', '2') }}">
                             @error('horas_practicas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -121,8 +107,9 @@
                             @enderror
                         </div>
                         <div class="">
-                            <label for="auditorio" class="block mb-2 text-sm font-medium text-gray-900 ">Auditorio:</label>
+                            <label for="auditorio" class="block mb-2 text-sm font-medium text-gray-900 ">Lugar:</label>
                             <select name="auditorio"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                                <option>Auditorio</option>
                                 <option>Sala de usos múltiples</option>
                                 <option>Sala de juntas de la dirección</option>
                                 <option>En el propio laboratorio</option>
@@ -149,15 +136,7 @@
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="forma_de_evaluacion" class="block mb-2 text-sm font-medium text-gray-900 ">Forma de evaluación:</label>
-                            <select locked id="forma_de_evaluacion" name="forma_de_evaluacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
-                                <option value="Ninguna">Ninguna</option>
-                            </select>
-                            @error('forma_de_evaluacion')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                        </div>
+                       
 
                         <div class="">
                             <label for="porcentaje_asistencia" class="block mb-2 text-sm font-medium text-gray-900 ">Porcentaje de asistencia
@@ -194,13 +173,7 @@
                         </div>
                         
                         
-                        <div>
-                            <label for="evaluacion_adquirida" class="block mb-2 text-sm font-medium text-gray-900 ">¿Requiere evaluación adquirida?</label>
-                            <select id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
-                                <option value="No" selected>No</option>
-                                <option value="Si">Sí</option>
-                            </select>
-                        </div>
+                        
                         <input type="text" id="age1" name="status" value="Disponible" hidden="true">
                         <div class="">
                             <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 ">
@@ -223,10 +196,17 @@
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div>
+                            <input hidden type="text" value="Asistencia" id="forma_de_evaluacion" name="forma_de_evaluacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 hidden"/>
+                        </div>
+                        
                         <div class="sm:col-span-2">
                             <label for="objetivo_general" class="block mb-2 text-sm font-medium text-gray-900 ">Objetivo general de la capacitación</label>
                             <textarea required id="objetivo_general" name="objetivo_general" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " placeholder="Tu descripción aquí"></textarea>
                         </div>
+                    </div>
+                    <div>
+                        <input hidden type="text" value="No" id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 hidden"/>
                     </div>
                     <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 md:-mb-24 text-sm font-medium text-center text-white bg-laravel rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
                         Crear curso
