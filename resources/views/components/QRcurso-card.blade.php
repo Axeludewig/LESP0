@@ -1,6 +1,6 @@
 @props(['listing'])
 
-<div class="max-w-sm p-6 bg-white border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 hover:scale-105 shadow-xl w-full flex-col items-center">
+<div class="max-w-sm p-6 bg-white border-gray-200 rounded-lg hover:scale-105 shadow-xl w-full flex-col items-center">
         <div class="flex items-center justify-center w-full">
             <div>
                 <h3 class="text-2xl text-center w-full">

@@ -1,24 +1,24 @@
 <x-layout>
     <div class="flex justify-center md:mr-80">
-    <a href="/listings/create" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
-    </a>
+        <a href="/listings/create" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+        </a>
     </div>
-        <section class="bg-white dark:bg-gray-900">
-            <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16  shadow-xl mb-48 mt-12 border-3 border-slate-300 rounded-xl">
-                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Crear curso en línea</h2>
-                <form method="POST" enctype="multipart/form-data" action="/admin/cursoenlinea" id="virtual-form">
-                    @csrf
-                    @method('POST')
-                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                        <div class="sm:col-span-2">
-                            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la capacitación</label>
-                            <input type="text" name="nombre" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
-                        </div>
-                        <input type="hidden" name="numero_consecutivo" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" value="1" required="">
-                        <div class="w-full">
-                            <label for="modalidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad a realizar</label>
-                            <select name="modalidad" id="modalidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
-                                value="{{ old('modalidad') }}">
+    <section class="bg-white">
+        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16  shadow-xl mb-48 mt-12 border-3 border-slate-300 rounded-xl">
+            <h2 class="mb-4 text-xl font-bold text-gray-900">Crear curso en línea</h2>
+            <form method="POST" enctype="multipart/form-data" action="/admin/cursoenlinea" id="virtual-form">
+                @csrf
+                @method('POST')
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    <div class="sm:col-span-2">
+                        <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la capacitación</label>
+                        <input type="text" name="nombre" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="">
+                    </div>
+                    <input type="hidden" name="numero_consecutivo" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" value="1" required="">
+                    <div class="w-full">
+                        <label for="modalidad" class="block mb-2 text-sm font-medium text-gray-900">Modalidad a realizar</label>
+                        <select name="modalidad" id="modalidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="$2999" required="">
+                            value="{{ old('modalidad') }}">
                             <option value="curso">Curso</option>
                             <option value="sesion">Sesión</option>
                             <option value="congreso">Congreso</option>
@@ -26,22 +26,22 @@
                             <option value="simposio">Simposio</option>
                             <option value="curso-taller">Curso-Taller</option>
                             <option value="videoconferencia">Videoconferencia</option>
-                            </select>
-                            @error('modalidad')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        </select>
+                        @error('modalidad')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
-                        </div>
-                        <label for="tipo" class="hidden text-lg mb-2">Tipo de capacitación:</label>
-                        <input type="hidden" name="tipo" value="Virtual" id="tipo">
-                        @error('tipo')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                        <div>
-                            <label for="nombre_del_responsable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del responsable</label>
-                            @php
-                            $allusers = DB::table('users')->orderBy('nombre')->get();
-                            @endphp
-                            <select required id="nombre_del_responsable" name="nombre_del_responsable" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    </div>
+                    <label for="tipo" class="hidden text-lg mb-2">Tipo de capacitación:</label>
+                    <input type="hidden" name="tipo" value="Virtual" id="tipo">
+                    @error('tipo')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                    <div>
+                        <label for="nombre_del_responsable" class="block mb-2 text-sm font-medium text-gray-900">Nombre del responsable</label>
+                        @php
+                        $allusers = DB::table('users')->orderBy('nombre')->get();
+                        @endphp
+                            <select required id="nombre_del_responsable" name="nombre_del_responsable" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                                 <option value="">Seleccionar responsable</option>
                                 @foreach($allusers as $user)
                                     <option value="{{ $user->id }}" {{ old('nombre_del_responsable') == $user->id ? 'selected' : '' }}>{{ $user->nombre_completo }}</option>
@@ -52,8 +52,8 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="coordinacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Coordinación repsonsable</label>
-                            <select name="coordinacion" id="coordinacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="12" required="" value="{{ old('coordinacion') }}"> 
+                            <label for="coordinacion" class="block mb-2 text-sm font-medium text-gray-900 ">Coordinación repsonsable</label>
+                            <select name="coordinacion" id="coordinacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="12" required="" value="{{ old('coordinacion') }}"> 
                                 <option value="todo-el-personal-de-la-unidad">Todo el personal de la unidad</option>
                                 <option value="coordinacion-de-vigilancia-epidemiologica">Coordinación de Vigilancia Epidemiológica
                                 </option>
@@ -75,38 +75,38 @@
                             @enderror
                         </div> 
                         <div>
-                            <label for="dirigido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Personal al que va dirigido</label>
-                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('dirigido') }}">
+                            <label for="dirigido" class="block mb-2 text-sm font-medium text-gray-900 ">Personal al que va dirigido</label>
+                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " value="{{ old('dirigido') }}">
                             @error('dirigido')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
-                            <label for="numero_de_asistentes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No. de asistentes esperados</label>
-                            <input type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" value="{{ old('numero_de_asistentes') }}">
+                            <label for="numero_de_asistentes" class="block mb-2 text-sm font-medium text-gray-900 ">No. de asistentes esperados</label>
+                            <input type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" value="{{ old('numero_de_asistentes') }}">
                             @error('numero_de_asistentes')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="">
-                            <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas teóricas:</label>
+                            <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas teóricas:</label>
                             <input required type="number" id="horas_teoricas" name="horas_teoricas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('horas_teoricas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas') }}">
                             @error('horas_teoricas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="">
-                            <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas prácticas:</label>
+                            <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas prácticas:</label>
                             <input required type="number" id="horas_practicas" name="horas_practicas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('horas_practicas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas') }}">
                             @error('horas_practicas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div> 
                         <div class="">
-                            <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría:</label>
-                            <select id="categoria" name="categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900 ">Categoría:</label>
+                            <select id="categoria" name="categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                                 value="{{ old('categoria') }}">
                                 <option>Cursos técnicos del proceso analítico</option>
                                 <option> Cursos del sistema de gestión integral (Calidad)</option>
@@ -125,25 +125,25 @@
                             <input hidden name="auditorio" value="Virtual"/>
 
                         <div class="">
-                            <label for="fecha_de_inicio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de inicio:</label>
+                            <label for="fecha_de_inicio" class="block mb-2 text-sm font-medium text-gray-900 ">Fecha de inicio:</label>
                             <input type="date" id="fecha_de_inicio" name="fecha_de_inicio"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ date('Y-m-d') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ date('Y-m-d') }}">
                             @error('fecha_de_inicio')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div> 
                         <div class="">
-                            <label for="fecha_de_terminacion"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de término:</label>
+                            <label for="fecha_de_terminacion"  class="block mb-2 text-sm font-medium text-gray-900 ">Fecha de término:</label>
                             <input type="date" id="fecha_de_terminacion" name="fecha_de_terminacion"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ date('Y-m-d') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ date('Y-m-d') }}">
                             @error('fecha_de_terminacion')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="forma_de_evaluacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Forma de evaluación:</label>
-                            <select locked id="forma_de_evaluacion" name="forma_de_evaluacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="forma_de_evaluacion" class="block mb-2 text-sm font-medium text-gray-900 ">Forma de evaluación:</label>
+                            <select locked id="forma_de_evaluacion" name="forma_de_evaluacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                                 <option value="Ninguna">Ninguna</option>
                             </select>
                             @error('forma_de_evaluacion')
@@ -152,9 +152,9 @@
                         </div>
 
                         <div class="">
-                            <label for="porcentaje_asistencia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Porcentaje de asistencia
+                            <label for="porcentaje_asistencia" class="block mb-2 text-sm font-medium text-gray-900 ">Porcentaje de asistencia
                                 para acreditar:</label>
-                                <select id="porcentaje_asistencia" name="porcentaje_asistencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('porcentaje_asistencia') }}">
+                                <select id="porcentaje_asistencia" name="porcentaje_asistencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " value="{{ old('porcentaje_asistencia') }}">
                                     <option value="0" selected>NA</option>
                                     <option value="10">10%</option>
                                     <option value="20">20%</option>
@@ -173,8 +173,8 @@
                         </div>
                         
                         <div class="">
-                            <label for="calificacion_requerida"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calificación requerida:</label>
-                            <select id="calificacion_requerida" name="calificacion_requerida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('calificacion_requerida') }}">
+                            <label for="calificacion_requerida"  class="block mb-2 text-sm font-medium text-gray-900 ">Calificación requerida:</label>
+                            <select id="calificacion_requerida" name="calificacion_requerida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " value="{{ old('calificacion_requerida') }}">
                                 <option value="0" selected>NA</option>
                                 <option value="80">80%</option>
                                 <option value="90">90%</option>
@@ -187,18 +187,18 @@
                         
                         
                         <div>
-                            <label for="evaluacion_adquirida" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">¿Requiere evaluación adquirida?</label>
-                            <select id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="evaluacion_adquirida" class="block mb-2 text-sm font-medium text-gray-900 ">¿Requiere evaluación adquirida?</label>
+                            <select id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                                 <option value="No" selected>No</option>
                                 <option value="Si">Sí</option>
                             </select>
                         </div>
                         <input type="text" id="age1" name="status" value="Disponible" hidden="true">
                         <div class="">
-                            <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 ">
                                 Palabras clave (Separadas por una coma)
                             </label>
-                            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="tags"
+                            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " name="tags"
                                 placeholder="Ejemplo: Calidad, Capacitación de Perfil, etc." value="{{ old('tags') }}" />
             
                             @error('tags')
@@ -207,8 +207,8 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="objetivo_general" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Objetivo general de la capacitación</label>
-                            <textarea id="objetivo_general" name="objetivo_general" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tu descripción aquí"></textarea>
+                            <label for="objetivo_general" class="block mb-2 text-sm font-medium text-gray-900 ">Objetivo general de la capacitación</label>
+                            <textarea id="objetivo_general" name="objetivo_general" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " placeholder="Tu descripción aquí"></textarea>
                         </div>
                     </div>
 
@@ -242,78 +242,78 @@
 
                         
                 <div class="">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Cuestionario</h2>
+                    <h2 class="mb-4 text-xl font-bold text-gray-900 ">Cuestionario</h2>
                 <p class="">Agregar preguntas y sus opciones de respuesta,</p>
                 <p class="mb-4">así como las opciones correctas</p>
                 <input type="hidden" name="id_evaluacion" value="x">
                 <div class="">
-                    <label for="pregunta1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="pregunta1" class="block mb-2 text-sm font-medium text-gray-900 ¿">
                         Pregunta #1:
                     </label>
-                    <input type="text" name="pregunta1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                    <input type="text" name="pregunta1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
                     <div class="flex-col items-center w-1/2">
                         <div class="">
-                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta1_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
-                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta1_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
+                        <input type="text" name="pregunta1_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
+                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
+                        <input type="text" name="pregunta1_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
                         </div>
                     </div>
 
-                    <label for="pregunta2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="pregunta2" class="block mb-2 text-sm font-medium text-gray-900 ">
                         Pregunta #2:
                     </label>
-                    <input type="text" name="pregunta2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                    <input type="text" name="pregunta2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
                     <div class="flex-col items-center w-3/4">
                         <div class="">
-                        <label for="pregunta2_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta2_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
-                        <label for="pregunta2_opcion2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta2_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                        <label for="pregunta2_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
+                        <input type="text" name="pregunta2_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
+                        <label for="pregunta2_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
+                        <input type="text" name="pregunta2_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
                         </div>
                     </div>
 
-                    <label for="pregunta3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="pregunta3" class="block mb-2 text-sm font-medium text-gray-900 ">
                         Pregunta #3:
                     </label>
-                    <input type="text" name="pregunta3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                    <input type="text" name="pregunta3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
                     <div class="flex-col items-center w-3/4">
                         <div class="">
-                        <label for="pregunta3_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta3_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
-                        <label for="pregunta3_opcion2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta3_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                        <label for="pregunta3_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
+                        <input type="text" name="pregunta3_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
+                        <label for="pregunta3_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
+                        <input type="text" name="pregunta3_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
                         </div>
                     </div>
 
-                    <label for="pregunta4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="pregunta4" class="block mb-2 text-sm font-medium text-gray-900 ">
                         Pregunta #4:
                     </label>
-                    <input type="text" name="pregunta4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                    <input type="text" name="pregunta4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
                     <div class="flex-col items-center w-3/4">
                         <div class="">
-                        <label for="pregunta4_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta4_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
-                        <label for="pregunta4_opcion2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta4_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                        <label for="pregunta4_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
+                        <input type="text" name="pregunta4_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
+                        <label for="pregunta4_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
+                        <input type="text" name="pregunta4_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
                         </div>
                     </div>
 
-                    <label for="pregunta5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="pregunta5" class="block mb-2 text-sm font-medium text-gray-900 ">
                         Pregunta #5:
                     </label>
-                    <input type="text" name="pregunta5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                    <input type="text" name="pregunta5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
                     <div class="flex-col items-center w-3/4">
                         <div class="">
-                        <label for="pregunta5_opcion1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta5_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
-                        <label for="pregunta5_opcion2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta5_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-4" >
+                        <label for="pregunta5_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
+                        <input type="text" name="pregunta5_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
+                        <label for="pregunta5_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
+                        <input type="text" name="pregunta5_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white text-center">Respuestas</h2>
+                    <h2 class="mb-4 text-xl font-bold text-gray-900  text-center">Respuestas</h2>
                     <p class="text-center mb-4">Agregar la opción correcta de cada pregunta</p>
                     <div class="flex flex-col gap-4">
                         <div class="flex flex-col text-center">
@@ -369,7 +369,7 @@
                 </div>
                 </div>
                 <div class="flex justify-center">
-                    <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 font-medium text-center text-white bg-laravel rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 font-medium text-center text-white bg-laravel rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800">
                         Crear curso
                     </button>
                 </div>
