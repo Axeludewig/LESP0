@@ -3,6 +3,9 @@
     </a>
     <div class="mx-4">
         <x-card class="p-10 mb-48">
+            @php    
+            $registrado = DB::table('participantes')->where('id_curso', $listing->id)->where('id_user', auth()->user()->id)->first();
+        @endphp  
             <div class="flex flex-col items-center justify-center text-center">
                 <img class="hidden object-contain w-48 mr-6 md:block"
                     src="{{ $listing->img ? asset('storage/' . $listing->img) : asset('/images/no-image.png') }}"
@@ -10,7 +13,6 @@
                 <h3 class="text-2xl md:text-5xl mb-2">
                     <span class="font-bold">{{ $listing->nombre }}</span>
                 </h3>
-                <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
 
                 <x-listing-tags :tagsCsv="$listing->tags" />
 
@@ -193,11 +195,12 @@
                                         <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
                                         <input type="hidden" name="id_curso" value="{{$listing->id}}">
 
+                                        @if(!$registrado)
                                         <button type="submit"
                                             class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                                             Registrarse
                                         </button>
-
+                                        @endif 
                                         <a href="/" class="text-black ml-4"> Volver </a>
                                     @else
                                         <a href="/"

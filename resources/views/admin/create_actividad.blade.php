@@ -75,14 +75,14 @@
                         </div> 
                         <div>
                             <label for="dirigido" class="block mb-2 text-sm font-medium text-gray-900 ">Personal al que va dirigido</label>
-                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " value="{{ old('dirigido') }}">
+                            <input required type="text" id="dirigido" name="dirigido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " value="{{ old('dirigido', 'Todo el personal') }}">
                             @error('dirigido')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
                             <label for="numero_de_asistentes" class="block mb-2 text-sm font-medium text-gray-900 ">No. de asistentes esperados</label>
-                            <input required type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" value="{{ old('numero_de_asistentes') }}">
+                            <input required type="number" name="numero_de_asistentes" id="numero_de_asistentes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" value="{{ old('numero_de_asistentes', '10') }}">
                             @error('numero_de_asistentes')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -90,7 +90,7 @@
                         <div class="">
                             <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas teóricas:</label>
                             <input required type="number" id="horas_teoricas" name="horas_teoricas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas', '2') }}">
                             @error('horas_teoricas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -98,7 +98,7 @@
                         <div class="">
                             <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas prácticas:</label>
                             <input required type="number" id="horas_practicas" name="horas_practicas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas', '2') }}">
                             @error('horas_practicas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -121,8 +121,9 @@
                             @enderror
                         </div>
                         <div class="">
-                            <label for="auditorio" class="block mb-2 text-sm font-medium text-gray-900 ">Auditorio:</label>
+                            <label for="auditorio" class="block mb-2 text-sm font-medium text-gray-900 ">Lugar:</label>
                             <select name="auditorio"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                                <option>Auditorio</option>
                                 <option>Sala de usos múltiples</option>
                                 <option>Sala de juntas de la dirección</option>
                                 <option>En el propio laboratorio</option>

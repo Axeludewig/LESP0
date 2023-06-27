@@ -4,7 +4,14 @@
 
 <x-layout>
     <div class="flex items-center justify-center">
+        
         <div class="border-2 p-4 md:w-1/2 rounded-xl shadow-xl mb-48">
+            
+            <div class="flex border rounded-xl p-4 w-1/3">
+                <a href="/" class="inline-block text-black ml-4">
+            <i class="fa-solid fa-arrow-left"></i> Volver a página principal
+            </a>
+            </div>
             <x-card class="p-10 max-w-lg mt-12 mx-auto mb-12 rounded-xl flex flex-col gap-6">
                     <div class="text-center font-semibold border-2 p-6  rounded-xl hover:ring bg-white shadow-xl hover:text-xl hover:text-blue-600">
                         {{$actividad->nombre}}
