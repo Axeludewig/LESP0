@@ -26,15 +26,56 @@
                 <div class="font-semibold md:text-xl">
                     @if($listing->status == 'Disponible')
                         <p class="text-green-600 animate-pulse">Status: {{$listing->status}}</p>
+                        <div class="py-2">
+                        <form action="/listings/{{$listing->id}}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="flex gap-4">
+                            <select name="status" class="p-2">
+                                <option value="En proceso">En proceso</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
+                            <button class=" border-2 p-2 px-4 rounded bg-laravel text-white font-normal" type="submit" >Cambiar</button>
+                            </div>
+                        </form>
+                        </div>
                     @endif
                     @if($listing->status == 'En proceso')
                         <p class="text-yellow-600 animate-pulse">Status: {{$listing->status}}</p>
+                        <div class="py-2">
+                        <form action="/listings/{{$listing->id}}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="flex gap-4">
+                            <select name="status" class="p-2">
+                                <option value="Disponible">Disponible</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
+                            <button class=" border-2 p-2 px-4 rounded bg-laravel text-white font-normal" type="submit" >Cambiar</button>
+                            </div>
+                        </form>
+                        </div>
                     @endif
                     @if($listing->status == 'Finalizado')
                         <p class="text-red-600 animate-pulse">Status: {{$listing->status}}</p>
+                        <div class="py-2">
+                        <form action="/listings/{{$listing->id}}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="flex gap-4">
+                            <select name="status" class="p-2">
+                                <option value="Disponible">Disponible</option>
+                                <option value="En proceso">En proceso</option>
+                            </select>
+                            <button class=" border-2 p-2 px-4 rounded bg-laravel text-white font-normal" type="submit" class="">Cambiar</button>
+                            </div>
+                        </form>
+                        </div>
                     @endif                    
                 </div>
-
+                <div>
+                    
+                </div>
                 <div class="m-4">
                     @php
                         $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();

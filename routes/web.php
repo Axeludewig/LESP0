@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActividadesController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CalificacionesController;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
@@ -148,7 +149,13 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 
 
+
+
+
 ////// ADMIN CREAR ACTIVIDAD 
+
+
+Route::get('/admin/create', [AdminController::class, 'create'])->middleware('auth');
 
 Route::post('/admin/adduser', [ParticipantesController::class, 'agregar_user'])->middleware('auth');
 
