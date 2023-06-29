@@ -34,17 +34,9 @@
                     </div>
 
 
-                        <div class="hidden gap-4 " id="presencial" disabled hidden>
-                            <div>
+                        <div class="hidden gap-4 mt-4" id="presencial" disabled hidden>
+                            <div class="hidden">
                             <input hidden type="hidden" name="numero_consecutivo" id="brand" class="" placeholder="" value="1" required="" />
-                            </div>
-
-                            <div>
-                                <label for="tipo" class="hidden text-lg mb-2">Tipo de capacitación:</label>
-                                <input type="hidden" name="tipo" value="Presencial" id="tipo">
-                                @error('tipo')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
                             </div>
 
 
@@ -231,6 +223,45 @@
                             <label for="objetivo_general" class="block mb-2 text-sm font-medium text-gray-900 ">Objetivo general de la capacitación</label>
                             <textarea required id="objetivo_general" name="objetivo_general" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " placeholder="Tu descripción aquí"></textarea>
                         </div>
+                        <div id="activity-container">
+                            <div class="activity-row" class="flex">
+                                <div>
+                                    <input type="text" name="actividades[]" required placeholder="Activity Name">
+                                </div>
+                                <div>
+                                    <input type="text" name="durations[]" required placeholder="Duration">
+                                </div>
+                                <div>
+                                    <input type="text" name="fechayhoras[]" required placeholder="Date and Time">
+                                </div>
+                                <div>
+                                    <textarea name="contenidos[]" required placeholder="Content"></textarea>
+                                </div>
+                                <div>
+                                    <textarea name="objetivos[]" required placeholder="Objectives"></textarea>
+                                </div>
+                                <div>
+                                    <input type="text" name="tecnicas[]" required placeholder="Technique">
+                                </div>
+                                <div>
+                                    <input type="text" name="responsables[]" required placeholder="Responsible">
+                                </div>
+                                <div>
+                                    <input type="text" name="horas_teoricas[]" required placeholder="Theoretical Hours">
+                                </div>
+                                <div>
+                                    <input type="text" name="horas_practicas[]" required placeholder="Practical Hours">
+                                </div>
+                                <div>
+                                    <input type="text" name="referencias[]" required placeholder="Reference">
+                                </div>
+                                
+                            </div>
+                            <button type="button" id="add-activity-btn" class="p-4 border-2 rounded bg-laravel text-white">Add Activity</button>
+                        </div>
+                    
+    
+                        
                    
                     <div>
                         <input hidden type="text" value="No" id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 hidden"/>
@@ -293,6 +324,49 @@
                 sesionDiv.style.display = "none";
             }
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Event listener for the "Add Activity" button
+            $("#add-activity-btn").on("click", function() {
+                var activityRow = `
+                    <div class="activity-row flex">
+                        <div class="mr-4">
+                            <input type="text" name="actividades[]" required placeholder="Activity Name" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="durations[]" required placeholder="Duration" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="fechayhoras[]" required placeholder="Date and Time" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <textarea name="contenidos[]" required placeholder="Content" class="border rounded px-2 py-1"></textarea>
+                        </div>
+                        <div class="mr-4">
+                            <textarea name="objetivos[]" required placeholder="Objectives" class="border rounded px-2 py-1"></textarea>
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="tecnicas[]" required placeholder="Technique" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="responsables[]" required placeholder="Responsible" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="horas_teoricas[]" required placeholder="Theoretical Hours" class="border rounded px-2 py-1">
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" name="horas_practicas[]" required placeholder="Practical Hours" class="border rounded px-2 py-1">
+                        </div>
+                        <div>
+                            <input type="text" name="referencias[]" required placeholder="Reference" class="border rounded px-2 py-1">
+                        </div>
+                    </div>
+                `;
+                
+                $("#activity-container").append(activityRow); // Append new activity row to the container
+            });
+        });
     </script>
     
 </x-layout>
