@@ -7,6 +7,7 @@ use App\Models\Cursos;
 use App\Models\participantes;
 use App\Models\User;
 use App\Models\validaciones;
+use App\Models\Tema;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -254,6 +255,8 @@ class CursosController extends Controller
             return view('users.sinpermiso');
         }
 
+        dd($request);
+
         $formFields = $request->validate([
             'nombre' => 'required',
             'numero_consecutivo' => 'required',
@@ -276,8 +279,6 @@ class CursosController extends Controller
             'evaluacion_adquirida'=> 'required',
             'status' => 'required',
         ]);
-
-
 
         $responsable = DB::table('users')->where('id', $formFields['nombre_del_responsable'])->first();
 
@@ -336,6 +337,27 @@ class CursosController extends Controller
         $responsable_data['img'] = $curso->img;
 
         Participantes::create($responsable_data);
+
+        $temasArray = $request->input('temasArray');
+
+            if (!empty($temasArray)) {
+                foreach ($temasArray as $tema) {
+                    Tema::create([
+                        'numero' => $tema['numero'],
+                        'fechayhora' => $tema['fechayhora'],
+                        'contenido_tematico' => $tema['contenido'],
+                        'objetivos' => $tema['objetivos'],
+                        'tecnica' => $tema['tecnica'],
+                        'responsable' => $tema['responsable'],
+                        'horas_teoricas' => $tema['horasTeoricas'],
+                        'horas_practicas' => $tema['horasPracticas'],
+                        'referencia' => $tema['referencia'],
+                    ]);
+                }
+            }
+
+
+
 
         return redirect('/')->with('message', 'Curso creado correctamente.');
     }
