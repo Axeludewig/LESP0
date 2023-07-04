@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cursos;
 use App\Models\participantes;
 use App\Models\User;
+use App\Models\carta;
 use App\Models\validaciones;
 use App\Models\Tema;
 use Illuminate\Http\Request;
@@ -22,6 +23,56 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class CursosController extends Controller
 {
+    public function finalizarx(Request $request, Cursos $listing) {
+        $ponente = $listing->nombre_del_responsable;
+
+         // Check if the ponente has already been validated for this curso
+            $existingValidation = DB::table('validaciones')
+            ->where('id_curso', $listing->id)
+            ->where('nombre_usuario', $ponente)
+            ->first();
+
+        if ($existingValidation) {
+            $listing->status = "Finalizado";
+            $listing->save();
+            return  back()->with('message', 'El ponente ya ha sido validado, curso finalizado correctamente.');
+        }
+        $ponenteobj = DB::table('users')->where('nombre_completo', $ponente)->first();
+        $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
+        $validaciones = DB::table('validaciones')->where('id_curso', $listing->id)->get();
+    
+        
+
+        // Get the current year
+        $currentYear = date('Y');
+    
+        // Get the total number of validated participants for the current curso
+        $totalValidatedParticipants = count($validaciones) + 1;
+    
+        // Generate the folio
+        $folio = "B2A" . $currentYear . "C" . $listing->numero_consecutivo . "F" . sprintf('%02d', $totalValidatedParticipants);
+    
+        $fecha_de_registro = date('Y-m-d'); // Set the current date as the value of $fecha_de_registro
+    
+        DB::table('validaciones')->insert([
+            'id_curso' => $listing->id,
+            'id_user' => $ponenteobj->id,
+            'nombre_curso' => $listing->nombre,
+            'nombre_usuario' => $ponenteobj->nombre_completo,
+            'valor_curricular' => $listing->horas_teoricas + $listing->horas_practicas,
+            'status' => "Verificado",
+            'tipo' => "Ponente",
+            'folio' => $folio,
+            'fecha_de_registro' => $fecha_de_registro
+        ]);
+
+        $listing->status = "Finalizado";
+        $listing->save();
+
+        return back()->with('message', 'Curso modificado correctamente.');
+    }
+    
+
     public function create_presencial(){
         if (auth()->user()->es_admin == 0){
             return view('users.sinpermiso');
@@ -255,7 +306,6 @@ class CursosController extends Controller
             return view('users.sinpermiso');
         }
 
-        dd($request);
 
         $formFields = $request->validate([
             'nombre' => 'required',
@@ -278,6 +328,10 @@ class CursosController extends Controller
             'calificacion_requerida'=> 'required',
             'evaluacion_adquirida'=> 'required',
             'status' => 'required',
+        ]);
+
+        $formFields2 = $request->validate([
+            'temas' => 'required',
         ]);
 
         $responsable = DB::table('users')->where('id', $formFields['nombre_del_responsable'])->first();
@@ -336,13 +390,14 @@ class CursosController extends Controller
         $responsable_data['tipo'] = "Ponente";
         $responsable_data['img'] = $curso->img;
 
-        Participantes::create($responsable_data);
+        $participantex = Participantes::create($responsable_data);
 
-        $temasArray = $request->input('temasArray');
+        $temasArray = $formFields2['temas'];
 
             if (!empty($temasArray)) {
                 foreach ($temasArray as $tema) {
                     Tema::create([
+                        'id_curso' => $curso->id,
                         'numero' => $tema['numero'],
                         'fechayhora' => $tema['fechayhora'],
                         'contenido_tematico' => $tema['contenido'],
@@ -356,10 +411,35 @@ class CursosController extends Controller
                 }
             }
 
+            $temas = DB::table('temas')->where('id_curso', $curso->id)->get();
 
+            $pdf = new Dompdf();
 
+// Generate the PDF
+            $pdf->loadHtml(view('cartapdf', compact(['curso', 'participantex', 'temas'])));
 
-        return redirect('/')->with('message', 'Curso creado correctamente.');
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'landscape');
+
+            // Render the PDF
+            $pdf->render();
+
+            $pdfContent = $pdf->output();
+            $filename = $curso->nombre . '.pdf';
+            
+            Storage::disk('public')->put($filename, $pdfContent);
+            
+            $storagePath = 'storage/' . $filename;
+            
+            $publicPath = url($storagePath);
+            
+            carta::create([
+                'id_curso' => $curso->id,
+                'carta' => $publicPath
+            ]);
+            
+            return redirect('/')->with('message', 'Curso creado correctamente.');
+            
     }
 
     public function destroy(Cursos $listing) {

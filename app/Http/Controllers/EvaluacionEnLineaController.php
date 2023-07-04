@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Calificaciones;
 use App\Models\Cuestionario;
 use App\Models\Cursos;
+use App\Models\Tema;
+use App\Models\Carta;
 use App\Models\Evaluacion;
 use App\Models\participantes;
 use App\Models\User;
@@ -16,6 +18,7 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\Eval_;
 use IntlDateFormatter;
 use IntlTimeZone;
@@ -340,7 +343,7 @@ class EvaluacionEnLineaController extends Controller
             'calificacion_requerida' => 'required',
             'evaluacion_adquirida' => 'required',
             'status' => 'required',
-            'tags' => 'required',
+            'tags',
             'objetivo_general' => 'required',
             'video' => 'file|max:250000',
             'pdf' => 'file|max:150000',
@@ -374,6 +377,10 @@ class EvaluacionEnLineaController extends Controller
             'pregunta5_respuesta' => 'required',
         ]);
 
+        $formFields2 = $request->validate([
+            'temas' => 'required',
+        ]);
+
         $responsable = DB::table('users')->where('id', $validatedData['nombre_del_responsable'])->first();
 
         $validatedData['nombre_del_responsable'] = $responsable->nombre_completo;
@@ -400,7 +407,7 @@ class EvaluacionEnLineaController extends Controller
         $curso_data['calificacion_requerida'] = $validatedData['calificacion_requerida'];
         $curso_data['evaluacion_adquirida'] = $validatedData['evaluacion_adquirida'];
         $curso_data['status'] = $validatedData['status'];
-        $curso_data['tags'] = $validatedData['tags'];
+        $curso_data['tags'] = "";
         $curso_data['img'] = null;
 
         $currentYear = date("Y");
@@ -425,35 +432,34 @@ class EvaluacionEnLineaController extends Controller
                 ]);
             }
         }
-
                 
-        $newCurso = Cursos::create($curso_data);
+        $curso = Cursos::create($curso_data);
 
-         $responsable_data = [];
+        $responsable_data = [];
         $responsable_data['id_user'] = $responsable->id;
-        $responsable_data['id_curso'] = $newCurso->id;
-        $responsable_data['nombre_curso'] = $newCurso->nombre;
+        $responsable_data['id_curso'] = $curso->id;
+        $responsable_data['nombre_curso'] = $curso->nombre;
         $responsable_data['rfc_participante'] = $responsable->rfc;
         $responsable_data['nombre_participante'] = $responsable->nombre_completo;
         $responsable_data['email_participante'] = $responsable->email;
-        $responsable_data['ubicacion'] = $newCurso->auditorio;
-        $responsable_data['fecha_de_inicio'] = $newCurso->fecha_de_inicio;
-        $valor_curricular = $newCurso->horas_teoricas + $newCurso->horas_practicas;
-        $responsable_data['fecha_de_terminacion']= $newCurso->fecha_de_terminacion;
+        $responsable_data['ubicacion'] = $curso->auditorio;
+        $responsable_data['fecha_de_inicio'] = $curso->fecha_de_inicio;
+        $valor_curricular = $curso->horas_teoricas + $curso->horas_practicas;
+        $responsable_data['fecha_de_terminacion']= $curso->fecha_de_terminacion;
         $responsable_data['valor_curricular'] = $valor_curricular;
         $responsable_data['tipo'] = "Ponente";
-        $responsable_data['img'] = $newCurso->img;
+        $responsable_data['img'] = $curso->img;
 
-        participantes::create($responsable_data);
+        $participantex = participantes::create($responsable_data);
 
 
         $evaluacion_data = [];
 
-        $evaluacion_data['id_curso'] = $newCurso->id;
-        $evaluacion_data['nombre'] = $newCurso->nombre;
+        $evaluacion_data['id_curso'] = $curso->id;
+        $evaluacion_data['nombre'] = $curso->nombre;
         $evaluacion_data['video'] = $validatedData['video'];
         $evaluacion_data['pdf'] = $validatedData['pdf'];
-        $evaluacion_data['numero_consecutivo'] = $newCurso->numero_consecutivo;
+        $evaluacion_data['numero_consecutivo'] = $curso->numero_consecutivo;
 
 
         if($request->hasFile('video')) {
@@ -481,7 +487,53 @@ class EvaluacionEnLineaController extends Controller
 
             $uwu = Cuestionario::create($validatedData2);
 
-            $pathz = "/users/xevalz/" . $newCurso->id;
+            $pathz = "/users/xevalz/" . $curso->id;
+
+            $temasArray = $formFields2['temas'];
+
+            if (!empty($temasArray)) {
+                foreach ($temasArray as $tema) {
+                    Tema::create([
+                        'id_curso' => $curso->id,
+                        'numero' => $tema['numero'],
+                        'fechayhora' => $tema['fechayhora'],
+                        'contenido_tematico' => $tema['contenido'],
+                        'objetivos' => $tema['objetivos'],
+                        'tecnica' => $tema['tecnica'],
+                        'responsable' => $tema['responsable'],
+                        'horas_teoricas' => $tema['horasTeoricas'],
+                        'horas_practicas' => $tema['horasPracticas'],
+                        'referencia' => $tema['referencia'],
+                    ]);
+                }
+            }
+
+            $temas = DB::table('temas')->where('id_curso', $curso->id)->get();
+
+            $pdf = new Dompdf();
+
+// Generate the PDF
+            $pdf->loadHtml(view('cartapdf', compact(['curso', 'participantex', 'temas'])));
+
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'landscape');
+
+            // Render the PDF
+            $pdf->render();
+
+            $pdfContent = $pdf->output();
+            $filename = $curso->nombre . '.pdf';
+            
+            Storage::disk('public')->put($filename, $pdfContent);
+            
+            $storagePath = 'storage/' . $filename;
+            
+            $publicPath = url($storagePath);
+            
+            carta::create([
+                'id_curso' => $curso->id,
+                'carta' => $publicPath
+            ]);
 
             return redirect($pathz)->with('message', 'Curso creado correctamente.');;
             }

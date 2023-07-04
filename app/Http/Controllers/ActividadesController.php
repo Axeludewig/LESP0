@@ -11,6 +11,10 @@ use App\Models\Revision;
 use App\Models\Validaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Dompdf\Dompdf;
+use App\Models\Tema;
+use App\Models\carta;
+use Illuminate\Support\Facades\Storage;
 
 class ActividadesController extends Controller
 {
@@ -187,6 +191,10 @@ class ActividadesController extends Controller
             'status' => 'required',
         ]);
 
+        $formFields2 = $request->validate([
+            'temas' => 'required',
+        ]);
+
         $ff2 = $request -> validate(['descripcion' => 'required']);
 
 
@@ -242,7 +250,7 @@ class ActividadesController extends Controller
         $responsable_data['tipo'] = "Ponente";
         $responsable_data['img'] = $curso->img;
 
-        participantes::create($responsable_data);
+        $participantex = participantes::create($responsable_data);
 
         $actividad_data = [];
         $actividad_data['id_user'] = "";
@@ -301,6 +309,54 @@ class ActividadesController extends Controller
         $actividad_data['nombre'] = $curso->nombre;
         $actividad_data['descripcion'] = $ff2['descripcion'];
         Actividades::create($actividad_data);
+
+
+        $temasArray = $formFields2['temas'];
+
+        if (!empty($temasArray)) {
+            foreach ($temasArray as $tema) {
+                Tema::create([
+                    'id_curso' => $curso->id,
+                    'numero' => $tema['numero'],
+                    'fechayhora' => $tema['fechayhora'],
+                    'contenido_tematico' => $tema['contenido'],
+                    'objetivos' => $tema['objetivos'],
+                    'tecnica' => $tema['tecnica'],
+                    'responsable' => $tema['responsable'],
+                    'horas_teoricas' => $tema['horasTeoricas'],
+                    'horas_practicas' => $tema['horasPracticas'],
+                    'referencia' => $tema['referencia'],
+                ]);
+            }
+        }
+
+        $temas = DB::table('temas')->where('id_curso', $curso->id)->get();
+
+        $pdf = new Dompdf();
+
+// Generate the PDF
+        $pdf->loadHtml(view('cartapdf', compact(['curso', 'participantex', 'temas'])));
+
+        // Set paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // Render the PDF
+        $pdf->render();
+
+        $pdfContent = $pdf->output();
+        $filename = $curso->nombre . '.pdf';
+        
+        Storage::disk('public')->put($filename, $pdfContent);
+        
+        $storagePath = 'storage/' . $filename;
+        
+        $publicPath = url($storagePath);
+        
+        carta::create([
+            'id_curso' => $curso->id,
+            'carta' => $publicPath
+        ]);
+
 
         return redirect('/')->with('message', 'Curso creado correctamente.');
     }

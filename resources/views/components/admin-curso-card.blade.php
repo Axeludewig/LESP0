@@ -23,6 +23,24 @@
                 @endif
             <div class="mt-3 md:text-xl font-bold mb-4">Inicia: {{ $listing->fecha_de_inicio }}</div>
             <div class="md:text-xl font-bold mb-4">Termina: {{ $listing->fecha_de_terminacion }}</div>
+
+            @php
+            $carta = DB::table('carta')->where('id_curso', $listing->id)->first();
+            @endphp
+
+            @if($carta !== null)
+            <div class="my-4">
+                <a href="{{$carta->carta}}" class="">
+                <button class="p-4 border-2 shadow rounded-lg bg-yellow-200">
+                
+                <p class="text-xl font-semibold text-blue-600">MOSTRAR FORMATO DE CARTA DESCRIPTIVA</p>
+                
+                </button>
+            </a>
+            </div>
+            @endif
+            
+
                 <div class="font-semibold md:text-xl">
                     @if($listing->status == 'Disponible')
                         <p class="text-green-600 animate-pulse">Status: {{$listing->status}}</p>
@@ -176,18 +194,17 @@
             </div>
             
             @if (auth()->user()->es_admin == '1' && $listing->status == 'En proceso' && $listing->tipo == 'Actividad' | $listing->tipo == 'Virtual')
-            <form method="POST" action="/listings/{{ $listing->id }}" enctype="multipart/form-data">
+            <form method="POST" action="/finalizar/{{ $listing->id }}" enctype="multipart/form-data">
                 @csrf
-                            @method('PUT')
                             {{ csrf_field() }}
-                            {{ method_field('put') }}
                 <div class=" mb-4 text-lg mt-4 flex place-content-center">
-                    <input type="text" name="status" hidden="true" value="Finalizado" />
+   
+                    
                     <button  data-modal-target="popup-modal{{ $listing->id }}" data-modal-toggle="popup-modal{{ $listing->id }}" type="button"  class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                         Finalizar Curso <i class="fa-solid fa-heart-circle-check"></i>
                     </button>
                 </div>
-                <div id="popup-modal{{ $listing->id }}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div id="popup-modal{{ $listing->id }}" tabindex="-" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative w-full max-w-md max-h-full">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="popup-modal{{ $listing->id }}">

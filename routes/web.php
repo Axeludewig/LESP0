@@ -155,6 +155,10 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 ////// ADMIN CREAR ACTIVIDAD 
 
 
+
+
+Route::post('/finalizar/{listing}', [CursosController::class, 'finalizarx'])->middleware('auth');
+
 Route::get('/admin/create', [AdminController::class, 'create'])->middleware('auth');
 
 Route::post('/admin/adduser', [ParticipantesController::class, 'agregar_user'])->middleware('auth');

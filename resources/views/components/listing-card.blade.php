@@ -40,17 +40,22 @@
             
             <div class="mt-3 text-xl mb-4"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
             <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $listing->fecha_de_terminacion }}</div>
-            <x-listing-tags :tagsCsv="$listing->tags" />
+                <div class="my-4 text-xl font-semibold ">
+                    Modalidad: <span class="text-green-500">{{ $listing->modalidad}}</span>
+                </div>
             <div class="text-lg mt-4">
                 @if($listing->auditorio == 'Virtual')
-                <p class="text-center animate-pulse text-green-600 text-2xl">CURSO VIRTUAL</p>
+                <p class="  text-green-600 text-2xl my-4">TIPO: CURSO VIRTUAL</p>
                 @endif
                 @if($listing->auditorio !== 'Virtual')
                     @if($listing->tipo == 'Presencial')
-                    <p class="text-center animate-pulse text-violet-600 text-2xl">CURSO PRESENCIAL</p>
+                    <p class=" text-violet-600 text-2xl my-4">TIPO: CURSO PRESENCIAL</p>
+                    @endif
+                    @if($listing->tipo == 'Virtual')
+                    <p class="  text-violet-600 text-2xl my-4">TIPO: CURSO VIRTUAL</p>
                     @endif
                     @if($listing->tipo == 'Actividad')
-                    <p class="text-center animate-pulse text-violet-600 text-2xl">CURSO CON ACTIVIDAD</p>
+                    <p class="  text-violet-600 text-2xl my-4">TIPO: CURSO CON ACTIVIDAD</p>
                     @endif
                 <span class="font-bold"> Auditorio:</span>
                 {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>
