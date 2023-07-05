@@ -11,14 +11,14 @@
                 <a href="/admin/details/{{ $listing->id }}">{{ $listing->nombre }}</a>
             </h3>
             @if($listing->auditorio == 'Virtual')
-                <p class=" animate-pulse text-green-600 md:text-2xl">CURSO VIRTUAL</p>
+                <p class=" text-green-600 md:text-2xl">CURSO VIRTUAL</p>
                 @endif
                 @if($listing->auditorio !== 'Virtual')
                     @if($listing->tipo == 'Presencial')
-                    <p class=" animate-pulse text-violet-600 md:text-2xl">CURSO PRESENCIAL</p>
+                    <p class="  text-violet-600 md:text-2xl">CURSO PRESENCIAL</p>
                     @endif
                     @if($listing->tipo == 'Actividad')
-                    <p class=" animate-pulse text-violet-600 md:text-2xl">CURSO CON ACTIVIDAD</p>
+                    <p class="  text-violet-600 md:text-2xl">CURSO CON ACTIVIDAD</p>
                     @endif
                 @endif
             <div class="mt-3 md:text-xl font-bold mb-4">Inicia: {{ $listing->fecha_de_inicio }}</div>
@@ -33,10 +33,10 @@
                 <a href="{{$carta->carta}}" class="">
                 <button class="p-4 border-2 shadow rounded-lg bg-yellow-200">
                 
-                <p class="text-xl font-semibold text-blue-600">MOSTRAR FORMATO DE CARTA DESCRIPTIVA</p>
+                <p class="text-xl font-semibold text-blue-600"><i class="fa-regular fa-hand-point-down"></i>&nbsp;Click para ver Carta Descriptiva&nbsp;<i class="fa-regular fa-hand-point-down"></i></p>
                 
                 </button>
-            </a>
+                </a>
             </div>
             @endif
             

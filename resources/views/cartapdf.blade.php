@@ -13,47 +13,198 @@
             }
             h3{
                 text-align: center;
+                margin-top: 0.2em;
+                margin-bottom: 0.2em; 
             }
-        </style>
-    </head>
-    <body>
-        <h3>SECRETARÍA DE SALUD DE MICHOACÁN</h3>
-        <h3>DIRECCIÓN DE SERVICIOS DE SALUD</h3>
-        <h3>DEPARTAMENTO DE ENSEÑANZA</h3>
-        <h3>CARTA DESCRIPTIVA PARA ACTIVIDADES DE CAPACITACIÓN</h3>
-        <p><span>Nombre de la capacitación: </span>{{ $curso->nombre }}</p>
-        <p><span>Número consecutivo: </span>{{ $curso->numero_consecutivo }}</p>
-        <p><span>Modalidad a realizar: </span>{{ $curso->modalidad }}</p>
-        <p><span>Tipo de capacitación: </span>{{ $curso->tipo }}</p>
-        <p><span>Responsable del evento: </span>{{ $curso->nombre_del_responsable }}</p>
-        <p><span>Coordinación o área: </span>{{ $curso->coordinacion }}</p>
-        <p><span>Personal al que va dirigido: </span>{{ $curso->dirigido }}</p>
-        <p><span>N° de asistentes esperados: </span>{{ $curso->numero_de_asistentes }}</p>
-        <p><span>Horas teóricas: </span>{{ $curso->horas_teoricas }}</p>
-        <p><span>Horas prácticas: </span>{{ $curso->horas_practicas }}</p>
-        <p><span>Categoría: </span>{{ $curso->categoria }}</p>
-        <p><span>Lugar: </span>{{ $curso->auditorio }}</p>
-        <p><span>Fecha de inicio: </span>{{ $curso->fecha_de_inicio }}</p>
-        <p><span>Fecha de término: </span>{{ $curso->fecha_de_terminacion }}</p>
-        <p><span>Objetivo general del evento: </span>{{ $curso->objetivo_general }}</p>
-        <p><span>Forma de evaluación: </span>{{ $curso->forma_de_evaluacion }}</p>
-        <p><span>Porcentaje de asistencia requerido para acreditar el curso: </span>{{ $curso->porcentaje_asistencia }}</p>
-        <p><span>Calificación requerida para acreditar el curso: </span>{{ $curso->calificacion_requerida }}</p>
-        <p><span>Requiere evaluación de la capacitación adquidida (antes de los 30 días hábiles): </span>{{ $curso->evaluacion_adquirida }}</p>
-        @foreach($temas as $tema)
-        <div>
-            <h3>Tema: {{ $tema->numero }}</h3>
-            <p><span>Fecha y hora: </span>{{ $tema->fechayhora }}</p>
-            <p><span>Contenido temático: </span>{{ $tema->contenido_tematico }}</p>
-            <p><span>Objetivos: </span>{{ $tema->objetivos }}</p>
-            <p><span>Técnica: </span>{{ $tema->tecnica }}</p>
-            <p><span>Responsable: </span>{{ $tema->responsable }}</p>
-            <p><span>Horas teóricas: </span>{{ $tema->horas_teoricas }}</p>
-            <p><span>Horas prácticas: </span>{{ $tema->horas_practicas }}</p>
-            <p><span>Referencia: </span>{{ $tema->referencia }}</p>
-            <!-- ... other tema fields ... -->
-        </div>
-        @endforeach
+             table {
+                border-collapse: collapse;
+                width: 100%;
+            }
 
-    </body>
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+                font-size: 9px; /* Adjust the font size as needed */
+            }
+
+              .grid-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+                justify-items: center; /* Change to center instead of start */
+            }
+
+            .grid-item {
+                margin-bottom: 10px;
+                text-align: left; /* Align text to the left */
+            }
+
+            .grid-item span {
+                font-weight: bold;
+            }
+                </style>
+            </head>
+            <body>
+                <h3>SECRETARÍA DE SALUD DE MICHOACÁN</h3>
+                <h3>DIRECCIÓN DE SERVICIOS DE SALUD</h3>
+                <h3>DEPARTAMENTO DE ENSEÑANZA</h3>
+                <h3>CARTA DESCRIPTIVA PARA ACTIVIDADES DE CAPACITACIÓN</h3>
+                
+                <div style="text-align: center;">
+
+                <div class="grid-container">
+                    <table style="width: 100%; margin-bottom: 8px;">
+                    <tr style="">            
+                        <td>
+                            <div class="grid-item">
+                                <span>Nombre de la capacitación:</span> {{ $curso->nombre }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Número consecutivo:</span> {{ $curso->numero_consecutivo }}
+                            </div>
+                        </td>
+                    </tr>   
+                    <tr>
+                        <td>         
+                            <div class="grid-item">
+                                <span>Modalidad a realizar:</span> {{ $curso->modalidad }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Tipo de capacitación:</span> {{ $curso->tipo }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="grid-item">
+                                <span>Responsable del evento:</span> {{ $curso->nombre_del_responsable }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Coordinación o área:</span> {{ $curso->coordinacion }}
+                            </div>
+                        </td>
+                    </tr>            
+                    <tr>    
+                        <td>
+                            <div class="grid-item">
+                                <span>Personal al que va dirigido:</span> {{ $curso->dirigido }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>N° de asistentes esperados:</span> {{ $curso->numero_de_asistentes }}
+                            </div>
+                        </td>
+                    </tr>    
+                    <tr>
+                        <td>
+                            <div class="grid-item">
+                                <span>Horas teóricas:</span> {{ $curso->horas_teoricas }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Horas prácticas:</span> {{ $curso->horas_practicas }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td>
+                            <div class="grid-item">
+                                <span>Categoría:</span> {{ $curso->categoria }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Lugar:</span> {{ $curso->auditorio }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td>
+                            <div class="grid-item">
+                                <span>Fecha de inicio:</span> {{ $curso->fecha_de_inicio }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Fecha de término:</span> {{ $curso->fecha_de_terminacion }}
+                            </div>
+                        </td>
+                    </tr>        
+                    <tr>    
+                        <td>
+                            <div class="grid-item">
+                                <span>Objetivo general del evento:</span> {{ $curso->objetivo_general }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Forma de evaluación:</span> {{ $curso->forma_de_evaluacion }}
+                            </div>
+                        </td>
+                    </tr>        
+                    <tr>
+                        <td>
+                            <div class="grid-item">
+                                <span>Porcentaje de asistencia requerido para acreditar el curso:</span> {{ $curso->porcentaje_asistencia }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="grid-item">
+                                <span>Calificación requerida para acreditar el curso:</span> {{ $curso->calificacion_requerida }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td colspan="2">
+                            <div class="grid-item">
+                                <span>Requiere evaluación de la capacitación adquirida (antes de los 30 días hábiles):</span> {{ $curso->evaluacion_adquirida }}
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+                </table>
+                </div>
+
+                    <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Fecha y hora</th>
+                        <th>Contenido temático</th>
+                        <th>Objetivos</th>
+                        <th>Técnica</th>
+                        <th>Responsable</th>
+                        <th>Horas teóricas</th>
+                        <th>Horas prácticas</th>
+                        <th>Referencia</th>
+                        <!-- Add other headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($temas as $tema)
+                    <tr>
+                        <td>{{ $tema->numero }}</td>
+                        <td>{{ $tema->fechayhora }}</td>
+                        <td>{{ $tema->contenido_tematico }}</td>
+                        <td>{{ $tema->objetivos }}</td>
+                        <td>{{ $tema->tecnica }}</td>
+                        <td>{{ $tema->responsable }}</td>
+                        <td>{{ $tema->horas_teoricas }}</td>
+                        <td>{{ $tema->horas_practicas }}</td>
+                        <td>{{ $tema->referencia }}</td>
+                        <!-- Add other data cells as needed -->
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </body>
 </html>
