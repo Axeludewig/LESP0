@@ -1,6 +1,6 @@
 @props(['listing'])
 
-<x-card>
+<x-card class="">
     <div class="flex">
         @if($listing->img !== null)
         <img class="hidden object-contain w-24 md:w-48 mr-6 md:block"
@@ -18,13 +18,13 @@
             </h3>
             <div class="font-semibold md:text-xl">
                 @if($listing->status == 'Disponible')
-                    <p class="text-green-600 animate-pulse">Status: {{$listing->status}}</p>
+                    <p class="text-green-600">Status: {{$listing->status}}</p>
                 @endif
                 @if($listing->status == 'En proceso')
-                    <p class="text-yellow-600 animate-pulse">Status: {{$listing->status}}</p>
+                    <p class="text-yellow-600 ">Status: {{$listing->status}}</p>
                 @endif
                 @if($listing->status == 'Finalizado')
-                    <p class="text-red-600 animate-pulse">Status: {{$listing->status}}</p>
+                    <p class="text-red-600 ">Status: {{$listing->status}}</p>
                 @endif                    
             </div>
             @if($listing->img !== null)
@@ -38,7 +38,7 @@
             alt="" />
             @endif
             
-            <div class="mt-3 text-xl mb-4"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
+            <div class="mt-3 text-xl"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
             <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $listing->fecha_de_terminacion }}</div>
             @php
             $carta = DB::table('carta')->where('id_curso', $listing->id)->first();
@@ -55,26 +55,26 @@
             </a>
             </div>
             @endif
-                <div class="my-4 text-xl font-semibold ">
-                    Modalidad: <span class="text-green-500">{{ $listing->modalidad}}</span>
+                <div class="my-2 text-lg ">
+                   <span class="font-semibold"> Modalidad:</span> {{ $listing->modalidad}}
                 </div>
-            <div class="text-lg mt-4">
+            <div class="text-lg mt-2">
                 @if($listing->auditorio == 'Virtual')
-                <p class="  text-green-600 text-2xl my-4">TIPO: CURSO VIRTUAL</p>
+                <p class="  my-2"><span class="font-semibold">Tipo:</span> CURSO VIRTUAL</p>
                 @endif
                 @if($listing->auditorio !== 'Virtual')
                     @if($listing->tipo == 'Presencial')
-                    <p class=" text-violet-600 text-2xl my-4">TIPO: CURSO PRESENCIAL</p>
+                    <p class="   my-2"><span class="font-semibold">Tipo:</span> CURSO PRESENCIAL</p>
                     @endif
                     @if($listing->tipo == 'Virtual')
-                    <p class="  text-violet-600 text-2xl my-4">TIPO: CURSO VIRTUAL</p>
+                    <p class="   my-2"><span class="font-semibold">Tipo:</span>  CURSO VIRTUAL</p>
                     @endif
                     @if($listing->tipo == 'Actividad')
-                    <p class="  text-violet-600 text-2xl my-4">TIPO: CURSO CON ACTIVIDAD</p>
+                    <p class="    my-2"><span class="font-semibold">Tipo:</span>  CURSO CON ACTIVIDAD</p>
                     @endif
                 <span class="font-bold"> Auditorio:</span>
                 {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>
-                <div class="m-4">
+                <div class="m-2">
                     @php
                         $participantes = DB::table('participantes')->where('id_curso', $listing->id)->get();
                         $cuenta = $participantes->count();
@@ -150,16 +150,17 @@
                 @endif
                 
             </div>
-            <h2 class="text-lg">
-                <p><span class="font-bold">Modalidad a realizar:</span> {{ $listing->modalidad }}</p>
-                <p><span class="font-bold">Tipo de capacitación:</span> {{ $listing->tipo }}</p>
+
+                <div class="p-2 border-2 border-black rounded-lg shadow-xl">
                 <p><span class="font-bold">Responsable del evento:</span> {{ $listing->nombre_del_responsable }}</p>
                 <p><span class="font-bold">Personal al que va dirigido:</span> {{ $listing->dirigido }}</p>
-                <p><span class="font-bold">Horas teóricas:</span> {{ $listing->horas_teoricas }}</p>
-                <p><span class="font-bold">Horas prácticas:</span> {{ $listing->horas_practicas }}</p>
+                <div class="flex gap-4">
+                    <p><span class="font-bold">Horas teóricas:</span> {{ $listing->horas_teoricas }}</p>
+                    <p><span class="font-bold">Horas prácticas:</span> {{ $listing->horas_practicas }}</p>
+                </div>
                 <p><span class="font-bold">Objetivo general:</span> {{ $listing->objetivo_general }}</p>
-                
-            </h2>
+                </div>
+
 
         </div>
     </div>

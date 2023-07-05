@@ -531,8 +531,8 @@
         $(document).ready(function() {
     // Set initial background color to red and font color to white for all input fields
         $('.requiredinput').css({
-        'background-color': 'red',
-        'color': 'white'
+        'background-color': 'yellow',
+        'color': 'black'
         });
 
     // Listen for change event on input fields
