@@ -319,7 +319,11 @@
             </form>
         
     </div>
-   
+    <script>
+        $(document).ready(function() {
+
+        });
+    </script>
     <script>
         $(document).ready(function() {
         // Listen for change event on select input
@@ -334,7 +338,7 @@
 
             if (selectedValue === 'Virtual') {
                 $('#physical-form').attr('action', '/admin/cursoenlinea');
-
+                $('#forma_de_evaluacion').val('Evaluación virtual');
                 var html = `
         <div class="flex-col gap-6 my-6">
           <div class="border-4 p-4 m-2">
@@ -380,7 +384,7 @@
 
             } else if (selectedValue === 'Actividad') {
                 $('#physical-form').attr('action', '/admin/create_actividad');
-
+                $('#forma_de_evaluacion').val('Actividad');
                 var html = `
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         
