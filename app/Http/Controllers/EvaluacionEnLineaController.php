@@ -9,7 +9,9 @@ use App\Models\Cursos;
 use App\Models\Tema;
 use App\Models\Carta;
 use App\Models\Evaluacion;
+use App\Models\Option;
 use App\Models\participantes;
+use App\Models\Question;
 use App\Models\User;
 use App\Models\Validaciones;
 use Illuminate\Http\Request;
@@ -52,9 +54,12 @@ class EvaluacionEnLineaController extends Controller
                 ]);
         }
 
+        $questions = $curso->questions;
+
         return view('users.evaluacion', [
             'eval' => $eval,
-            'cuestionario' => $cuestionario
+            'cuestionario' => $cuestionario,
+            'questions' => $questions
         ]);
     
 }
@@ -104,54 +109,57 @@ class EvaluacionEnLineaController extends Controller
     }
 
     public function eval_submit(Request $request, User $user){
+
         $formFields = $request->validate([
             'eval_id' => 'required',
             'nombre' => 'required',
-            'q1' => 'required',
-            'q2' => 'required',
-            'q3' => 'required',
-            'q4' => 'required',
-            'q5' => 'required',
             'fecha_de_terminacion' => 'required',
             'nombre_user' => 'required',
             'valor_curricular' => 'required',
             'apellido_paterno' => 'required',
-            'apellido_materno' => 'required'
+            'apellido_materno' => 'required',
+            'questions' => 'required|array|min:1',
         ]);
-
+        
         $eval_id = $formFields['eval_id'];
         $eval = DB::table('evaluaciones')->where('id', $eval_id)->first();
         $curso_id = $eval->id_curso;
-
-        $idx = auth()->user()->id;
-        $tru = DB::table('validaciones')->where('id_user', $idx)->where('id_curso', $curso_id)->first();
-
+        
+        $userId = auth()->user()->id;
+        $tru = DB::table('validaciones')->where('id_user', $userId)->where('id_curso', $curso_id)->first();
+        
         if (isset($tru)) {
-            return redirect()->back()->with('message', 'Ya habías aprobado esta evaluación antes.');;
-        }      
+            return redirect()->back()->with('message', 'Ya habías aprobado esta evaluación antes.');
+        }
+        
+        $questionsData = $formFields['questions'];
+        $totalQuestions = count($questionsData);
+        $minimumPercentage = 0.8; // Minimum required percentage (e.g., 80%)
+        $correctAnswers = 0;
 
-        $eval_id= $formFields['eval_id'];
-        $respuestas= DB::table('cuestionarios')->where('id', $eval_id)->first();
-        $respuesta1 = $respuestas->pregunta1_respuesta;
-        $respuesta2 = $respuestas->pregunta2_respuesta;
-        $respuesta3 = $respuestas->pregunta3_respuesta;
-        $respuesta4 = $respuestas->pregunta4_respuesta;
-        $respuesta5 = $respuestas->pregunta5_respuesta;
-        $r1 = $formFields['q1'];
-        $r2 = $formFields['q2'];
-        $r3 = $formFields['q3'];
-        $r4 = $formFields['q4'];
-        $r5 = $formFields['q5'];
-        $puntos = 0;
+        foreach ($questionsData as $questionId => $questionData) {
+            // Fetch the options for the question from the database
+            $options = DB::table('options')->where('question_id', $questionId)->get();
 
-        if($respuesta1==$r1){++$puntos;}
-        if($respuesta2==$r2){++$puntos;}
-        if($respuesta3==$r3){++$puntos;}
-        if($respuesta4==$r4){++$puntos;}
-        if($respuesta5==$r5){++$puntos;}
+            $userAnswer = $questionData['answer'];
+            $isCorrect = false;
 
-    
-        if ($puntos >= 4){
+            foreach ($options as $option) {
+                if ($option->id == $userAnswer && $option->correct == 1) {
+                    $isCorrect = true;
+                    break;
+                }
+            }
+
+            if ($isCorrect) {
+                $correctAnswers++;
+            }
+        }
+
+        $score = ($correctAnswers / $totalQuestions) * 100;
+
+        if ($score >= ($minimumPercentage * 100)) {
+    // Successful evaluation logic
             
             $valor_curricular = $formFields['valor_curricular'];
             $nombre_usuario = $formFields['nombre_user'] . " " . $formFields['apellido_paterno'] . " " . $formFields['apellido_materno'];
@@ -256,7 +264,7 @@ class EvaluacionEnLineaController extends Controller
                 $oportunidad = $trucalif->oportunidad;
 
                 if ($oportunidad == '1'){
-                    $calif = (($puntos * 100) / 5);
+                    $calif = $score;
 
                     $calificacion = [];
                     $calificacion['id_evaluacion'] = $eval_id;
@@ -282,7 +290,7 @@ class EvaluacionEnLineaController extends Controller
                 }
             }
 
-            $calif = (($puntos * 100) / 5);
+            $calif = $score;
 
             $calificacion = [];
             $calificacion['id_evaluacion'] = $eval_id;
@@ -352,35 +360,15 @@ class EvaluacionEnLineaController extends Controller
             'pdf4' => 'file|max:150000'
         ]);
 
-
-        $validatedData2 = $request->validate([
-            'id_evaluacion' => 'required',
-            'pregunta1' => 'required',
-            'pregunta1_opcion1' => 'required',
-            'pregunta1_opcion2' => 'required',
-            'pregunta2' => 'required',
-            'pregunta2_opcion1' => 'required',
-            'pregunta2_opcion2' => 'required',
-            'pregunta3' => 'required',
-            'pregunta3_opcion1' => 'required',
-            'pregunta3_opcion2' => 'required',
-            'pregunta4' => 'required',
-            'pregunta4_opcion1' => 'required',
-            'pregunta4_opcion2' => 'required',
-            'pregunta5' => 'required',
-            'pregunta5_opcion1' => 'required',
-            'pregunta5_opcion2' => 'required',
-            'pregunta1_respuesta' => 'required',
-            'pregunta2_respuesta' => 'required',
-            'pregunta3_respuesta' => 'required',
-            'pregunta4_respuesta' => 'required',
-            'pregunta5_respuesta' => 'required',
-        ]);
-
         $formFields2 = $request->validate([
             'temas' => 'required',
         ]);
 
+        $questionsData = $request->validate([
+            'questions' => 'required',
+        ]);
+
+        
         $responsable = DB::table('users')->where('id', $validatedData['nombre_del_responsable'])->first();
 
         $validatedData['nombre_del_responsable'] = $responsable->nombre_completo;
@@ -458,7 +446,8 @@ class EvaluacionEnLineaController extends Controller
         $evaluacion_data['id_curso'] = $curso->id;
         $evaluacion_data['nombre'] = $curso->nombre;
         $evaluacion_data['video'] = $validatedData['video'];
-        $evaluacion_data['pdf'] = $validatedData['pdf'];
+
+
         $evaluacion_data['numero_consecutivo'] = $curso->numero_consecutivo;
 
 
@@ -483,9 +472,6 @@ class EvaluacionEnLineaController extends Controller
 
             $evalz = Evaluacion::create($evaluacion_data);
 
-            $validatedData2['id_evaluacion'] = $evalz->id;
-
-            $uwu = Cuestionario::create($validatedData2);
 
             $pathz = "/users/xevalz/" . $curso->id;
 
@@ -535,7 +521,117 @@ class EvaluacionEnLineaController extends Controller
                 'carta' => $publicPath
             ]);
 
-            return redirect($pathz)->with('message', 'Curso creado correctamente.');;
+            foreach ($questionsData['questions'] as $questionData) {
+                // Create the question
+                $question = Question::create([
+                    'id_curso' => $curso->id,
+                    'text' => $questionData['text'],
+                ]);
+            
+                // Create the options for the question
+                foreach ($questionData['options'] as $key => $optionText) {
+                    $option = new Option([
+                        'text' => $optionText,
+                        'correct' => in_array($key, $questionData['correct']),
+                    ]);
+            
+                    // Save the option to the database
+                    $question->options()->save($option);
+                }
+            }
+    
+
+            return redirect($pathz)->with('message', 'Curso creado correctamente.');
+            
+            } else {
+                $evaluacion_data['video'] = $request->file('video')->store('videos', 'public');
+
+                $evaluacion_data['pdf'] = null;
+    
+                if($request->hasFile('pdf2')) {
+                $evaluacion_data['pdf2'] = $request->file('pdf2')->store('apoyos', 'public'); 
+                }
+    
+                if($request->hasFile('pdf3')) {
+                    $evaluacion_data['pdf3'] = $request->file('pdf3')->store('apoyos', 'public'); 
+                    }
+    
+                if($request->hasFile('pdf4')) {
+                        $evaluacion_data['pdf4'] = $request->file('pdf4')->store('apoyos', 'public'); 
+                        }
+    
+                $evalz = Evaluacion::create($evaluacion_data);
+    
+    
+                $pathz = "/users/xevalz/" . $curso->id;
+    
+                $temasArray = $formFields2['temas'];
+    
+                if (!empty($temasArray)) {
+                    foreach ($temasArray as $tema) {
+                        Tema::create([
+                            'id_curso' => $curso->id,
+                            'numero' => $tema['numero'],
+                            'fechayhora' => $tema['fechayhora'],
+                            'contenido_tematico' => $tema['contenido'],
+                            'objetivos' => $tema['objetivos'],
+                            'tecnica' => $tema['tecnica'],
+                            'responsable' => $tema['responsable'],
+                            'horas_teoricas' => $tema['horasTeoricas'],
+                            'horas_practicas' => $tema['horasPracticas'],
+                            'referencia' => $tema['referencia'],
+                        ]);
+                    }
+                }
+    
+                $temas = DB::table('temas')->where('id_curso', $curso->id)->get();
+    
+                $pdf = new Dompdf();
+    
+    // Generate the PDF
+                $pdf->loadHtml(view('cartapdf', compact(['curso', 'participantex', 'temas'])));
+    
+                // Set paper size and orientation
+                $pdf->setPaper('A4', 'landscape');
+    
+                // Render the PDF
+                $pdf->render();
+    
+                $pdfContent = $pdf->output();
+                $filename = $curso->nombre . '.pdf';
+                
+                Storage::disk('public')->put($filename, $pdfContent);
+                
+                $storagePath = 'storage/' . $filename;
+                
+                $publicPath = url($storagePath);
+                
+                carta::create([
+                    'id_curso' => $curso->id,
+                    'carta' => $publicPath
+                ]);
+    
+                foreach ($questionsData['questions'] as $questionData) {
+                    // Create the question
+                    $question = Question::create([
+                        'id_curso' => $curso->id,
+                        'text' => $questionData['text'],
+                    ]);
+                
+                    // Create the options for the question
+                    foreach ($questionData['options'] as $key => $optionText) {
+                        $option = new Option([
+                            'text' => $optionText,
+                            'correct' => in_array($key, $questionData['correct']),
+                        ]);
+                
+                        // Save the option to the database
+                        $question->options()->save($option);
+                    }
+                }
+        
+    
+                return redirect($pathz)->with('message', 'Curso creado correctamente.');;
             }
         }      
     }

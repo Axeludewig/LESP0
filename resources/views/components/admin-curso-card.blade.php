@@ -157,6 +157,17 @@
         <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel"  onclick="toggleList({{ $listing->id }})">
             Mostrar <i class="fa-solid fa-plus"></i>
         </button>
+
+        <!--
+        <div>
+        <a href="/admin/limpiarparticipantes">
+        <button class="m-2 py-2 px-4 rounded bg-laravel text-white hover:bg-black show-participants bg-laravel">
+            Vaciar lista de participantes
+        </button>
+        </a>
+        </div>
+        -->
+
         @endif
         <div class="max-h-[125px] overflow-y-auto hidden p-2" id="participantesList{{ $listing->id }}">   
             <ul>

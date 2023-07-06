@@ -72,7 +72,7 @@
                     @if($listing->tipo == 'Actividad')
                     <p class="    my-2"><span class="font-semibold">Tipo:</span>  CURSO CON ACTIVIDAD</p>
                     @endif
-                <span class="font-bold"> Auditorio:</span>
+                <span class="font-bold"> Lugar:</span>
                 {{ $listing->auditorio }} <i class="fa-solid fa-location-dot"></i>
                 <div class="m-2">
                     @php

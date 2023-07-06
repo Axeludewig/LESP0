@@ -58,22 +58,23 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="coordinacion" class="block mb-2 text-sm font-medium text-gray-900 ">Coordinación repsonsable</label>
+                            <label for="coordinacion" class="block mb-2 text-sm font-medium text-gray-900 ">Coordinación responsable</label>
                             <select name="coordinacion" id="coordinacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="12" required="" value="{{ old('coordinacion') }}"> 
-                                <option value="todo-el-personal-de-la-unidad">Todo el personal de la unidad</option>
-                                <option value="coordinacion-de-vigilancia-epidemiologica">Coordinación de Vigilancia Epidemiológica
+                                <option value="Todo el personal de la unidad">Todo el personal de la unidad</option>
+                                <option value="Coordinación de Bioseguridad">Coordinación de Bioseguridad</option>
+                                <option value="Coordinación de vigilancia epidemiológica">Coordinación de Vigilancia Epidemiológica
                                 </option>
-                                <option value="coordinacion-de-vigilancia-contra-riesgos-sanitarios">Coordinación de Vigilancia
+                                <option value="Coordinación de vigilancia contra riesgos sanitarios">Coordinación de Vigilancia
                                     Contra Riesgos Sanitarios</option>
-                                <option value="coordinacion-de-biologia-molecular">Coordinación de Biologia Molecular</option>
-                                <option value="coordinacion-de-cacu">Coordinación de CACU</option>
-                                <option value="coordinacion-de-gestion-de-calidad">Coordinación de Gestión de Calidad</option>
-                                <option value="coordinacion-administrativa">Coordinación Administrativa</option>
-                                <option value="coordinacion-de-la-red-estatal-de-laboratorios">Coordinación de la Red Estatal de
+                                <option value="Coordinación de biología molecular">Coordinación de Biologia Molecular</option>
+                                <option value="Coordinación de Cacu">Coordinación de CACU</option>
+                                <option value="Coordinación de gestión de calidad">Coordinación de Gestión de Calidad</option>
+                                <option value="Coordinación administrativa">Coordinación Administrativa</option>
+                                <option value="Coordinación de la red estatal de laboratorios">Coordinación de la Red Estatal de
                                     Laboratorios</option>
-                                <option value="coordinacion-de-tecnologias-de-la-informacion">Coordinación de tecnologías de la
+                                <option value="Coordinación de tecnologías de la información">Coordinación de tecnologías de la
                                     información</option>
-                                <option value="coordinacion-de-ensenanza-e-investigacion">Coordinación de Enseñanza e Investigación
+                                <option value="Coordinación de enseñanza e investigación">Coordinación de Enseñanza e Investigación
                                 </option>
                             </select>
                             @error('coordinacion')
@@ -97,7 +98,7 @@
                         <div class="">
                             <label for="horas_teoricas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas teóricas:</label>
                             <input required type="number" id="horas_teoricas" name="horas_teoricas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas', '2') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_teoricas', '0') }}" readonly>
                             @error('horas_teoricas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -105,7 +106,7 @@
                         <div class="">
                             <label for="horas_practicas" class="block mb-2 text-sm font-medium text-gray-900 ">Horas prácticas:</label>
                             <input required type="number" id="horas_practicas" name="horas_practicas"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas', '2') }}">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " value="{{ old('horas_practicas', '0') }}" readonly>
                             @error('horas_practicas')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -318,7 +319,7 @@
             </form>
         
     </div>
-
+   
     <script>
         $(document).ready(function() {
         // Listen for change event on select input
@@ -365,127 +366,14 @@
                     <h2 class="mb-4 text-xl font-bold text-gray-900 ">Cuestionario</h2>
                 <p class="">Agregar preguntas y sus opciones de respuesta,</p>
                 <p class="mb-4">así como las opciones correctas</p>
-                <input type="hidden" name="id_evaluacion" value="x">
-                <div class="">
-                    <label for="pregunta1" class="block mb-2 text-sm font-medium text-gray-900 ¿">
-                        Pregunta #1:
-                    </label>
-                    <input type="text" name="pregunta1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                    <div class="flex-col items-center w-1/2">
-                        <div class="">
-                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta1_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        <label for="pregunta1_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta1_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
-                        </div>
-                    </div>
 
-                    <label for="pregunta2" class="block mb-2 text-sm font-medium text-gray-900 ">
-                        Pregunta #2:
-                    </label>
-                    <input type="text" name="pregunta2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                    <div class="flex-col items-center w-3/4">
-                        <div class="">
-                        <label for="pregunta2_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta2_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        <label for="pregunta2_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta2_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        </div>
-                    </div>
+                    <div id="questionsContainer">
+                        <button type="button" id="addQuestionBtn">Agregar pregunta</button>
+        </div>
+        
+        <br><br>
 
-                    <label for="pregunta3" class="block mb-2 text-sm font-medium text-gray-900 ">
-                        Pregunta #3:
-                    </label>
-                    <input type="text" name="pregunta3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                    <div class="flex-col items-center w-3/4">
-                        <div class="">
-                        <label for="pregunta3_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta3_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        <label for="pregunta3_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta3_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        </div>
-                    </div>
-
-                    <label for="pregunta4" class="block mb-2 text-sm font-medium text-gray-900 ">
-                        Pregunta #4:
-                    </label>
-                    <input type="text" name="pregunta4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                    <div class="flex-col items-center w-3/4">
-                        <div class="">
-                        <label for="pregunta4_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta4_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                        <label for="pregunta4_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta4_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                        </div>
-                    </div>
-
-                    <label for="pregunta5" class="block mb-2 text-sm font-medium text-gray-900 ">
-                        Pregunta #5:
-                    </label>
-                    <input type="text" name="pregunta5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                    <div class="flex-col items-center w-3/4">
-                        <div class="">
-                        <label for="pregunta5_opcion1" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #1:</label>                    
-                        <input type="text" name="pregunta5_opcion1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  mb-4" >
-                        <label for="pregunta5_opcion2" class="block mb-2 text-sm font-medium text-gray-900 ">Opción de respuesta #2:</label>
-                        <input type="text" name="pregunta5_opcion2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-4" >
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="mb-4 text-xl font-bold text-gray-900  text-center">Respuestas</h2>
-                    <p class="text-center mb-4">Agregar la opción correcta de cada pregunta</p>
-                    <div class="flex flex-col gap-4">
-                        <div class="flex flex-col text-center">
-                            <p>Respuesta #1:</p>
-                            <div class="flex flex-row items-center justify-center gap-3">
-                            <label for="p1r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                            <input type="radio" name="pregunta1_respuesta" value="1" id="p1r1">
-                            <label for="p1r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                            <input type="radio" name="pregunta1_respuesta" value="2" id="p1r2">
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col text-center">
-                            <p>Respuesta #2:</p>
-                            <div class="flex flex-row items-center justify-center gap-3">
-                            <label for="p2r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                            <input type="radio" name="pregunta2_respuesta" value="1" id="p2r1">
-                            <label for="p2r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                            <input type="radio" name="pregunta2_respuesta" value="2" id="p2r2">
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col text-center" >
-                            <p>Respuesta #3:</p>
-                            <div class="flex flex-row items-center justify-center gap-3">
-                            <label for="p3r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                            <input type="radio" name="pregunta3_respuesta" value="1" id="p3r1">
-                            <label for="p3r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                            <input type="radio" name="pregunta3_respuesta" value="2" id="p3r2">
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col text-center">
-                            <p>Respuesta #4:</p>
-                            <div class="flex flex-row items-center justify-center gap-3">
-                            <label for="p4r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                            <input type="radio" name="pregunta4_respuesta" value="1" id="p4r1">
-                            <label for="p4r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                            <input type="radio" name="pregunta4_respuesta" value="2" id="p4r2">
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col text-center">
-                            <p>Respuesta #5:</p>
-                            <div class="flex flex-row items-center justify-center gap-3">
-                            <label for="p5r1" class="inline-block text-lg mb-2">Opción 1</label> 
-                            <input type="radio" name="pregunta5_respuesta" value="1" id="p5r1">
-                            <label for="p5r2" class="inline-block text-lg mb-2">Opción 2</label> 
-                            <input type="radio" name="pregunta5_respuesta" value="2" id="p5r2">
-                            </div>
-                        </div>
-                    </div>
+        </div>
     `;
       
     dynamicFieldsContainer.append(html);
@@ -604,6 +492,8 @@ $(document).ready(function() {
     $('#objetivosinput').val('n/a');
     $('#objetivo_general').val('n/a');
   var temaIndex = 1; // Keep track of the index for dynamic input fields
+  var totalHorasT = 0;
+  var totalHorasP = 0;
 
   $('#add-activity-btn').click(function(e) {
     e.preventDefault(); // Prevent the default form submission behavior
@@ -667,6 +557,8 @@ $(document).ready(function() {
       }
     }
 
+    updateTotalHoras();
+
     temaIndex++; // Increment the index for the next set of input fields
 
     console.log(activityData); // Output the activity data object to the console for testing
@@ -680,8 +572,34 @@ $(document).ready(function() {
     $('#teoricasinput').val('2');
     $('#practicasinput').val('2');
     $('#referenciasinput').val('n/a');
+    $('#ponente').css({
+            'font-weight': 'bold',
+            'background-color': 'yellow',
+            'color': 'black'
+        });
     });
+
+    
+function updateTotalHoras() {
+  var horasT = parseInt($('#teoricasinput').val());
+  var horasP = parseInt($('#practicasinput').val());
+
+    totalHorasT = totalHorasT + horasT;
+    totalHorasP = totalHorasP + horasP;
+
+  console.log('Horas Teoricas de la actividad:', horasT);
+  console.log('Horas Practicas de la actividad:', horasP);
+  console.log('Total Horas Teóricas:', totalHorasT);
+  console.log('Total Horas Prácticas:', totalHorasP);
+
+  $('#horas_teoricas').val(totalHorasT);
+  $('#horas_practicas').val(totalHorasP);
+}
+
+
 });
+
+
 
 function getTodayDateTime() {
   var today = new Date();
@@ -873,6 +791,49 @@ const addButton = document.getElementById("add-activity-btn");
 // Add event listener to the button
 addButton.addEventListener("click", addTema);
     </script>
+     <script>
+    $(document).ready(function () {
+    var questionCount = 0; // Track the number of questions
+
+    // Event delegation for addQuestionBtn button click event
+    $(document).on('click', '#addQuestionBtn', function () {
+        questionCount++; // Increment the question count
+
+        // Create question HTML elements
+        var questionHtml = '<div class="question">';
+        questionHtml += '<label>Pregunta # ' + questionCount + ':</label>';
+        questionHtml += '<input type="text" name="questions[' + questionCount + '][text]" required>';
+        questionHtml += '<button type="button" class="addOptionBtn">Agregar opción</button>';
+        questionHtml += '<div class="optionsContainer">';
+        questionHtml += '</div>';
+        questionHtml += '</div>';
+
+        // Append question to the container
+        $('#questionsContainer').append(questionHtml);
+    });
+
+    // Event delegation for addOptionBtn button click event
+    $(document).on('click', '.addOptionBtn', function () {
+        var questionContainer = $(this).closest('.question');
+        var optionsContainer = questionContainer.find('.optionsContainer');
+
+        // Create option HTML elements
+        var optionHtml = '<div class="option">';
+        optionHtml += '<input type="text" name="questions[' + questionCount + '][options][]" required>';
+        optionHtml += '<label>';
+        optionHtml += '<input type="checkbox" name="questions[' + questionCount + '][correct][]" value="' + optionsContainer.children().length + '">';
+        optionHtml += 'Opción correcta';
+        optionHtml += '</label>';
+        optionHtml += '</div>';
+
+        // Append option to the options container
+        optionsContainer.append(optionHtml);
+    });
+});
+
+
+    </script>
+
     <style>
 .remove-button {
   background-color: #a61414;

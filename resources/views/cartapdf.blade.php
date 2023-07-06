@@ -130,12 +130,12 @@
                     <tr>    
                         <td>
                             <div class="grid-item">
-                                <span>Fecha de inicio:</span> {{ $curso->fecha_de_inicio }}
+                                <span>Fecha de inicio:</span> {{ date('Y-m-d h:i A', strtotime($curso->fecha_de_inicio)) }}
                             </div>
                         </td>
                         <td>
                             <div class="grid-item">
-                                <span>Fecha de término:</span> {{ $curso->fecha_de_terminacion }}
+                                <span>Fecha de término:</span> {{ date('Y-m-d h:i A', strtotime($curso->fecha_de_terminacion)) }}
                             </div>
                         </td>
                     </tr>        
@@ -193,7 +193,7 @@
                     @foreach($temas as $tema)
                     <tr>
                         <td>{{ $tema->numero }}</td>
-                        <td>{{ $tema->fechayhora }}</td>
+                        <td>{{ date('Y-m-d h:i A', strtotime($tema->fechayhora)) }}</td>
                         <td>{{ $tema->contenido_tematico }}</td>
                         <td>{{ $tema->objetivos }}</td>
                         <td>{{ $tema->tecnica }}</td>

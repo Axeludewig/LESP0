@@ -78,4 +78,9 @@ class Cursos extends Model
         return $this->hasMany(Ponentes::class, 'id_curso');
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'id_curso');
+    }
+
 }
