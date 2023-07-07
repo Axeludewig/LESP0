@@ -154,8 +154,11 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 ////// ADMIN CREAR ACTIVIDAD 
 
+Route::get('/admin/qrenlinea/{listing}', [CursosController::class, 'qrenlinea'])->middleware('auth');
 
+Route::get('/admin/qrpublico/{listing}', [CursosController::class, 'qrpublico'])->middleware('auth');
 
+Route::get('/admin/qr/{listing}', [CursosController::class, 'oneQR'])->middleware('auth');
 
 Route::post('/finalizar/{listing}', [CursosController::class, 'finalizarx'])->middleware('auth');
 
@@ -354,7 +357,7 @@ Route::delete('/users/{listing}', [UserController::class, 'destroy'])->middlewar
 Route::get('/listings/manage', [participantesController::class, 'index'])->middleware('auth');
 
 // Single Listing
-Route::get('/listings/{listing}', [CursosController::class, 'show']);
+Route::get('/listings/{listing}', [CursosController::class, 'show'])->middleware('auth');
 
 // Show Register/Create Form
 Route::get('/register', [UserController::class, 'create'])->middleware('auth');

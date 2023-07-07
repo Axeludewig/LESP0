@@ -19,10 +19,113 @@ use Dompdf\Options;
 use Illuminate\Support\Facades\Storage;
 use LasseRafn;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+
 
 
 class CursosController extends Controller
 {
+    public function qrenlinea(Request $request, Cursos $listing){
+        if (auth()->user()->es_admin == 0) {
+            return view('users.sinpermiso');
+        }
+        $qrCode = [];
+            
+            
+        $options = new QROptions([
+            'version' => 5,
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'imageTransparent' => false,
+            'eccLevel' => QRCode::ECC_L,
+            'scale' => 10,
+            'addQuietzone' => true,
+            'margin' => 10,
+            'logoPath' => asset('/images/logolesp.png'), // Path to the logo file
+            'logoWidth' => 150, // Width of the logo in pixels
+        ]);
+
+            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/users/xevalz/' . $listing->id;
+            $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
+            $qrCode = [
+                'name' => $listing->nombre,
+                'image' => $qrCodeImage,
+                'id_curso' => $listing->id
+            ];
+    
+    return view('admin.qrenlinea', [
+        'qrCode' => $qrCode
+    ]);
+    }
+
+    public function oneQR(Request $request, Cursos $listing){
+        if (auth()->user()->es_admin == 0) {
+            return view('users.sinpermiso');
+        }
+        $qrCode = [];
+            
+            
+        $options = new QROptions([
+            'version' => 5,
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'imageTransparent' => false,
+            'eccLevel' => QRCode::ECC_L,
+            'scale' => 10,
+            'addQuietzone' => true,
+            'margin' => 10,
+            'logoPath' => asset('/images/logolesp.png'), // Path to the logo file
+            'logoWidth' => 150, // Width of the logo in pixels
+        ]);
+
+            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/listings/' . $listing->id;
+            $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
+            $qrCode = [
+                'name' => $listing->nombre,
+                'image' => $qrCodeImage,
+                'id_curso' => $listing->id
+            ];
+    
+    return view('admin.qr', [
+        'qrCode' => $qrCode
+    ]);
+    }
+
+    public function qrpublico(Request $request, Cursos $listing){
+        if (auth()->user()->es_admin == 0) {
+            return view('users.sinpermiso');
+        }
+        $qrCode = [];
+            
+            
+        $options = new QROptions([
+            'version' => 5,
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'imageTransparent' => false,
+            'eccLevel' => QRCode::ECC_L,
+            'scale' => 10,
+            'addQuietzone' => true,
+            'margin' => 10,
+            'logoPath' => asset('/images/logolesp.png'), // Path to the logo file
+            'logoWidth' => 150, // Width of the logo in pixels
+        ]);
+
+            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/registro/' . $listing->id;
+            $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
+            $qrCode = [
+                'name' => $listing->nombre,
+                'image' => $qrCodeImage,
+                'id_curso' => $listing->id
+            ];
+    
+    return view('admin.qrpublico', [
+        'qrCode' => $qrCode
+    ]);
+    }
+
     public function finalizarx(Request $request, Cursos $listing) {
         $ponente = $listing->nombre_del_responsable;
 
@@ -288,7 +391,7 @@ class CursosController extends Controller
     }
 
     //MUESTRA UN SOLO CURSO
-    public function show(Cursos $listing) {
+    public function show(Cursos $listing) {        
         return view('listings.show', [
             'listing' => $listing
         ]);
@@ -448,7 +551,7 @@ class CursosController extends Controller
     }
 
     public function qrs(Request $request)
-{
+    {
     if (auth()->user()->es_admin == 0) {
         return view('users.sinpermiso');
     }
@@ -459,8 +562,9 @@ class CursosController extends Controller
         ->where('nombre', 'like', "%$search%")
         ->get();
 
-    $qrCodes = [];
-
+        $qrCodes = [];
+        
+        
     $options = new QROptions([
         'version' => 5,
         'outputType' => QRCode::OUTPUT_IMAGE_PNG,
@@ -484,9 +588,18 @@ class CursosController extends Controller
         ];
     }
 
-    return view('admin.qrs', [
-        'qrCodes' => $qrCodes, // Pass the array of QR codes to the view
-    ]); 
+    $perPage = 6;
+$page = Paginator::resolveCurrentPage('page');
+$items = array_slice($qrCodes, ($page - 1) * $perPage, $perPage);
+$total = count($qrCodes);
+
+$paginatedQrCodes = new LengthAwarePaginator($items, $total, $perPage, $page, [
+    'path' => Paginator::resolveCurrentPath(),
+]);
+
+return view('admin.qrs', [
+    'qrCodes' => $paginatedQrCodes
+]);
 }
 
     

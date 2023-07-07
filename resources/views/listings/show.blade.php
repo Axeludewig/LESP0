@@ -23,6 +23,45 @@
                     <i class="fa-solid fa-calendar-xmark"></i><span class="font-semibold"> Inicio:</span>
                     {{ $listing->fecha_de_inicio }}
                 </div>
+                <form method="POST" action="/listings" enctype="multipart/form-data">
+                    <div class="mb-6">
+                
+                @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial')
+
+                                        <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
+                                        <input type="hidden" name="id_curso" value="{{$listing->id}}">
+
+                                        @if(!$registrado)
+                                        <div class="m-4">
+                                        <button type="submit"
+                                            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+                                            Registrarse
+                                        </button>
+                                        </div>
+                                        @endif 
+                                        <div class="m-4">
+                                        <a href="/"
+                                            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+                                            Volver
+                                        </a href>
+                                        <div class="m-4">
+                                            <button disabled
+                                                class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+                                                Ya estás registrado a esta capacitación.
+                                            </button>
+                                            </div>
+                                    </div>
+                                    @else
+                                    
+                                        <div>
+                                        <a href="/"
+                                            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
+                                            Volver
+                                        </a href>
+                                    </div>
+                                </div>
+                    @endif
+
                 <div class="border border-gray-200 w-full mb-6"></div>
                 <div>
                     @if (auth()->check())
@@ -33,8 +72,7 @@
 
 
 
-                            <form method="POST" action="/listings" enctype="multipart/form-data">
-                                <div class="mb-6">
+                            
 
                                     @csrf
                                     <div class="mb-6">
@@ -42,6 +80,7 @@
                                             <span class="font-bold">Nombre de la capacitación:</span>
                                             {{ $listing->nombre }}
                                         </label>
+                                        
                                         <input type="text" hidden="true" contenteditable="false"
                                             class="border border-gray-200 rounded p-2 w-full" name="nombre_curso"
                                             rows="10" value="{{ $listing->nombre }}"
@@ -190,25 +229,7 @@
                                         class="border border-gray-200 rounded p-2 w-full" name="tipo"
                                         rows="10" value="Asistente" </input>
 
-                                    @if (auth()->user()->es_admin == '0' && $listing->tipo == 'Presencial' |$listing->tipo == 'Actividad' )
-
-                                        <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
-                                        <input type="hidden" name="id_curso" value="{{$listing->id}}">
-
-                                        @if(!$registrado)
-                                        <button type="submit"
-                                            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                                            Registrarse
-                                        </button>
-                                        @endif 
-                                        <a href="/" class="text-black ml-4"> Volver </a>
-                                    @else
-                                        <a href="/"
-                                            class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                                            Volver
-                                        </a href>
-                                </div>
-                    @endif
+                                    
                 </div>
                 </form>
                 @endif

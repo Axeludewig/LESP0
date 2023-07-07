@@ -343,7 +343,7 @@
         <div class="flex-col gap-6 my-6">
           <div class="border-4 p-4 m-2">
             <label for="video" class="block font-semibold text-gray-700">Subir video</label>
-            <input id="video" type="file" name="video" class="mt-1">
+            <input id="video" type="file" name="video" class="mt-1" required>
           </div>
 
           <div class="border-4 p-4 m-2">
@@ -372,7 +372,7 @@
                 <p class="mb-4">así como las opciones correctas</p>
 
                     <div id="questionsContainer">
-                        <button type="button" id="addQuestionBtn">Agregar pregunta</button>
+                        <button type="button" id="addQuestionBtn" class="bg-laravel text-white rounded-lg border shadow px-4 py-2 mb-4">Agregar pregunta</button>
         </div>
         
         <br><br>
@@ -804,10 +804,10 @@ addButton.addEventListener("click", addTema);
         questionCount++; // Increment the question count
 
         // Create question HTML elements
-        var questionHtml = '<div class="question">';
-        questionHtml += '<label>Pregunta # ' + questionCount + ':</label>';
-        questionHtml += '<input type="text" name="questions[' + questionCount + '][text]" required>';
-        questionHtml += '<button type="button" class="addOptionBtn">Agregar opción</button>';
+        var questionHtml = '<div class="question p-4 border shadow rounded-lg mb-4">';
+        questionHtml += '<label class="my-4">Pregunta # ' + questionCount + ':</label>';
+        questionHtml += '<input type="text" name="questions[' + questionCount + '][text]" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">';
+        questionHtml += '<button type="button" class="addOptionBtn bg-laravel text-white rounded-lg border shadow px-4 py-2 mb-4 mt-4">Agregar opción de respuesta</button>';
         questionHtml += '<div class="optionsContainer">';
         questionHtml += '</div>';
         questionHtml += '</div>';
@@ -823,9 +823,9 @@ addButton.addEventListener("click", addTema);
 
         // Create option HTML elements
         var optionHtml = '<div class="option">';
-        optionHtml += '<input type="text" name="questions[' + questionCount + '][options][]" required>';
+        optionHtml += '<input type="text" name="questions[' + questionCount + '][options][]" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">';
         optionHtml += '<label>';
-        optionHtml += '<input type="checkbox" name="questions[' + questionCount + '][correct][]" value="' + optionsContainer.children().length + '">';
+        optionHtml += '<input type="checkbox" name="questions[' + questionCount + '][correct][]" value="' + optionsContainer.children().length + '" class="rounded-lg mb-4 mt-2">';
         optionHtml += 'Opción correcta';
         optionHtml += '</label>';
         optionHtml += '</div>';

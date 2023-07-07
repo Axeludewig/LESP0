@@ -14,7 +14,7 @@
         @endif
         <div class="overflow-hidden">
             <h3 class="text-xl md:text-3xl truncate mb-3">
-                <a href="/listings/{{ $listing->id }}"><span class="font-bold">{{ $listing->nombre }}</span></a>
+                <span class="font-bold">{{ $listing->nombre }}</span>
             </h3>
             <div class="font-semibold md:text-xl">
                 @if($listing->status == 'Disponible')

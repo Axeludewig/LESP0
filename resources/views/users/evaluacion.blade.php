@@ -36,7 +36,7 @@
           </video>
         </div>
         
-        <div class="flex items-center justify-center text-center mt-4 mb-72">
+        <div class="flex items-center justify-center text-center mt-4 mb-8 md:mb-72">
           
           <div id="exam-section" class="disabled">
             <h2 class="ml-2 text-xl font-semibold text-gray-900 dark:text-gray-300">Sección de preguntas:</h2>
@@ -56,11 +56,11 @@
             <input type="hidden" name="valor_curricular" value="4">
             <input type="hidden" name="nombre" value="{{$eval->nombre}}">
 
-            <div class="flex justify-center max-w-full text-center mt-6">
+            <div class="flex justify-center max-w-full text-center">
               <div id="accordion-collapse" data-accordion="collapse">
                   @foreach($questions as $key => $question)
                       <h2 id="accordion-collapse-heading-{{ $key }}">
-                          <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-collapse-body-{{ $key }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ $key }}">
+                          <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-gray-500 border border-b-0 border-gray-200 rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-collapse-body-{{ $key }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ $key }}">
                               <span>{{ $question->text }}</span>
                               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -68,7 +68,7 @@
                           </button>
                       </h2>
                       <div id="accordion-collapse-body-{{ $key }}" class="hidden" aria-labelledby="accordion-collapse-heading-{{ $key }}">
-                          <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                          <div class="p-5 border  border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                               @foreach($question->options as $option)
                                   <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                       <input type="radio" name="questions[{{ $question->id }}][answer]" value="{{ $option->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

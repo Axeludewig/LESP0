@@ -22,7 +22,7 @@
 
                     <h1 class="mb-4 mt-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Felicidades, has aprobado.</h1><br>
                     <div class="mt-4">
-                        <a href="data:application/pdf;base64,{{ $base64Pdf }}" download="{{ $filename }}" class="rounded-full bg-mich4 text-2xl p-4 m-4 animate-bounce mb-4">Descargar constancia</a><br>
+                        <a href="data:application/pdf;base64,{{ $base64Pdf }}" download="{{ $filename }}" class="rounded-full bg-mich4 text-lg p-4 m-4 mb-4 animate-bounce"><button>Descargar constancia </button></a><br>
                         </div>
                    
                 </div>

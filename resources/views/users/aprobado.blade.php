@@ -20,7 +20,7 @@
                     </a>
                     <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Ya has aprobado esta evaluación.</h1>
                     <div class="mt-16 animate-bounce ">
-                    <a href="/pdf_download/{{$curso->id}}" class="rounded-full bg-mich4 text-2xl p-4 px-8 font-bold m-4 animate-bounce mb-4">Descargar constancia</a><br>
+                    <a href="/pdf_download/{{$curso->id}}" class="rounded-full bg-mich4 text-lg p-4 px-8 font-bold m-4 animate-bounce mb-4"><button>Descargar constancia</button></a><br>
                     </div>
                    
                 </div>
