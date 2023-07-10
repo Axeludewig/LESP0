@@ -38,8 +38,25 @@
             alt="" />
             @endif
             
-            <div class="mt-3 text-xl"><span class="font-bold">Inicia: </span>{{ $listing->fecha_de_inicio }}</div>
-            <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $listing->fecha_de_terminacion }}</div>
+
+            @php
+    date_default_timezone_set('America/Mexico_City');
+    
+    
+
+    $inicio = \Carbon\Carbon::parse($listing->fecha_de_inicio)->format('l j F Y H:i:s');
+
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+$fecha = \Carbon\Carbon::parse($listing->fecha_de_inicio);
+$mes = $meses[($fecha->format('n')) - 1];
+$lel = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+
+$fecha2 = \Carbon\Carbon::parse($listing->fecha_de_terminacion);
+$mes = $meses[($fecha2->format('n')) - 1];
+$lel2 = $fecha2->format('d') . ' de ' . $mes . ' de ' . $fecha2->format('Y');
+@endphp
+            <div class="mt-3 text-xl"><span class="font-bold">Inicia: </span>{{ $lel }}</div>
+            <div class="text-xl mb-4"><span class="font-bold">Termina: </span>{{ $lel2 }}</div>
             @php
             $carta = DB::table('carta')->where('id_curso', $listing->id)->first();
             @endphp

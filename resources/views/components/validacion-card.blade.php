@@ -25,7 +25,10 @@
                         <input type="hidden" name="tipo_participacion" value="{{$validacion->tipo}}">
                         <input type="hidden" name="fecha_capacitacion" value="{{$validacion->fecha_de_registro}}">
                         <input type="hidden" name="valor_curricular" value="{{$validacion->valor_curricular}}">
+
+                       
                         <button type="submit" class="font-medium text-blue-600 hover:underline">Descargar constancia</button>
                     </form>
                 </td>
+                
             </tr>

@@ -154,6 +154,12 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 ////// ADMIN CREAR ACTIVIDAD 
 
+Route::get('/admin/deletebitacora/{validacion}', [AdminController::class, 'destroy'])->middleware('auth');
+
+Route::put('/admin/editbitacora/{validacion}', [AdminController::class, 'update'])->middleware('auth');
+
+Route::get('/admin/editbitacora', [AdminController::class, 'editbitacora'])->middleware('auth');
+
 Route::get('/admin/qrenlinea/{listing}', [CursosController::class, 'qrenlinea'])->middleware('auth');
 
 Route::get('/admin/qrpublico/{listing}', [CursosController::class, 'qrpublico'])->middleware('auth');
