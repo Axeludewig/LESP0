@@ -152,7 +152,22 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 
 
-////// ADMIN CREAR ACTIVIDAD 
+////// ADMIN CREAR ACTIVIDAD
+Route::put('/posts/edit/{post}', [AdminController::class, 'save_edited_post'])->middleware('auth');
+
+Route::get('/posts/edit/{post}', [AdminController::class, 'edit_post'])->middleware('auth');
+
+Route::delete('/posts/destroy/{post}', [AdminController::class, 'destroy_post'])->middleware('auth');
+
+Route::get('/avisos', [AdminController::class, 'avisos'])->middleware('auth');
+
+Route::get('/posts', [AdminController::class, 'posts'])->middleware('auth');
+
+Route::get('/posts/{postid}', [AdminController::class, 'post']);
+
+Route::get('/editor', [AdminController::class, 'editor'])->middleware('auth');
+
+Route::post('/editor/post', [AdminController::class, 'editor_post'])->middleware('auth');
 
 Route::get('/admin/deletebitacora/{validacion}', [AdminController::class, 'destroy'])->middleware('auth');
 
