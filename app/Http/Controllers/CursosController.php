@@ -47,7 +47,7 @@ class CursosController extends Controller
             'logoWidth' => 150, // Width of the logo in pixels
         ]);
 
-            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/users/xevalz/' . $listing->id;
+            $qrCodeContent = 'http://lespmich.hopto.org/users/xevalz/' . $listing->id;
             $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
             $qrCode = [
                 'name' => $listing->nombre,
@@ -80,7 +80,7 @@ class CursosController extends Controller
             'logoWidth' => 150, // Width of the logo in pixels
         ]);
 
-            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/listings/' . $listing->id;
+            $qrCodeContent = 'http://lespmich.hopto.org/listings/' . $listing->id;
             $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
             $qrCode = [
                 'name' => $listing->nombre,
@@ -113,7 +113,7 @@ class CursosController extends Controller
             'logoWidth' => 150, // Width of the logo in pixels
         ]);
 
-            $qrCodeContent = 'https://c243-187-173-155-99.ngrok-free.app/registro/' . $listing->id;
+            $qrCodeContent = 'http://lespmich.hopto.org/registro/' . $listing->id;
             $qrCodeImage = (new QRCode($options))->render($qrCodeContent);
             $qrCode = [
                 'name' => $listing->nombre,
