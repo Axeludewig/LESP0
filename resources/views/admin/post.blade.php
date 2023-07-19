@@ -3,7 +3,7 @@
         <i class="fa-solid fa-arrow-left"></i> Volver
     </a>
     <div class="md:mx-48">
-        <div class="mb-[600px] mt-24 content">
+        <div class="mb-[600px] md:mt-24 content">
             {!! $postid->content !!}
         </div>
     </div>
@@ -41,13 +41,15 @@
         figure {
             border: 10px solid #333333;
             padding: 20px;
-            margin: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         p img {
             border: 10px solid #333333;
             padding: 20px;
-            margin: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
     </style>
     
