@@ -63,7 +63,7 @@ $lel2 = $fecha2->format('d') . ' de ' . $mes . ' de ' . $fecha2->format('Y');
 
             @if($carta !== null)
             <div class="my-4">
-                <a href="{{$carta->carta}}" class="">
+                <a href="{{ asset($carta->carta) }}" class="">
                 <button class="p-4 border-2 shadow rounded-lg bg-yellow-200">
                 
                 <p class="text-xl font-semibold text-blue-600"><i class="fa-regular fa-hand-point-down"></i>&nbsp;Click para ver Carta Descriptiva&nbsp;<i class="fa-regular fa-hand-point-down"></i></p>

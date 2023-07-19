@@ -5,7 +5,13 @@
         <h3 class="text-2xl">
             <div class="flex justify-center items-center m-4">
             <div class="md:w-64 md:h-64 w-32 h-32 border-2 border-gray-400 bg-gray-100 rounded-full overflow-hidden shadow-xl">
-                <img class=" rounded-full dark:border-gray-800" src="/prueba_pics_submit/{{$listing->id}}" alt=""> 
+                @if ($listing->profile_pic)
+                    <img id="picture-box"
+                        src="{{ $listing->profile_pic ? asset('storage/' . $listing->profile_pic) : asset('/images/Default_pfp.svg.png') }}"
+                        alt="Profile Picture" class="w-full h-full object-cover ">
+                    @else
+                    <img src="/prueba_pics_submit/{{$listing->id}}" class="w-full h-full object-cover"/>
+                    @endif
             </div>
             </div>
             <b>{{ $listing->apellido_paterno }} {{ $listing->apellido_materno }} {{ $listing->nombre }}</b>
