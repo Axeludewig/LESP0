@@ -532,15 +532,14 @@ class CursosController extends Controller
             
             Storage::disk('public')->put($filename, $pdfContent);
             
-            $storagePath = 'storage/' . $filename;
+            $relativePath = $filename;
             
-            $publicPath = url($storagePath);
+            $publicPath = Storage::url($relativePath);
             
             carta::create([
                 'id_curso' => $curso->id,
                 'carta' => $publicPath
             ]);
-            
             return redirect('/')->with('message', 'Curso creado correctamente.');
             
     }

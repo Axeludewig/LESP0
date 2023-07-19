@@ -15,12 +15,31 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use LasseRafn;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class AdminController extends Controller
 {
+    public function export_bitacora()
+    {
+        $data = validaciones::all()->toArray();
+    
+        $pdf = new Dompdf();
+    
+        // Generate the PDF
+        $pdf->loadHtml(view('pdf.export', compact('data')));
+    
+        // Set paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+    
+        // Render the PDF
+        $pdf->render();
+    
+        return $pdf->stream('export.pdf');
+    }
+    
 
     public function save_edited_post(Request $request, posts $post){
         $formFields = $request->validate([

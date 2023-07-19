@@ -1,5 +1,5 @@
 <x-layout>
-    <x-card class="p-10 max-w-lg mx-auto mt-24 mb-48">
+    <x-card class="p-10 max-w-lg md:max-w-[1250px] mx-auto mt-24 mb-48">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">REGISTRO</h2>
             <p class="mb-4">Crea una cuenta</p>
@@ -7,6 +7,8 @@
 
         <form method="POST" action="/users">
             @csrf
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">    
             <div class="mb-6">
                 <label for="rfc" class="inline-block text-lg mb-2"> RFC </label>
                 <input type="text"
@@ -200,16 +202,19 @@
 
             <div class="mb-6">
                 <label for="es_admin" class="inline-block text-lg mb-2">
+                    Administrador
                 </label>
-                <input type="password" class="border border-gray-200 rounded p-2 w-full" name="es_admin"
-                    value="0" hidden="true" />
+                <select  class="shadow appearance-none leading-tight focus:outline-none focus:ring focus:border-mich5 border border-gray-200 rounded p-2 w-full hover:ring" name="es_admin">
+                    <option value="0">No</option>
+                    <option value="1">Sí</option>
+                </select>   
 
                 @error('es_admin')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
-
-            <div class="mb-6">
+        </div>
+            <div class="mb-6 flex justify-center">
                 <button type="submit"
                     class="bg-laravel text-white rounded py-2 px-4 hover:bg-mich4 hover:text-black">
                     Registrar

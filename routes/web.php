@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
 use App\Models\participantes;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\Mailer\Test\Constraint\EmailCount;
 
 /*
@@ -151,8 +152,17 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 
 
+Route::get('/phpmyadmin', function () {
 
-////// ADMIN CREAR ACTIVIDAD
+    if (auth()->user()->es_admin === 0){
+        return view('users.sinpermiso');
+    }
+
+    return Redirect::away('http://localhost/phpmyadmin');
+})->middleware('auth');
+
+Route::get('/bitacora_en_pdf', [AdminController::class, 'export_bitacora'])->middleware('auth');
+
 Route::put('/posts/edit/{post}', [AdminController::class, 'save_edited_post'])->middleware('auth');
 
 Route::get('/posts/edit/{post}', [AdminController::class, 'edit_post'])->middleware('auth');
