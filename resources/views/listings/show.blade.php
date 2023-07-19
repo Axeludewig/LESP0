@@ -38,12 +38,15 @@
                                             Registrarse
                                         </button>
                                         </div>
+                                        
                                         @endif 
+                                        
                                         <div class="m-4">
                                         <a href="/"
                                             class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                                             Volver
                                         </a href>
+                                        @if($registrado)
                                         <div class="m-4">
                                             <button disabled
                                                 class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
@@ -51,6 +54,7 @@
                                             </button>
                                             </div>
                                     </div>
+                                    @endif
                                     @else
                                     
                                         <div>
