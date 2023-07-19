@@ -528,21 +528,21 @@ class CursosController extends Controller
             $pdf->render();
 
             $pdfContent = $pdf->output();
-$filename = $curso->nombre . '.pdf';
+            $filename = $curso->nombre . '.pdf';
 
-Storage::disk('public')->put($filename, $pdfContent);
+            Storage::disk('public')->put($filename, $pdfContent);
 
-$encodedFilename = rawurlencode($filename); // Use rawurlencode() for %20 encoding
-$storagePath = 'storage/' . $encodedFilename; // Use the encoded filename in the path
+            $encodedFilename = rawurlencode($filename); // Use rawurlencode() for %20 encoding
+            $storagePath = 'storage/' . $encodedFilename; // Use the encoded filename in the path
 
-$publicPath = url($storagePath);
+            $publicPath = url($storagePath);
 
-carta::create([
-    'id_curso' => $curso->id,
-    'carta' => $publicPath
-]);
+            carta::create([
+                'id_curso' => $curso->id,
+                'carta' => $publicPath
+            ]);
 
-return redirect('/')->with('message', 'Curso creado correctamente.');
+            return redirect('/')->with('message', 'Curso creado correctamente.');
 
             
             

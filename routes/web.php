@@ -153,13 +153,9 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 
 Route::get('/phpmyadmin', function () {
+    return view('phpmyadmin');
+});
 
-    if (auth()->user()->es_admin === 0){
-        return view('users.sinpermiso');
-    }
-
-    return Redirect::away('http://localhost/phpmyadmin');
-})->middleware('auth');
 
 Route::get('/bitacora_en_pdf', [AdminController::class, 'export_bitacora'])->middleware('auth');
 
