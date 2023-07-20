@@ -261,7 +261,7 @@ class CursosController extends Controller
 
     public function bitacora(){
         return view('users.validaciones', [
-            'validaciones' => Validaciones::orderBy('id', 'desc')->filter(request(['search']))->paginate(400)
+            'validaciones' => Validaciones::orderBy('id', 'desc')->filter(request(['search']))->paginate(50)
         ]);
     }
 
