@@ -90,7 +90,7 @@
             </div>
         </div>
     -->
-    <div class="flex flex-col md:flex-row items-center justify-center gap-24 mx-6 mb-80 mt-4 md:mt-12">
+    <div class="flex flex-col md:flex-row items-center justify-center gap-24 mx-6 mb-24 mt-4 md:mt-12">
         <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg   hover:scale-105 shadow-xl w-full">
             <a href="/users/actividades">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Actividades</h5>
@@ -122,4 +122,79 @@
             </a>
         </div>
     </div>
+
+        @php
+            $id = auth()->user()->id;
+            $externos = DB::table('externos')->where('id_user', $id )->paginate(5);
+            $registryNumber = 1;
+        @endphp
+
+    <div class="">
+        <div
+            class="m-4 flex text-white bg-mich5 border border-gray-200 rounded p-6 place-content-center mb-6">
+            <h3 class="text-3xl ">
+                <p>Módulo de cursos externos</p>
+            </h3>
+        </div>
+        <div class="text-center shadow rounded-lg border m-4 p-2">
+            @php
+                $totalHorasValidadas = 0;
+            @endphp
+
+            @foreach ($externos as $externo)
+            @if ($externo->status === 'Validado')
+                @php
+                    $totalHorasValidadas += $externo->horas_totales;
+                @endphp
+            @endif
+            @endforeach 
+            <h3 class="text-xl ">
+                <p class="font-semibold">Total de horas de cursos externos: {{ $totalHorasValidadas }}</p>
+            </h3>
+        </div>
+        <div class="flex justify-center">
+            <button class="shadow rounded-lg border px-4 py-2 bg-laravel text-white text-center">
+                <a href="/users/addexternos">
+                    Agregar curso externo
+                </a>
+            </button>
+        </div>
+
+        
+
+        @unless(count($externos) == 0) 
+
+            @foreach($externos as $externo)
+                <div class="text-center m-4 flex flex-col items-center justify-center">
+                    <div>
+                        Registro #{{ $registryNumber }}
+                    </div>
+                    <x-externo-card :externo="$externo" />
+                </div>
+                @php
+                $registryNumber++;
+                @endphp
+            @endforeach
+
+
+        @else
+  </div>
+    <div class="flex flex-col justify-center text-center text-2xl items-center mb-64">
+      <p>No se encontró ningún curso externo. </p>
+      <div class="animate-bounce hover:text-laravel text-red-500 text-4xl m-6">Próximamente</div>
+      <!--
+      <div class="animate-pulse">
+        <img class="object-contain mr-6"
+        src="{{asset('/images/jojo.jpg')}}"
+        alt="" />
+      </div> -->
+      <p>Se enlistarán aquí cuando se suban.</p>
+  </div>
+    @endunless 
+    </div>
+
+    <div class="mt-6 p-4">
+        {{$externos->links()}}
+    </div>
+
 </x-layout>

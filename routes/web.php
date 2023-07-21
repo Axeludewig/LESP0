@@ -7,6 +7,7 @@ use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EvaluacionEnLineaController;
 use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\ExternosController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\participantesController;
 use App\Http\Controllers\PdfController;
@@ -144,6 +145,14 @@ Route::get('/users/aprobar', [ActividadesController::class, 'aprobar'])->middlew
 
 Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->middleware('auth');
 
+Route::get('/users/addexternos', [ExternosController::class, 'add'])
+->middleware('auth');
+
+Route::post('/users/addexternos', [ExternosController::class, 'store'])
+->middleware('auth');
+
+Route::delete('/users/delete_externos/{externo}', [ExternosController::class, 'destroy'])
+->middleware('auth');
 
 
 
@@ -152,10 +161,13 @@ Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->
 
 
 
-Route::get('/phpmyadmin', function () {
-    return view('phpmyadmin');
-});
 
+
+
+
+Route::get('/admin/users_externos/{user}', [ExternosController::class, 'users_externos'])->middleware('auth');
+
+Route::put('/admin/validar_externo/{externo}', [ExternosController::class, 'validar'])->middleware('auth');
 
 Route::get('/bitacora_en_pdf', [AdminController::class, 'export_bitacora'])->middleware('auth');
 

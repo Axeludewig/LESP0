@@ -19,7 +19,6 @@
             @if ($revision->archivo3 != null)
             <a target="_blank" href="{{asset('storage/' . $revision->archivo3)}}" class="border-2 bg-mich4 border-black mb-4 hover:scale-105 font-semibold px-6 p-4 rounded-full">Evidencia 3</a>
             @endif
-
             </div>
     </div>
     <div class="flex items-center justify-center text-center">

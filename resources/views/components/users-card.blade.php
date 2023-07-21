@@ -59,4 +59,20 @@
         </div>
         
     </form>
+
+
+    @php
+        $id_user = $listing->id;
+        $externos = DB::table('externos')->where('id_user', $id_user)->get();
+    @endphp
+
+@unless(count($externos) == 0) 
+    <div class="flex justify-center">    
+        <button class="shadow rounded-lg border px-4 py-2 bg-laravel text-white m-4">
+            <a href="/admin/users_externos/{{$listing->id}}">
+                Ver cursos externos
+            </a>
+        </button>  
+    </div>
+@endunless
 </x-card>
