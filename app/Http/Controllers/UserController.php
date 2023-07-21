@@ -23,7 +23,9 @@ use Dompdf\Options;
 class UserController extends Controller
 {
  
-
+    public function email(){
+        return view('users.email');
+    }
     
    
 
@@ -186,6 +188,10 @@ class UserController extends Controller
     }
 
     public function perfil() {
+        if(Auth::check() && auth()->user()->email === "sin registro"){
+            return view('users.email');
+        }  
+        
         return view('users.perfil');
     }
 
@@ -461,12 +467,24 @@ class UserController extends Controller
         $formFields = $request->validate([
             'email' => 'required|email',
         ], [
-            'email.email' => 'Please enter a valid email address.',
+            'email.email' => 'Por favor introduce un email válido.',
         ]);
         
         $user->update($formFields);
 
         return back()->with('message', 'Email modificado correctamente.');;
+    }
+
+    public function update_email2(Request $request, User $user){
+        $formFields = $request->validate([
+            'email' => 'required|email',
+        ], [
+            'email.email' => 'Por favor introduce un email válido.',
+        ]);
+        
+        $user->update($formFields);
+
+        return redirect('/')->with('message', 'Tu email ha sido actualizado.');
     }
 
     

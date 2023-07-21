@@ -22,8 +22,7 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class CursosController extends Controller
 {
@@ -357,9 +356,15 @@ class CursosController extends Controller
     
     //MUESTRA TODOS LOS CURSOS
     public function index() {
+
+        if(Auth::check() && auth()->user()->email === "sin registro"){
+            return view('users.email');
+        }  
+        
         return view('listings.index', [
             'listings' => Cursos::latest()->where('status', 'Disponible')->filter(request(['tag', 'search']))->paginate(6)
         ]);
+    
     }
 
     public function showfinalizados() {

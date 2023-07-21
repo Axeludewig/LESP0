@@ -127,7 +127,9 @@ Route::get('/users/cursos', [UserController::class, 'cursos'])->middleware('auth
 // -- USUARIO -- ACTUALIZAR EMAIL!!
 Route::put('/users/email/{user}', [UserController::class, 'update_email'])->middleware('auth');
 
-// -- USUARIO -- ACTUALIZAR EMAIL!!
+Route::put('/users/email2/{user}', [UserController::class, 'update_email2'])->middleware('auth');
+
+// -- USUARIO -- 
 Route::get('/users/actividades', [ActividadesController::class, 'CP'])->middleware('auth');
 
 Route::get('/users/actividades/{actividad}', [ActividadesController::class, 'details'])->middleware('auth');
@@ -153,6 +155,10 @@ Route::post('/users/addexternos', [ExternosController::class, 'store'])
 
 Route::delete('/users/delete_externos/{externo}', [ExternosController::class, 'destroy'])
 ->middleware('auth');
+
+Route::get('/users/email', [UserController::class, 'email'])
+->middleware('auth');
+
 
 
 
