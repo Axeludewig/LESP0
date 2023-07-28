@@ -96,9 +96,8 @@ class ValidacionesController extends Controller
                 $query = 'usuario=' . urlencode($formFields['nombre_participante']) . '&curso=' . urlencode($formFields['nombre_capacitacion']);
                 $qrCodeContent = 'http://lespmich.hopto.org/validacionesx/search?' . $query;
 
-                $qrcode = new QRCode();
-
-        $qrcode->render($qrCodeContent);
+                $qrcode = (new QRCode())->render($qrCodeContent);
+        
                 // Create a new instance of dompdf
                 $pdf = new Dompdf();
         
