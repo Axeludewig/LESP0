@@ -83,12 +83,12 @@ class ValidacionesController extends Controller
                 $data = file_get_contents($path); 
                 $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
         
-                $path2 = base_path('gob.jpg');
+                $path2 = base_path('logosheader.png');
                 $type2 = pathinfo($path2, PATHINFO_EXTENSION);
                 $data2 = file_get_contents($path2);
                 $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
         
-                $path3 = base_path('SS1.png');
+                $path3 = base_path('barraroja.png');
                 $type3 = pathinfo($path3, PATHINFO_EXTENSION);
                 $data3 = file_get_contents($path3);
                 $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
@@ -96,8 +96,9 @@ class ValidacionesController extends Controller
                 $query = 'usuario=' . urlencode($formFields['nombre_participante']) . '&curso=' . urlencode($formFields['nombre_capacitacion']);
                 $qrCodeContent = 'http://lespmich.hopto.org/validacionesx/search?' . $query;
 
-                $qrcode = (new QRCode())->render($qrCodeContent);
-        
+                $qrcode = new QRCode();
+
+        $qrcode->render($qrCodeContent);
                 // Create a new instance of dompdf
                 $pdf = new Dompdf();
         
