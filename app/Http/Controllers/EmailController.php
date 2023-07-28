@@ -501,20 +501,20 @@ class EmailController extends Controller
             
             // CÓDIGO PARA LAS IMÁGENES 
             // CÓDIGO PARA LAS IMÁGENES 
-                $path = base_path('FIRMAS.png');
-                $type = pathinfo($path, PATHINFO_EXTENSION);
-                $data = file_get_contents($path);
-                $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
-                $path2 = base_path('gob.jpg');
-                $type2 = pathinfo($path2, PATHINFO_EXTENSION);
-                $data2 = file_get_contents($path2);
-                $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
-        
-                $path3 = base_path('SS1.png');
-                $type3 = pathinfo($path3, PATHINFO_EXTENSION);
-                $data3 = file_get_contents($path3);
-                $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+            $path = base_path('FIRMAS.png');
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path); 
+            $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    
+            $path2 = base_path('logosheader.png');
+            $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+            $data2 = file_get_contents($path2);
+            $pic2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+    
+            $path3 = base_path('barraroja.png');
+            $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+            $data3 = file_get_contents($path3);
+            $pic3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
             // CÓDIGO PARA LAS IMÁGENES 
             // CÓDIGO PARA LAS IMÁGENES 
     
@@ -549,7 +549,7 @@ class EmailController extends Controller
             $pdf = new Dompdf();
     
             // Generate the PDF
-            $pdf->loadHtml(view('pdf3', compact(['user', 'curso', 'valor_curricular', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio'])));
+            $pdf->loadHtml(view('pdf3', compact(['user', 'curso', 'valor_curricular', 'pic', 'pic2', 'pic3', 'qrCodeContent', 'qrcode', 'tipo', 'folio', 'fecha_de_terminacion', 'nombre_del_curso', 'nombre_del_participante'])));
     
             // Set paper size and orientation
             $pdf->setPaper('A4', 'vertical');
