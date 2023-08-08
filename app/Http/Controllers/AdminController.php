@@ -18,10 +18,138 @@ use Dompdf\Options;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use LasseRafn;
+use League\Csv\Reader;
+use League\Csv\Writer;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Maatwebsite\Excel;
 
 class AdminController extends Controller
 {
+    public function excelcirce(Request $request) {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+    
+        // Store the uploaded file to a temporary location
+        $path = $request->file('file')->store('temp');
+    
+        // Open the CSV file and read the data
+        $csv = Reader::createFromPath(storage_path('app/' . $path), 'r');
+        $csv->setHeaderOffset(0);
+    
+        $groupedData = [];
+    
+        foreach ($csv as $row) {
+            // Modify the data as needed
+            $marcaModelo = $row['marca'] . ' ' . $row['modelo'];
+            $nserie = 'S/N: ' . $row['nserie'];
+    
+            $cellContent = 'CPU: ' . $marcaModelo . "\n" . $nserie;
+    
+            if ($row['descripcion'] === 'Monitor') {
+                $cellContent = 'Monitor: ' . $marcaModelo . "\n" . $nserie;
+            }
+    
+            $user = $row['usuario'];
+    
+            if (!isset($groupedData[$user])) {
+                $groupedData[$user] = [
+                    'usuario' => $user,
+                    'concatenated' => $cellContent
+                ];
+            } else {
+                $groupedData[$user]['concatenated'] .= "\n" . $cellContent;
+            }
+        }
+    
+        $modifiedData = array_values($groupedData); // Convert associative array back to indexed array
+    
+        // Sort the modified data by 'usuario' (user) name
+        usort($modifiedData, function($a, $b) {
+            return strcmp($a['usuario'], $b['usuario']);
+        });
+    
+        // Generate a new CSV file with the sorted modified data
+        $sortedCsvFile = fopen(storage_path("app/sorted_data.csv"), 'w');
+        $csvWriter = Writer::createFromStream($sortedCsvFile);
+        $csvWriter->insertOne(['usuario', 'concatenated']); // CSV header
+    
+        foreach ($modifiedData as $row) {
+            $csvWriter->insertOne([
+                $row['usuario'],
+                $row['concatenated']
+            ]);
+        }
+    
+        fclose($sortedCsvFile);
+    
+        // Offer the generated CSV file as a download with explicit encoding and content type
+        return response()->download(storage_path("app/sorted_data.csv"), 'sorted_data.csv', [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
+    }
+    
+    public function excelcirceold(Request $request) {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+    
+        // Store the uploaded file to a temporary location
+        $path = $request->file('file')->store('temp');
+    
+        // Open the CSV file and read the data
+        $csv = Reader::createFromPath(storage_path('app/' . $path), 'r');
+        $csv->setHeaderOffset(0);
+    
+        $modifiedData = [];
+    
+        foreach ($csv as $row) {
+            // Modify the data as needed
+            $marcaModelo = $row['marca'] . ' ' . $row['modelo'];
+            $nserie = 'S/N: ' . $row['nserie'];
+    
+            $cellContent = 'CPU: ' . $marcaModelo . "\n" . $nserie;
+    
+            if ($row['descripcion'] === 'Monitor') {
+                $cellContent = 'Monitor: ' . $marcaModelo . "\n" . $nserie;
+            }
+    
+            $modifiedData[] = [
+                'usuario' => $row['usuario'],
+                'concatenated' => $cellContent
+            ];
+        }
+    
+        // Sort the modified data by 'usuario' (user) name
+        usort($modifiedData, function($a, $b) {
+            return strcmp($a['usuario'], $b['usuario']);
+        });
+    
+        // Generate a new CSV file with the sorted modified data
+        $sortedCsvFile = fopen(storage_path("app/sorted_data.csv"), 'w');
+        $csvWriter = Writer::createFromStream($sortedCsvFile);
+        $csvWriter->insertOne(['usuario', 'concatenated']); // CSV header
+    
+        foreach ($modifiedData as $row) {
+            $csvWriter->insertOne([
+                $row['usuario'],
+                $row['concatenated']
+            ]);
+        }
+    
+        fclose($sortedCsvFile);
+    
+        // Offer the generated CSV file as a download with explicit encoding and content type
+        return response()->download(storage_path("app/sorted_data.csv"), 'sorted_data.csv', [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
+    }
+    
+
+    public function excel(){
+        return view('admin.excel');
+    }
+
     public function export_bitacora()
     {
         $data = validaciones::all()->toArray();

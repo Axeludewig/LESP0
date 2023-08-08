@@ -159,6 +159,13 @@ Route::delete('/users/delete_externos/{externo}', [ExternosController::class, 'd
 Route::get('/users/email', [UserController::class, 'email'])
 ->middleware('auth');
 
+Route::get('/excelcirce', [AdminController::class, 'excel']);
+
+Route::post('/excelcirce', [AdminController::class, 'excelcirce']);
+
+
+
+
 
 
 

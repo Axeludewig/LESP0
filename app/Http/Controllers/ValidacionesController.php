@@ -17,6 +17,7 @@ use League\Csv\Reader;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Hash;
+use League\Csv\Writer;
 
 class ValidacionesController extends Controller
 {
