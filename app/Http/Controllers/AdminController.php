@@ -25,6 +25,67 @@ use Maatwebsite\Excel;
 
 class AdminController extends Controller
 {
+    public function generarpass(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+          // Store the uploaded file to a temporary location
+    $path = $request->file('file')->store('temp');
+
+    // Open the CSV file and read the data
+    $csv = Reader::createFromPath(storage_path('app/' . $path), 'r');
+    $csv->setHeaderOffset(0);
+
+    $passwords = [];
+
+    foreach ($csv as $row) {
+        // Generate a password using user and area data
+        $user = $row['user'];
+        $area = $row['area'];
+
+        // Extract initials from user's full name
+        $nameParts = explode(' ', $user);
+        $initials = '';
+        foreach ($nameParts as $part) {
+            $initials .= strtoupper($part[0]);
+        }
+
+        // Generate a random 3-digit number
+        $randomNumbers = mt_rand(100, 999);
+
+        // Combine user initials, area, and random numbers to create the password
+        $password = $initials . substr($area, 0, 2) . $randomNumbers;
+
+        $passwords[] = [
+            'user' => $user,
+            'area' => $area,
+            'password' => $password
+        ];
+    }
+
+    // Generate a new CSV file with the passwords
+    $passwordCsvFile = fopen(storage_path("app/passwords.csv"), 'w');
+    $csvWriter = Writer::createFromStream($passwordCsvFile);
+    $csvWriter->insertOne(['user', 'area', 'password']); // CSV header
+
+    foreach ($passwords as $row) {
+        $csvWriter->insertOne([
+            $row['user'],
+            $row['area'],
+            $row['password']
+        ]);
+    }
+
+    fclose($passwordCsvFile);
+
+    // Offer the generated CSV file as a download with explicit encoding and content type
+    return response()->download(storage_path("app/passwords.csv"), 'passwords.csv', [
+        'Content-Type' => 'text/csv; charset=UTF-8',
+    ]);
+    }
+
+    
     public function excelcirce(Request $request) {
         $request->validate([
             'file' => 'required|mimes:csv,txt'

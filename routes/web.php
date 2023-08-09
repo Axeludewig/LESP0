@@ -163,6 +163,12 @@ Route::get('/excelcirce', [AdminController::class, 'excel']);
 
 Route::post('/excelcirce', [AdminController::class, 'excelcirce']);
 
+Route::post('/generarpasswords', [AdminController::class, 'generarpass']);
+
+
+
+
+
 
 
 
