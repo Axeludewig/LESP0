@@ -194,7 +194,14 @@
                             @enderror
                         </div>
                         
+                        <div>   
+                            <label for="evaluacion_adquirida" class="block mb-2 text-sm font-medium text-gray-900">¿Requiere evaluación adquirida a los 30 días?</label>
                         
+                            <select id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                                <option value="No">No</option>
+                                <option value="Si">Sí</option>
+                            </select>
+                        </div>                        
                         
                         <input type="text" id="age1" name="status" value="Disponible" hidden="true">
                         <div class="">
@@ -294,11 +301,6 @@
                         </div>
                     
     
-                        
-                   
-                    <div>
-                        <input hidden type="text" value="No" id="evaluacion_adquirida" name="evaluacion_adquirida" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 hidden"/>
-                    </div>
                     <div>
                     <button type="submit" class="inline-flex self-center px-5 py-2.5 mt-4 sm:mt-6 md:-mb-24 text-center text-white bg-laravel rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800 " onclick="submitForm()">
                         Crear curso

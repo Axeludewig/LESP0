@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cursos;
 use App\Models\Escolaridad;
+use App\Models\Eval_adq;
 use App\Models\Evaluacion;
 use App\Models\Experiencia_profesional;
 use App\Models\InformacionPersonal;
@@ -22,6 +24,30 @@ use Dompdf\Options;
 
 class UserController extends Controller
 {
+    public function evaluar_participante(User $user_id, Eval_adq $eval_id){
+
+        $curso = DB::table('cursos')->where('id', $eval_id->id_curso)->first();
+
+        return view('users.evaluar_participante', [
+            'user' => $user_id,
+            'eval' => $eval_id,
+            'curso' => $curso
+        ]);
+    }
+
+    public function evaluar(){
+        $evals = DB::table('evals_adq')->where('id_revisor', auth()->user()->id)->latest()->paginate(15);
+
+        foreach($evals as $eval){
+        $eval->infoCurso = DB::table('cursos')->where('id', $eval->id_curso)->first();
+        $eval->participantes = DB::table('participantes')->where('id_curso', $eval->infoCurso->id)->get();
+        }
+
+        
+        return view('users.evaluar', [
+            'evaluaciones' => $evals
+        ]);
+    }
  
     public function email(){
         return view('users.email');

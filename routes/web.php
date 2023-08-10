@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CalificacionesController;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Eval_adq_controller;
 use App\Http\Controllers\EvaluacionEnLineaController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ExternosController;
@@ -165,6 +166,11 @@ Route::post('/excelcirce', [AdminController::class, 'excelcirce']);
 
 Route::post('/generarpasswords', [AdminController::class, 'generarpass']);
 
+Route::get('/users/evaluar', [UserController::class, 'evaluar'])
+->middleware('auth');
+
+Route::get('/evaluar/{user_id}/{eval_id}', [UserController::class, 'evaluar_participante'])
+->middleware('auth');
 
 
 
@@ -179,10 +185,9 @@ Route::post('/generarpasswords', [AdminController::class, 'generarpass']);
 
 
 
+Route::post('/admin/evaladq', [Eval_adq_controller::class, 'create'])->middleware('auth');
 
-
-
-
+Route::get('/admin/evaladq', [Eval_adq_controller::class, 'show'])->middleware('auth');
 
 Route::get('/admin/users_externos/{user}', [ExternosController::class, 'users_externos'])->middleware('auth');
 

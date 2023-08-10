@@ -154,7 +154,7 @@
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
     <x-flash-message />
-    <footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black  opacity-90 md:justify-center h-[150px] p-24 mt-96">
+    <footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-mich4 text-black  opacity-90 md:justify-center h-[150px] p-24 mt-96 md:mt-[700px]">
         <p class="ml-2">&copy; 2023, Laboratorio Estatal de Salud Pública de Michoacán</p>
 
     </footer>

@@ -32,7 +32,7 @@ class Cursos extends Model
         'valor_curricular',
         'status',
         'tags',
-        'img'
+        'img',
     ];
 
     public function scopeFilter($query, array $filters) {
