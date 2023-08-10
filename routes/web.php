@@ -166,10 +166,13 @@ Route::post('/excelcirce', [AdminController::class, 'excelcirce']);
 
 Route::post('/generarpasswords', [AdminController::class, 'generarpass']);
 
-Route::get('/users/evaluar', [UserController::class, 'evaluar'])
+Route::get('/users/evaluar', [Eval_adq_controller::class, 'evaluar'])
 ->middleware('auth');
 
-Route::get('/evaluar/{user_id}/{eval_id}', [UserController::class, 'evaluar_participante'])
+Route::get('/evaluar/{user_id}/{eval_id}', [Eval_adq_controller::class, 'evaluar_participante'])
+->middleware('auth');
+
+Route::post('/users/evaluar', [Eval_adq_controller::class, 'evaluar_store'])
 ->middleware('auth');
 
 

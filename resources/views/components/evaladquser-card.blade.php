@@ -7,12 +7,25 @@
         @if($eval->status == 'Pendiente')
     </div>
     <div class="shadow border rounded-lg p-4 m-4s">
+
         <h1 class="font-semibold text-xl">Evaluar participantes</h1>
-    @foreach ($eval->participantes as $participante)
-    <div class="flex justify-center gap-12 items-center m-2">
-        <p>{{$participante->nombre_participante}}</p><a href="/evaluar/{{$participante->id_user}}/{{$eval->id}}"><button class="bg-laravel text-white px-4 py-2 rounded-lg shadow">Evaluar</button></a>
-    </div>
+        @foreach ($eval->participantes as $participante)    
+        @php
+        $evaluado = DB::table('evals_adquiridas')->where('id_evaluado', $participante->id_user)->where('id_evaladq', $eval->id)->first();
+
+        @endphp
+    
+        @if($evaluado == null)
+            <div class="flex justify-center gap-12 items-center m-2">
+                <p>{{$participante->nombre_participante}}</p><a href="/evaluar/{{$participante->id_user}}/{{$eval->id}}"><button class="bg-laravel text-white px-4 py-2 rounded-lg shadow">Evaluar</button></a>
+            </div>
+        @else
+            <div class="flex justify-center gap-12 items-center m-2">
+                <p>{{$participante->nombre_participante}} ya fue evaluado. Resultado: {{$evaluado->interpretacion_resultado}}</p>
+            </div>
+        @endif
     @endforeach
+    
     </div>
     @endif
 </div>

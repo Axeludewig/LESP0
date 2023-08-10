@@ -33,6 +33,7 @@ return new class extends Migration
             $table->integer('evaluacion7');
             $table->integer('evaluacion8');
             $table->integer('resultado');
+            $table->string('interpretacion_resultado');
             $table->string('necesidad_capacitacion')->nullable();
             $table->string('descripcion_necesidad')->nullable();
             $table->integer('calificacion')->nullable();
