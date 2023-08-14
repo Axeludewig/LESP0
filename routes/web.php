@@ -176,6 +176,8 @@ Route::post('/users/evaluar', [Eval_adq_controller::class, 'evaluar_store'])
 ->middleware('auth');
 
 
+Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparticipantes'])
+->middleware('auth');
 
 
 
@@ -187,6 +189,21 @@ Route::post('/users/evaluar', [Eval_adq_controller::class, 'evaluar_store'])
 
 
 
+
+
+
+
+
+Route::post('/admin/firmar', [Eval_adq_controller::class, 'firmar_store'])
+->middleware('auth');
+
+Route::get('/admin/firmar/{evalid}', [Eval_adq_controller::class, 'firmar'])
+->middleware('auth');
+
+Route::get('/admin/evaladq/{user_id}/{eval_id}', [Eval_adq_controller::class, 'show_detail'])
+->middleware('auth');
+
+Route::get('/admin/evaladq/{evalid}', [Eval_adq_controller::class, 'showeval'])->middleware('auth');
 
 Route::post('/admin/evaladq', [Eval_adq_controller::class, 'create'])->middleware('auth');
 

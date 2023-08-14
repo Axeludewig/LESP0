@@ -177,7 +177,7 @@
             </div>
         </div>
         <div class="text-center border shadow rounded-lg m-2 md:mx-24 p-4 flex flex-col  justify-center gap-4 items-center">
-            <p>Validación por coordinación de enseñanza: PENDIENTE</p>
+            <p>Validación por coordinación de enseñanza:</p>
             <input hidden name="validacion_ensenanza" value="N/A" />
             <button type="submit" class="bg-laravel text-white px-4 py-2 rounded-lg text-center">Evaluar</button>
         </div>

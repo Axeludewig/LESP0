@@ -1,4 +1,7 @@
 <x-layout>
+  <a href="/admin/paneldecursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+  </a>
+
     <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
 
         @unless(count($evals) == 0)

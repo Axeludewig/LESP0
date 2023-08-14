@@ -65,8 +65,29 @@
             @endphp
             <p>Evaluador: {{$evaluador->nombre_completo}}</p>
             <p>Status: {{$eval->evalAdq->status}}</p>
+
+        
+
+            @php
+                $hayevals = DB::table('evals_adquiridas')->where('id_evaladq', $eval->evalAdq->id)->first();
+            @endphp
+
+            @if ($hayevals !== null)
+                <div class="p-4 shadow border rounded-lg my-4">
+                    <p>Hay evaluaciones registradas.</p>
+                    <a href="/admin/evaladq/{{$eval->evalAdq->id}}" ><button class="bg-laravel text-white p-4 m-4 rounded-lg">Revisar</button></a>
+                </div>
+            @endif
+
+            @if (!$hayevals)
+            <div class="p-4 shadow border rounded-lg my-4">
+                <p>No hay evaluaciones registradas.</p>
+                <a href="/admin/evaladq/{{$eval->evalAdq->id}}" ><button class="bg-laravel text-white p-4 m-4 rounded-lg">Revisar</button></a>
+            </div>
+            @endif
         </div>
         @endif
+
     </div>
 </div>
 </div>

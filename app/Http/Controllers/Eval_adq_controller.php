@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Eval_adq;
 use App\Models\User;
+use App\Models\OTP;
 use App\Models\Evals_adq;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
@@ -12,9 +13,100 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 use DateInterval;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Eval_adq_controller extends Controller
 {
+    public function firmar_store(Request $request)
+    {
+        $input = $request->validate([
+            'otp' => 'required',
+        ]);
+
+        $otpModel = OTP::latest()->first(); // Retrieve the latest stored OTP
+
+        if (Hash::check($input['otp'], $otpModel->OTP)) {
+            // OTP is correct
+            // Proceed with the signature logic
+            // ...
+            return back()->with('message', 'Éxito, el código se ha confirmado correctamente.');
+        } else {
+            return back()->with('message', 'Invalid OTP');
+        }
+    }
+
+    public function firmar(Eval_adq $evalid){
+        $otp = mt_rand(100000, 999999);
+
+        
+        $mail = new PHPMailer(true);
+        
+        $mail->isSMTP();
+
+        // LÍNEA PARA MOSTRAR LA PÁGINA CON DEBUG DATA EN EL BROWSER!
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 465;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->SMTPAuth = true;
+        $mail->Username = 'axelramirezludewig@gmail.com';
+        $mail->Password = 'uppmigsgyglwqume';
+
+        $mail->addAddress($mail->Username, "ADMIN");
+         // Set up the email
+        $mail->Subject = 'Saludos ' . "ADMIN";
+        $mail->Body = 'Su código para confirmar la firma es: ' . $otp;
+
+        
+            if ($mail->send()) {
+                $hashedOtp = Hash::make($otp);
+        
+                // Store the hashed OTP in the database
+                $otpModel = new OTP();
+                $otpModel->otp = $hashedOtp;
+                $otpModel->save();
+        
+                return view('admin.firmar', [
+                    'eval' => $evalid,
+                    'otp' => $otpModel
+                ]);
+            } else {
+                return back()->with('message', 'Error, no se ha podido enviar el código por correo.');
+            }
+    }
+
+    public function show_detail(User $user_id, Evals_adq $eval_id)
+    {
+        $curso = DB::table('cursos')->where('id', $eval_id->id_curso)->first();
+
+        return view('admin.show_detail_evaladq', [
+            'user' => $user_id,
+            'eval' => $eval_id,
+            'curso' => $curso
+        ]);
+    }
+    public function showeval(Eval_adq $evalid){
+
+            $evalid->infoCurso = DB::table('cursos')->where('id', $evalid->id_curso)->first();
+            $evalid->participantes = DB::table('participantes')->where('id_curso', $evalid->infoCurso->id)->get();
+            
+
+        return view ('admin.evaladqdetails', [
+            'eval' => $evalid
+        ]);
+    }
+
+    public function showparticipantes(Eval_adq $evaladqid){
+        $evaladqid->infoCurso = DB::table('cursos')->where('id', $evaladqid->id_curso)->first();
+        $evaladqid->participantes = DB::table('participantes')->where('id_curso', $evaladqid->infoCurso->id)->get();
+        
+        return view('users.showparticipantes', [
+            'eval' => $evaladqid
+        ]);
+    }
+    
     public function evaluar_store(Request $request){
 
         $data = $request->validate([
@@ -109,6 +201,7 @@ class Eval_adq_controller extends Controller
 
 
         foreach ($evals as $eval) {
+            $eval->participantes = DB::table('participantes')->where('id_curso', $eval->id)->get();
             $eval->evalAdq = DB::table('evals_adq')->where('id_curso', $eval->id)->first();
             $dateTime = new DateTime($eval->fecha_de_terminacion);
             $dateTime->add(new DateInterval('P1M'));
