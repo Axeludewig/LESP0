@@ -13,13 +13,43 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 use DateInterval;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Hash;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Eval_adq_controller extends Controller
 {
-    public function firmar_store(Request $request)
+
+    public function generate_pdf(Evals_adq $evalid)
     {
+        $pdf = new Dompdf();
+
+        $path = base_path('firma_doctor.png');
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        // Generate the PDF
+        $pdf->loadHtml(view('evaladquirida', compact(['evalid', 'pic'])));
+
+        // Set paper size and orientation
+        $pdf->setPaper('A4', 'vertical');
+
+        // Render the PDF
+        $pdf->render();
+
+        $filename = $evalid->nombre_evaluado . ' ' . $evalid->nombre_capacitacion . '.pdf';
+        //return $pdf->stream($filename); 
+
+        $pdfStream = $pdf->output();
+
+        return $pdf->stream($filename);
+    }
+
+    public function firmar_store(Evals_adq $evalid, Request $request)
+    {
+
+
         $input = $request->validate([
             'otp' => 'required',
         ]);
@@ -30,18 +60,28 @@ class Eval_adq_controller extends Controller
             // OTP is correct
             // Proceed with the signature logic
             // ...
-            return back()->with('message', 'Éxito, el código se ha confirmado correctamente.');
+            // Prepare the fields you want to update
+            $updatedFields = [
+                'validacion_ensenanza' => 'VALIDADO', // Update the field value
+                // Add other fields you might want to update here
+            ];
+
+            // Update the model with the provided fields
+            $evalid->update($updatedFields);
+
+            return redirect('/admin/evaladq')->with('message', 'Éxito, el código se ha confirmado correctamente.');
         } else {
             return back()->with('message', 'Invalid OTP');
         }
     }
 
-    public function firmar(Eval_adq $evalid){
+    public function firmar(Evals_adq $evalid)
+    {
         $otp = mt_rand(100000, 999999);
 
-        
+
         $mail = new PHPMailer(true);
-        
+
         $mail->isSMTP();
 
         // LÍNEA PARA MOSTRAR LA PÁGINA CON DEBUG DATA EN EL BROWSER!
@@ -55,26 +95,26 @@ class Eval_adq_controller extends Controller
         $mail->Password = 'uppmigsgyglwqume';
 
         $mail->addAddress($mail->Username, "ADMIN");
-         // Set up the email
+        // Set up the email
         $mail->Subject = 'Saludos ' . "ADMIN";
         $mail->Body = 'Su código para confirmar la firma es: ' . $otp;
 
-        
-            if ($mail->send()) {
-                $hashedOtp = Hash::make($otp);
-        
-                // Store the hashed OTP in the database
-                $otpModel = new OTP();
-                $otpModel->otp = $hashedOtp;
-                $otpModel->save();
-        
-                return view('admin.firmar', [
-                    'eval' => $evalid,
-                    'otp' => $otpModel
-                ]);
-            } else {
-                return back()->with('message', 'Error, no se ha podido enviar el código por correo.');
-            }
+
+        if ($mail->send()) {
+            $hashedOtp = Hash::make($otp);
+
+            // Store the hashed OTP in the database
+            $otpModel = new OTP();
+            $otpModel->otp = $hashedOtp;
+            $otpModel->save();
+
+            return view('admin.firmar', [
+                'eval' => $evalid,
+                'otp' => $otpModel
+            ]);
+        } else {
+            return back()->with('message', 'Error, no se ha podido enviar el código por correo.');
+        }
     }
 
     public function show_detail(User $user_id, Evals_adq $eval_id)
@@ -87,27 +127,30 @@ class Eval_adq_controller extends Controller
             'curso' => $curso
         ]);
     }
-    public function showeval(Eval_adq $evalid){
+    public function showeval(Eval_adq $evalid)
+    {
 
-            $evalid->infoCurso = DB::table('cursos')->where('id', $evalid->id_curso)->first();
-            $evalid->participantes = DB::table('participantes')->where('id_curso', $evalid->infoCurso->id)->get();
-            
+        $evalid->infoCurso = DB::table('cursos')->where('id', $evalid->id_curso)->first();
+        $evalid->participantes = DB::table('participantes')->where('id_curso', $evalid->infoCurso->id)->get();
 
-        return view ('admin.evaladqdetails', [
+
+        return view('admin.evaladqdetails', [
             'eval' => $evalid
         ]);
     }
 
-    public function showparticipantes(Eval_adq $evaladqid){
+    public function showparticipantes(Eval_adq $evaladqid)
+    {
         $evaladqid->infoCurso = DB::table('cursos')->where('id', $evaladqid->id_curso)->first();
         $evaladqid->participantes = DB::table('participantes')->where('id_curso', $evaladqid->infoCurso->id)->get();
-        
+
         return view('users.showparticipantes', [
             'eval' => $evaladqid
         ]);
     }
-    
-    public function evaluar_store(Request $request){
+
+    public function evaluar_store(Request $request)
+    {
 
         $data = $request->validate([
             'id_evaladq' => 'required',
@@ -136,19 +179,19 @@ class Eval_adq_controller extends Controller
             'validacion_ensenanza' => 'nullable',
         ]);
 
-        if($data['resultado'] > 0 && $data['resultado'] < 9){
+        if ($data['resultado'] > 0 && $data['resultado'] < 9) {
             $data['interpretacion_resultado'] = 'Malo';
         }
-        if($data['resultado'] > 8 && $data['resultado'] < 17){
+        if ($data['resultado'] > 8 && $data['resultado'] < 17) {
             $data['interpretacion_resultado'] = 'Deficiente';
         }
-        if($data['resultado'] > 16 && $data['resultado'] < 25){
+        if ($data['resultado'] > 16 && $data['resultado'] < 25) {
             $data['interpretacion_resultado'] = 'Regular';
         }
-        if($data['resultado'] > 24 && $data['resultado'] < 33){
+        if ($data['resultado'] > 24 && $data['resultado'] < 33) {
             $data['interpretacion_resultado'] = 'Bueno';
         }
-        if($data['resultado'] > 32 && $data['resultado'] < 41){
+        if ($data['resultado'] > 32 && $data['resultado'] < 41) {
             $data['interpretacion_resultado'] = 'Muy bueno';
         }
 
@@ -156,8 +199,9 @@ class Eval_adq_controller extends Controller
 
         return redirect('/users/evaluar')->with('message', 'Evaluación guardada.');
     }
-    
-    public function evaluar_participante(User $user_id, Eval_adq $eval_id){
+
+    public function evaluar_participante(User $user_id, Eval_adq $eval_id)
+    {
 
         $curso = DB::table('cursos')->where('id', $eval_id->id_curso)->first();
 
@@ -168,21 +212,23 @@ class Eval_adq_controller extends Controller
         ]);
     }
 
-    public function evaluar(){
+    public function evaluar()
+    {
         $evals = DB::table('evals_adq')->where('id_revisor', auth()->user()->id)->latest()->paginate(15);
 
-        foreach($evals as $eval){
-        $eval->infoCurso = DB::table('cursos')->where('id', $eval->id_curso)->first();
-        $eval->participantes = DB::table('participantes')->where('id_curso', $eval->infoCurso->id)->get();
+        foreach ($evals as $eval) {
+            $eval->infoCurso = DB::table('cursos')->where('id', $eval->id_curso)->first();
+            $eval->participantes = DB::table('participantes')->where('id_curso', $eval->infoCurso->id)->get();
         }
 
-        
+
         return view('users.evaluar', [
             'evaluaciones' => $evals
         ]);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $data = $request->validate([
             'id_curso' => 'required',
             'id_revisor' => 'required',
@@ -195,7 +241,8 @@ class Eval_adq_controller extends Controller
         return back()->with('message', 'Evaluador asignado correctamente.');
     }
 
-    public function show(){
+    public function show()
+    {
         $evals = DB::table('cursos')->where('evaluacion_adquirida', 'Si')->where('status', 'Finalizado')->latest()->paginate(15);
         $users = DB::table('users')->get();
 
@@ -207,7 +254,7 @@ class Eval_adq_controller extends Controller
             $dateTime->add(new DateInterval('P1M'));
             $eval->newDate = $dateTime->format('Y-m-d'); // Change the format here
         }
-    
+
         return view('admin.showevaladq', [
             'evals' => $evals,
             'users' => $users,

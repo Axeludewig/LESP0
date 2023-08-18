@@ -149,16 +149,16 @@ Route::get('/users/aprobar', [ActividadesController::class, 'aprobar'])->middlew
 Route::get('/users/mibitacora', [ValidacionesController::class, 'mibitacora'])->middleware('auth');
 
 Route::get('/users/addexternos', [ExternosController::class, 'add'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::post('/users/addexternos', [ExternosController::class, 'store'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::delete('/users/delete_externos/{externo}', [ExternosController::class, 'destroy'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::get('/users/email', [UserController::class, 'email'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::get('/excelcirce', [AdminController::class, 'excel']);
 
@@ -167,17 +167,17 @@ Route::post('/excelcirce', [AdminController::class, 'excelcirce']);
 Route::post('/generarpasswords', [AdminController::class, 'generarpass']);
 
 Route::get('/users/evaluar', [Eval_adq_controller::class, 'evaluar'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::get('/evaluar/{user_id}/{eval_id}', [Eval_adq_controller::class, 'evaluar_participante'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::post('/users/evaluar', [Eval_adq_controller::class, 'evaluar_store'])
-->middleware('auth');
+    ->middleware('auth');
 
 
 Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparticipantes'])
-->middleware('auth');
+    ->middleware('auth');
 
 
 
@@ -194,14 +194,27 @@ Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparti
 
 
 
-Route::post('/admin/firmar', [Eval_adq_controller::class, 'firmar_store'])
-->middleware('auth');
+
+
+
+
+
+
+
+
+Route::get('/generate_pdf/{evalid}', [Eval_adq_controller::class, 'generate_pdf'])
+    ->middleware('auth');
+
+
+
+Route::post('/admin/firmar/{evalid}', [Eval_adq_controller::class, 'firmar_store'])
+    ->middleware('auth');
 
 Route::get('/admin/firmar/{evalid}', [Eval_adq_controller::class, 'firmar'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::get('/admin/evaladq/{user_id}/{eval_id}', [Eval_adq_controller::class, 'show_detail'])
-->middleware('auth');
+    ->middleware('auth');
 
 Route::get('/admin/evaladq/{evalid}', [Eval_adq_controller::class, 'showeval'])->middleware('auth');
 
@@ -408,16 +421,16 @@ Route::post('/validaciones', [ValidacionesController::class, 'validaciones'])->m
 //QUERY VALIDACIONES
 Route::get('/validaciones/search', function () {
     $query = request()->query('q'); // get the value of the 'q' query parameter
-    $query2 = request()->query('curso'); 
-    $query3 = request()->query('status'); 
-    $listings = App\Models\Validaciones::where('nombre_usuario', 'like', "%$query%")->where('nombre_curso', 'like', "%$query2%")->where('status', 'like', "%$query3%", )->get(); // replace YourModel and column_name with your actual model and column name
+    $query2 = request()->query('curso');
+    $query3 = request()->query('status');
+    $listings = App\Models\Validaciones::where('nombre_usuario', 'like', "%$query%")->where('nombre_curso', 'like', "%$query2%")->where('status', 'like', "%$query3%",)->get(); // replace YourModel and column_name with your actual model and column name
 
     return view('validaciones.validar', compact('listings'));
 });
 
 Route::get('/validacionesx/search', function () {
     $query = request()->query('usuario'); // get the value of the 'q' query parameter
-    $query2 = request()->query('curso'); 
+    $query2 = request()->query('curso');
     $listings = App\Models\Validaciones::where('nombre_usuario', 'like', "%$query%")->where('nombre_curso', 'like', "%$query2%")->get(); // replace YourModel and column_name with your actual model and column name
 
     return view('validaciones.validar', compact('listings'));
