@@ -51,8 +51,7 @@
         }
 
         .data-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
             border: 1px solid #e2e8f0;
         }
 
@@ -71,12 +70,12 @@
     <body>
         <div class="border rounded-lg shadow p-4">
             <div class="text-center border">
-                <h1 class="font-semibold text-xl m-4 border p-4">
+                <h1 class="font-semibold text-xl border p-4">
                     SECRETARÍA DE SALUD DE MICHOACÁN <br />
                     LABORATORIO ESTATAL DE SALUD PÚBLICA <br />
                     F EZ 005-1 EVALUACIÓN DE LA CAPACITACIÓN ADQUIRIDA
                 </h1>
-                <div class="data-container border">
+                <div class="border">
                     <p class="data-label">Datos del Evaluado</p>
                     <div class="data-grid">
                         <div class="data-field">
@@ -123,15 +122,6 @@
                                 <span class="font-semibold"
                                     >Puesto del evaluador: </span
                                 >{{ $evalid->puesto_evaluador }}
-                            </p>
-                        </div>
-                        <div
-                            class="border p-2 overflow-scroll md:overflow-clip"
-                        >
-                            <p>
-                                <span class="font-semibold"
-                                    >Firma del evaluador:
-                                </span>
                             </p>
                         </div>
                     </div>

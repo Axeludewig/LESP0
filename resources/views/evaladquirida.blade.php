@@ -7,6 +7,15 @@
     <title>Document</title>
 </head>
 <style>
+    * {
+        margin: 0.1%;
+    }
+
+    .validado {
+        color: green;
+        font-size: 22px;
+    }
+
     /* Styles for the container */
     .border {
         border: 1px solid #e2e8f0;
@@ -20,9 +29,7 @@
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .p-4 {
-        padding: 1rem;
-    }
+    .p-4 {}
 
     /* Styles for text */
     .text-center {
@@ -37,18 +44,13 @@
         font-size: 1.25rem;
     }
 
-    .m-4 {
-        margin: 1rem;
-    }
+    .m-4 {}
 
     /* Styles for data container */
-    .data-container {
-        margin: 2rem 0;
-    }
+    .data-container {}
 
     .data-label {
         font-weight: 600;
-        padding: 0.5rem;
     }
 
     .data-grid {
@@ -59,26 +61,30 @@
 
     .data-field {
         border: 1px solid #e2e8f0;
-        padding: 0.5rem;
     }
 
     .field-label {
         font-weight: 600;
     }
 
+    .flex {
+        display: flex;
+    }
+
     /* Add more styles for other sections as needed */
 </style>
 
 <body>
-    <div class="border rounded-lg shadow p-4">
+    <div class="border rounded-lg shadow " style="padding: 4%;">
         <div class="text-center border">
-            <h1 class="font-semibold text-xl m-4 border p-4">
+            <h1 class="font-semibold text-xl border ">
                 SECRETARÍA DE SALUD DE MICHOACÁN <br />
                 LABORATORIO ESTATAL DE SALUD PÚBLICA <br />
                 F EZ 005-1 EVALUACIÓN DE LA CAPACITACIÓN ADQUIRIDA
             </h1>
-            <div class="data-container border">
+            <div class="border">
                 <p class="data-label">Datos del Evaluado</p>
+
                 <div class="data-grid">
                     <div class="data-field">
                         <p>
@@ -92,7 +98,8 @@
                     </div>
                     <div class="data-field">
                         <p>
-                            <span class="font-semibold">Área a la que pertenece: </span>{{ $evalid->area_evaluado }}
+                            <span class="font-semibold">Área a la que pertenece:
+                            </span>{{ $evalid->area_evaluado }}
                         </p>
                     </div>
                 </div>
@@ -114,6 +121,8 @@
                         <p>
                             <span class="font-semibold">Firma del evaluador:
                             </span>
+                            <span class="validado">
+                                VALIDADO</span>
                         </p>
                     </div>
                 </div>
@@ -130,61 +139,61 @@
                 <h1 class="font-semibold text-xl">RESULTADOS</h1>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion1">Mayor destreza en el desarrollo de sus
-                            actividades</label>
+                        <p for="evaluacion1">Mayor destreza en el desarrollo de sus actividades:
+                            {{ $evalid->evaluacion1 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion1 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion2">Nivel de conocimientos adquiridos</label>
+                        <p for="evaluacion2">Nivel de conocimientos adquiridos: {{ $evalid->evaluacion2 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion2 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion3">Mejora en la forma en que desempeña sus
-                            actividades</label>
+                        <p for="evaluacion3">Mejora en la forma en que desempeña sus
+                            actividades: {{ $evalid->evaluacion3 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion3 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion4">Utilidad de la capacitación adquirida para la
-                            realización de su trabajo</label>
+                        <p for="evaluacion4">Utilidad de la capacitación adquirida para la
+                            realización de su trabajo: {{ $evalid->evaluacion4 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion4 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion5">Demuestra una aplicación de los conocimientos
-                            adquiridos</label>
+                        <p for="evaluacion5">Demuestra una aplicación de los conocimientos
+                            adquiridos: {{ $evalid->evaluacion5 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion5 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion6">Difunde el conocimiento adquirido</label>
+                        <p for="evaluacion6">Difunde el conocimiento adquirido: {{ $evalid->evaluacion6 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion6 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion7">Muestra un dominio sobre el conocimiento
-                            adquirido</label>
+                        <p for="evaluacion7">Muestra un dominio sobre el conocimiento adquirido:
+                            {{ $evalid->evaluacion7 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion7 }}</p>
+
                 </div>
                 <div class="flex gap-24 justify-center items-center">
                     <div class="w-[300px]">
-                        <label for="evaluacion8">Aceptación de la capacitación para mejorar sus
-                            actividades</label>
+                        <p for="evaluacion8">Aceptación de la capacitación para mejorar sus
+                            actividades: {{ $evalid->evaluacion8 }}</p>
                     </div>
-                    <p>{{ $evalid->evaluacion8 }}</p>
+
                 </div>
                 <div class="flex gap-4 justify-center items-center">
-                    <label for="resultado" class="font-semibold">Resultado:
-                    </label>
+                    <p for="resultado" class="font-semibold">Resultado:
+                    </p>
                     <p>
                         {{ $evalid->resultado }} - {{ $evalid->interpretacion_resultado }}
                     </p>
@@ -206,8 +215,7 @@
                 class="text-center border shadow rounded-lg m-2 md:mx-24 p-4 flex flex-col justify-center gap-4 items-center">
                 <div class="flex justify-center items-center gap-4">
                     <label for="necesidad_capacitacion">¿Usted ha detectado en el personal evaluado alguna
-                        necesidad de capacitación?</label>
-                    <p>{{ $evalid->necesidad_capacitacion }}</p>
+                        necesidad de capacitación?: {{ $evalid->necesidad_capacitacion }}</label>
                 </div>
                 <label for="descripcion_necesidad">De responder si en la pregunta anterior describa cual
                     es la necesidad:</label>
@@ -222,10 +230,8 @@
             <div
                 class="text-center border shadow rounded-lg m-2 md:mx-24 p-4 flex flex-col justify-center gap-4 items-center">
                 <p>Validación por coordinación de enseñanza:</p>
-                <br />
-                <div class="image-container">
-                    <img src="<?php echo $pic; ?>" width="350px" height="160px" />
-                </div>
+                <p class="validado">VALIDADO</p>
+
             </div>
         </div>
     </div>
