@@ -199,13 +199,10 @@ Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparti
 
 
 
-
-
+Route::post('/admin/importar_participantes/{cursoid}', [participantesController::class, 'import'])->middleware('auth');
 
 Route::get('/generate_pdf/{evalid}', [Eval_adq_controller::class, 'generate_pdf'])
     ->middleware('auth');
-
-
 
 Route::post('/admin/firmar/{evalid}', [Eval_adq_controller::class, 'firmar_store'])
     ->middleware('auth');

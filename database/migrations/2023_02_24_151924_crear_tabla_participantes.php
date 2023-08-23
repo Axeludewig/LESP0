@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user')->nullable();
             $table->unsignedBigInteger('id_curso');
             $table->string('nombre_curso');
-            $table->string('rfc_participante');
+            $table->string('rfc_participante')->nullable();
             $table->string('nombre_participante');
             $table->string('email_participante');
             $table->string('ubicacion');
