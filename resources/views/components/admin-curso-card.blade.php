@@ -49,24 +49,23 @@
                     $carta = DB::table('carta')
                         ->where('id_curso', $listing->id)
                         ->first();
+                    
                 @endphp
 
                 @if ($carta !== null)
                     <div class="my-4">
-                        <a href="{{ $carta->carta }}" class="">
+                        <a href="/admin/generate_carta/{{ $listing->id }}" class="" target="_blank">
                             <button class="p-4 border-2 shadow rounded-lg bg-yellow-200">
-
-                                <p class="text-xl font-semibold text-blue-600"><i
-                                        class="fa-regular fa-hand-point-down"></i>&nbsp;Click para ver Carta
-                                    Descriptiva&nbsp;<i class="fa-regular fa-hand-point-down"></i></p>
-
-
-
-
+                                <p class="text-xl font-semibold text-blue-600">
+                                    <i class="fa-regular fa-hand-point-down"></i>&nbsp;Click para descargar la Carta
+                                    Descriptiva&nbsp;
+                                    <i class="fa-regular fa-hand-point-down"></i>
+                                </p>
                             </button>
                         </a>
                     </div>
                 @endif
+
 
                 @if ($listing->tipo == 'Presencial')
                     <div class="my-4">

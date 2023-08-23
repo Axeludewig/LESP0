@@ -198,6 +198,7 @@ Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparti
 
 
 
+Route::get('/admin/generate_carta/{cursoid}', [CursosController::class, 'generate_carta'])->middleware('auth');
 
 Route::post('/admin/importar_participantes/{cursoid}', [participantesController::class, 'import'])->middleware('auth');
 
