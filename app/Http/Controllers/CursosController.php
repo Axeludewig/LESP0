@@ -26,6 +26,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CursosController extends Controller
 {
+    public function privacidad()
+    {
+        return view('users.privacidad');
+    }
+
     public function generate_carta(Request $request, Cursos $cursoid)
     {
         $curso = $cursoid;

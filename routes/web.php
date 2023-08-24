@@ -180,6 +180,8 @@ Route::get('/users/evaluar/{evaladqid}', [Eval_adq_controller::class, 'showparti
     ->middleware('auth');
 
 
+Route::get('/privacidad', [CursosController::class, 'privacidad']);
+
 
 
 
