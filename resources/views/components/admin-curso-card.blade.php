@@ -75,10 +75,6 @@
                                 <p class="text-xl font-semibold text-blue-600"><i
                                         class="fa-regular fa-hand-point-down"></i>&nbsp;Click para ver Código QR&nbsp;<i
                                         class="fa-regular fa-hand-point-down"></i></p>
-
-
-
-
                             </button>
                         </a>
                     </div>
@@ -446,6 +442,12 @@
                         </div>
                     </form>
                 @elseif (auth()->user()->es_admin == '1' && $listing->status == 'Disponible')
+                    <div class="flex justify-center">
+                        <a href="/admin/editcurso/{{ $listing->id }}">
+                            <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">Editar
+                                curso</button>
+                        </a>
+                    </div>
                     <form method="POST" action="/listings/{{ $listing->id }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

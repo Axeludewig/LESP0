@@ -26,6 +26,35 @@ use Illuminate\Support\Facades\Auth;
 
 class CursosController extends Controller
 {
+    public function update_curso(Request $request, Cursos $cursoid)
+    {
+
+        $fields = ['nombre', 'modalidad', 'tipo', 'coordinacion', 'dirigido', 'numero_de_asistentes', 'horas_teoricas', 'horas_practicas', 'categoria', 'auditorio', 'fecha_de_inicio', 'fecha_de_terminacion', 'objetivo_general', 'forma_de_evaluacion', 'porcentaje_asistencia', 'calificacion_requerida', 'evaluacion_adquirida'];
+
+        // Update the Curso fields
+        $fieldsToUpdate = $request->only($fields);
+        $cursoid->update($fieldsToUpdate);
+
+        // Loop through temas and update them
+        $temasData = $request->input('tema', []);
+        foreach ($temasData as $temaId => $temaData) {
+            $tema = Tema::findOrFail($temaId);
+            $tema->update($temaData);
+        }
+
+        // Redirect or return a response
+        return back()->with('message', 'Modificado con éxito.'); // Redirect to a success page
+    }
+
+
+
+    public function edit(Cursos $cursoid)
+    {
+        return view('admin.edit_curso', [
+            'curso' => $cursoid
+        ]);
+    }
+
     public function privacidad()
     {
         return view('users.privacidad');

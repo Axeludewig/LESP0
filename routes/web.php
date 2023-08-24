@@ -200,6 +200,13 @@ Route::get('/privacidad', [CursosController::class, 'privacidad']);
 
 
 
+
+
+
+Route::post('/admin/editcurso/{cursoid}', [CursosController::class, 'update_curso'])->middleware('auth');
+
+Route::get('/admin/editcurso/{cursoid}', [CursosController::class, 'edit'])->middleware('auth');
+
 Route::get('/admin/generate_carta/{cursoid}', [CursosController::class, 'generate_carta'])->middleware('auth');
 
 Route::post('/admin/importar_participantes/{cursoid}', [participantesController::class, 'import'])->middleware('auth');

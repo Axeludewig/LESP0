@@ -1,4 +1,6 @@
 <x-layout>
+    <a href="/admin/paneldecursos" class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i> Volver
+    </a>
     <div class="flex items-center justify-center mx-auto mt-12">
         <div class="border w-3/4 rounded shadow-xl p-6">
             <form method="POST" action="/cursos/crear" enctype="multipart/form-data" id="physical-form">
@@ -312,7 +314,6 @@
                             <th>Horas teóricas</th>
                             <th>Horas prácticas</th>
                             <th>Referencia bibliográfica</th>
-                            <th>Acción</th>
                             <th>Acción</th>
                         </table>
                     </div>
@@ -836,83 +837,7 @@
                 removeButtonCell.appendChild(removeButton);
                 newRow.appendChild(removeButtonCell);
 
-                const editButton = document.createElement("button");
 
-                editButton.textContent = "Editar";
-                editButton.classList.add("edit-button");
-                editButton.classList.add("styla");
-                editButton.addEventListener("click", function(event) {
-                    event.preventDefault(); // Prevent form submission
-                    // Replace text cells with input fields
-                    editButtonCell.removeChild(editButton); // Remove "Editar" button
-                    editButtonCell.appendChild(saveButton);
-
-                    const value1 = fechayhoraCell.innerHTML;
-                    const value2 = contenidoCell.innerHTML;
-                    const value3 = objetivosCell.innerHTML;
-                    const value4 = tecnicaCell.innerHTML;
-                    const value5 = horasTeoricasCell.innerHTML;
-                    const value6 = horasPracticasCell.innerHTML;
-                    const value7 = referenciaCell.innerHTML;
-
-                    fechayhoraCell.innerHTML =
-                        `<input type="datetime-local" value="${value1}" class="edit-input" name="fechayhoras" style="width: 100px;" id="newinput1">`;
-                    contenidoCell.innerHTML =
-                        `<input type="text" value="${value2}" class="edit-input" name="contenidos" id="newinput2">`;
-                    objetivosCell.innerHTML =
-                        `<input type="text" value="${value3}" class="edit-input" name="objetivos" id="newinput3">`;
-                    tecnicaCell.innerHTML =
-                        `<input type="text" value="${value4}" class="edit-input" name="tecnicas" id="newinput4">`;
-                    horasTeoricasCell.innerHTML =
-                        `<input type="number" value="${value5}" class="edit-input" name="teoricas" id="newinput5">`;
-                    horasPracticasCell.innerHTML =
-                        `<input type="number" value="${value6}" class="edit-input" name="practicas" id="newinput6">`;
-                    referenciaCell.innerHTML =
-                        `<input type="text" value="${value7}" class="edit-input" name="referencias" id="newinput7">`;
-                });
-                // Create a table cell for the "Editar" button
-                const editButtonCell = document.createElement("td");
-                editButtonCell.appendChild(editButton);
-                newRow.appendChild(editButtonCell);
-
-                const saveButton = document.createElement("button");
-                saveButton.textContent = "Guardar";
-                saveButton.classList.add("save-button");
-                saveButton.classList.add("styla");
-                saveButton.addEventListener("click", function(event) {
-                    event.preventDefault(); // Prevent form submission
-                    editButtonCell.removeChild(saveButton); // Remove "Guardar" button
-                    editButtonCell.appendChild(editButton);
-                    console.log("save button clicked");
-
-                    const inputFields = newRow.querySelectorAll('input');
-                    console.log(inputFields);
-                    // Get input values
-                    const newFechayHora = document.getElementById("newinput1").value;
-                    const newContenido = document.getElementById("newinput2").value;
-                    const newObjetivos = document.getElementById("newinput3").value;
-                    const newTecnica = document.getElementById("newinput4").value;
-                    const newTeoricas = document.getElementById("newinput5").value;
-                    const newPracticas = document.getElementById("newinput6").value;
-                    const newRef = document.getElementById("newinput7").value;
-                    // Get other input values as needed
-                    // Update cell contents with new values
-                    fechayhoraCell.innerHTML = newFechayHora;
-                    contenidoCell.innerHTML = newContenido;
-                    objetivosCell.innerHTML = newObjetivos;
-                    tecnicaCell.innerHTML = newTecnica;
-                    horasTeoricasCell.innerHTML = newTeoricas;
-                    horasPracticasCell.innerHTML = newPracticas;
-                    referenciaCell.innerHTML = newRef;
-
-                    document.querySelector('[name="fechayhoras"]').value = newFechayHora;
-                    document.querySelector('[name="contenidos"]').value = newContenido;
-                    document.querySelector('[name="objetivos"]').value = newObjetivos;
-                    document.querySelector('[name="tecnicas"]').value = newTecnica;
-                    document.querySelector('[name="teoricas"]').value = newTeoricas;
-                    document.querySelector('[name="practicas"]').value = newPracticas;
-                    document.querySelector('[name="referencias"]').value = newRef;
-                });
 
 
                 // Append the new row to the table
